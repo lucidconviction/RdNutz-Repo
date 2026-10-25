@@ -3,6 +3,6 @@
     "description": "Extended CloudStream providers for raw/shocking video content from Crazyshit, LiveGore, Worldstar Hip Hop, and more.",
     "manifestVersion": 1,
     "pluginLists": [
-        "https://raw.githubusercontent.com/Robbdeeze/rdnutz-cloudstream-extensions/main/plugins.json"
+        "https://raw.githubusercontent.com/Robbdeeze/rdnutz-cloudstream-extensions/master/plugins.json"
     ]
 }
