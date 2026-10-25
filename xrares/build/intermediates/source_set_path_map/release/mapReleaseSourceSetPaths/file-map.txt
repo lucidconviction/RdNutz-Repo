@@ -1,7 +1,0 @@
-com.rdnutz.providers.xrares-pngs-0 /Users/robbdeeze/Documents/projects/rdnutz-cloudstream-extensions/xrares/build/generated/res/pngs/release
-com.rdnutz.providers.xrares-resValues-1 /Users/robbdeeze/Documents/projects/rdnutz-cloudstream-extensions/xrares/build/generated/res/resValues/release
-com.rdnutz.providers.xrares-mergeReleaseResources-2 /Users/robbdeeze/Documents/projects/rdnutz-cloudstream-extensions/xrares/build/intermediates/incremental/release/mergeReleaseResources/merged.dir
-com.rdnutz.providers.xrares-mergeReleaseResources-3 /Users/robbdeeze/Documents/projects/rdnutz-cloudstream-extensions/xrares/build/intermediates/incremental/release/mergeReleaseResources/stripped.dir
-com.rdnutz.providers.xrares-release-4 /Users/robbdeeze/Documents/projects/rdnutz-cloudstream-extensions/xrares/build/intermediates/merged_res/release/mergeReleaseResources
-com.rdnutz.providers.xrares-main-5 /Users/robbdeeze/Documents/projects/rdnutz-cloudstream-extensions/xrares/src/main/res
-com.rdnutz.providers.xrares-release-6 /Users/robbdeeze/Documents/projects/rdnutz-cloudstream-extensions/xrares/src/release/res

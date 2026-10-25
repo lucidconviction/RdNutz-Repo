@@ -1,7 +1,0 @@
-com.rdnutz.providers.sports-pngs-0 /Users/robbdeeze/Documents/projects/rdnutz-cloudstream-extensions/sports/build/generated/res/pngs/release
-com.rdnutz.providers.sports-resValues-1 /Users/robbdeeze/Documents/projects/rdnutz-cloudstream-extensions/sports/build/generated/res/resValues/release
-com.rdnutz.providers.sports-mergeReleaseResources-2 /Users/robbdeeze/Documents/projects/rdnutz-cloudstream-extensions/sports/build/intermediates/incremental/release/mergeReleaseResources/merged.dir
-com.rdnutz.providers.sports-mergeReleaseResources-3 /Users/robbdeeze/Documents/projects/rdnutz-cloudstream-extensions/sports/build/intermediates/incremental/release/mergeReleaseResources/stripped.dir
-com.rdnutz.providers.sports-release-4 /Users/robbdeeze/Documents/projects/rdnutz-cloudstream-extensions/sports/build/intermediates/merged_res/release/mergeReleaseResources
-com.rdnutz.providers.sports-main-5 /Users/robbdeeze/Documents/projects/rdnutz-cloudstream-extensions/sports/src/main/res
-com.rdnutz.providers.sports-release-6 /Users/robbdeeze/Documents/projects/rdnutz-cloudstream-extensions/sports/src/release/res

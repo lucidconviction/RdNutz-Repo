@@ -1,7 +1,0 @@
-com.rdnutz.providers.usacrime-pngs-0 /Users/robbdeeze/Documents/projects/rdnutz-cloudstream-extensions/usacrime/build/generated/res/pngs/release
-com.rdnutz.providers.usacrime-resValues-1 /Users/robbdeeze/Documents/projects/rdnutz-cloudstream-extensions/usacrime/build/generated/res/resValues/release
-com.rdnutz.providers.usacrime-mergeReleaseResources-2 /Users/robbdeeze/Documents/projects/rdnutz-cloudstream-extensions/usacrime/build/intermediates/incremental/release/mergeReleaseResources/merged.dir
-com.rdnutz.providers.usacrime-mergeReleaseResources-3 /Users/robbdeeze/Documents/projects/rdnutz-cloudstream-extensions/usacrime/build/intermediates/incremental/release/mergeReleaseResources/stripped.dir
-com.rdnutz.providers.usacrime-release-4 /Users/robbdeeze/Documents/projects/rdnutz-cloudstream-extensions/usacrime/build/intermediates/merged_res/release/mergeReleaseResources
-com.rdnutz.providers.usacrime-main-5 /Users/robbdeeze/Documents/projects/rdnutz-cloudstream-extensions/usacrime/src/main/res
-com.rdnutz.providers.usacrime-release-6 /Users/robbdeeze/Documents/projects/rdnutz-cloudstream-extensions/usacrime/src/release/res

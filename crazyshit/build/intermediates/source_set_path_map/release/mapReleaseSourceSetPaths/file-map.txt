@@ -1,7 +1,0 @@
-com.rdnutz.providers.crazyshit-pngs-0 /Users/robbdeeze/Documents/projects/rdnutz-cloudstream-extensions/crazyshit/build/generated/res/pngs/release
-com.rdnutz.providers.crazyshit-resValues-1 /Users/robbdeeze/Documents/projects/rdnutz-cloudstream-extensions/crazyshit/build/generated/res/resValues/release
-com.rdnutz.providers.crazyshit-mergeReleaseResources-2 /Users/robbdeeze/Documents/projects/rdnutz-cloudstream-extensions/crazyshit/build/intermediates/incremental/release/mergeReleaseResources/merged.dir
-com.rdnutz.providers.crazyshit-mergeReleaseResources-3 /Users/robbdeeze/Documents/projects/rdnutz-cloudstream-extensions/crazyshit/build/intermediates/incremental/release/mergeReleaseResources/stripped.dir
-com.rdnutz.providers.crazyshit-release-4 /Users/robbdeeze/Documents/projects/rdnutz-cloudstream-extensions/crazyshit/build/intermediates/merged_res/release/mergeReleaseResources
-com.rdnutz.providers.crazyshit-main-5 /Users/robbdeeze/Documents/projects/rdnutz-cloudstream-extensions/crazyshit/src/main/res
-com.rdnutz.providers.crazyshit-release-6 /Users/robbdeeze/Documents/projects/rdnutz-cloudstream-extensions/crazyshit/src/release/res

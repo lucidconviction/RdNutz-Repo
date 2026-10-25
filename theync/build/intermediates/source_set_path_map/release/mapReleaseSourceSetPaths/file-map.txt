@@ -1,7 +1,0 @@
-com.rdnutz.providers.theync-pngs-0 /Users/robbdeeze/Documents/projects/rdnutz-cloudstream-extensions/theync/build/generated/res/pngs/release
-com.rdnutz.providers.theync-resValues-1 /Users/robbdeeze/Documents/projects/rdnutz-cloudstream-extensions/theync/build/generated/res/resValues/release
-com.rdnutz.providers.theync-mergeReleaseResources-2 /Users/robbdeeze/Documents/projects/rdnutz-cloudstream-extensions/theync/build/intermediates/incremental/release/mergeReleaseResources/merged.dir
-com.rdnutz.providers.theync-mergeReleaseResources-3 /Users/robbdeeze/Documents/projects/rdnutz-cloudstream-extensions/theync/build/intermediates/incremental/release/mergeReleaseResources/stripped.dir
-com.rdnutz.providers.theync-release-4 /Users/robbdeeze/Documents/projects/rdnutz-cloudstream-extensions/theync/build/intermediates/merged_res/release/mergeReleaseResources
-com.rdnutz.providers.theync-main-5 /Users/robbdeeze/Documents/projects/rdnutz-cloudstream-extensions/theync/src/main/res
-com.rdnutz.providers.theync-release-6 /Users/robbdeeze/Documents/projects/rdnutz-cloudstream-extensions/theync/src/release/res
