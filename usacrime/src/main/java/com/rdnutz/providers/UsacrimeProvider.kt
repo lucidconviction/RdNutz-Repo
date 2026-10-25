@@ -21,7 +21,6 @@ class UsacrimeProvider : MainAPI() {
         val postLinks = mutableSetOf<String>()
         
         document.select("a[href^=https://www.usacrime.com/]")
-            .filter { it.attr("href").matches(Regex("\\d+")) }
             .forEach { postLinks.add(fixUrl(it.attr("href"))!!) }
         
         document.select("a.post-card, a[class*=post]")

@@ -21,7 +21,6 @@ class NothingtoxicProvider : MainAPI() {
         val postLinks = mutableSetOf<String>()
         
         document.select("a[href^=https://www.nothingtoxic.com/]")
-            .filter { it.attr("href").matches(Regex("\\d+")) }
             .forEach { postLinks.add(fixUrl(it.attr("href"))!!) }
         
         document.select("a.post-card, a[class*=post]")

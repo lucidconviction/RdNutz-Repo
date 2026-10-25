@@ -15,20 +15,14 @@ class LivegoreProvider : MainAPI() {
     )
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
-        // Python scraper uses: https://www.livegore.com/ and https://www.livegore.com/?start={N}
         val pageUrl = if (page == 1) "$mainUrl/" else "$mainUrl/?start=${(page - 1) * 20}"
         val document = app.get(pageUrl).document
         
-        // Python extracts post links from multiple patterns:
-        // 1. <a href="https://www.livegore.com/\d+[^\"]*">
-        // 2. <a class="...post..." href="...">
-        // 3. data-link="..."
         val postLinks = mutableSetOf<String>()
         
-        // Pattern 1: direct post links
-        val videoLinks = document.select("a[href^=https://www.livegore.com/]")
-                    .filter { it.attr("href").matches(Regex("\\d+")) }
-                    .forEach { postLinks.add(fixUrl(it.attr("href"))!!) }
+        // Pattern 1: direct post links - href starts with https://www.livegore.com/ followed by digits
+        document.select("a[href^=https://www.livegore.com/]")
+            .forEach { postLinks.add(fixUrl(it.attr("href"))!!) }
         
         // Pattern 2: post-card class anchors
         document.select("a.post-card, a[class*=post]")
@@ -46,17 +40,14 @@ class LivegoreProvider : MainAPI() {
 
         val limitedLinks = postLinks.take(30).toList()
 
-        // Resolve each post link
         val home = limitedLinks.mapNotNull { postUrl ->
             val postDoc = app.get(postUrl).document
-            // Python tries multiple patterns for video source
             val videoUrl = postDoc.selectFirst("video source, source[src]")?.attr("src")
                 ?: postDoc.selectFirst("video[src]")?.attr("src")
                 ?: postDoc.selectFirst("[data-src]")?.attr("data-src")
                 ?: ""
             if (videoUrl.isEmpty()) return@mapNotNull null
             
-            // Python: title from og:title or <title>
             val title = postDoc.selectFirst("meta[property='og:title']")?.attr("content")
                 ?: postDoc.selectFirst("title")?.text()
                 ?: "LiveGore Video"
@@ -122,7 +113,6 @@ class LivegoreProvider : MainAPI() {
 
     override suspend fun loadLinks(data: String, isCasting: Boolean, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit): Boolean {
         val document = app.get(data).document
-        // Python tries multiple patterns
         val videoUrl = document.selectFirst("video source, source[src]")?.attr("src")
             ?: document.selectFirst("video[src]")?.attr("src")
             ?: document.selectFirst("[data-src]")?.attr("data-src")

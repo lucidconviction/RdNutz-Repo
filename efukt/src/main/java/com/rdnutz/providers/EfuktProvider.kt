@@ -20,8 +20,9 @@ class EfuktProvider : MainAPI() {
         val document = app.get(pageUrl).document
         
         // Python: <a href="https?://efukt\.com/\d+_[^\"]*" title="([^\"]*)"
+        // Filter URLs that contain underscore (indicating the \d+_ pattern)
         val videoLinks = document.select("a[href^=https://efukt.com/]")
-            .filter { it.attr("href").matches(Regex("\\d+_")) }
+            .filter { it.attr("href").contains("_") }
             .mapNotNull { el ->
                 val href = fixUrlNull(el.attr("href"))
                 val title = el.attr("title")
@@ -59,7 +60,7 @@ class EfuktProvider : MainAPI() {
     override suspend fun search(query: String): List<SearchResponse> {
         val document = app.get("${mainUrl}/search/${query.replace(" ", "-")}").document
         val videoLinks = document.select("a[href^=https://efukt.com/]")
-            .filter { it.attr("href").matches(Regex("\\d+_")) }
+            .filter { it.attr("href").contains("_") }
             .mapNotNull { el ->
                 val href = fixUrlNull(el.attr("href"))
                 val title = el.attr("title")
@@ -89,6 +90,7 @@ class EfuktProvider : MainAPI() {
             ?: document.selectFirst("title")?.text()
             ?: "eFukt Video"
         val posterUrl = fixUrlNull(document.selectFirst("meta[property='og:image']")?.attr("content"))
+            ?: ""
         
         return newMovieLoadResponse(title, url, TvType.NSFW, url) {
             this.posterUrl = posterUrl
