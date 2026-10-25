@@ -1,6 +1,6 @@
-# CloudStream 3 Nett Smutt Extension
+# RDNutz CloudStream Extensions
 
-CloudStream 3 plugins for raw/shocking video content from Crazyshit, LiveGore, and Worldstar Hip Hop.
+12 NSFW CloudStream extensions for raw/shocking video content from Crazyshit, LiveGore, Worldstar Hip Hop, Kaotic, DaftPorn, eFukt, HeavyFetish, NothingToxic, Xrares, TheYNC, USACrime, and Live Sports.
 
 ## Quick Start
 
@@ -10,13 +10,22 @@ CloudStream 3 plugins for raw/shocking video content from Crazyshit, LiveGore, a
 4. Select **"Add CloudStream repo"**
 5. Paste this URL and tap Add:
    ```
-   https://raw.githubusercontent.com/Robbdeeze/rdnutz-cloudstream-extensions/main/repo.json
+   https://raw.githubusercontent.com/Robbdeeze/rdnutz-cloudstream-extensions/master/repo.json
    ```
 6. Tap the **"RdNutz Nett Smutt"** card that appears
 7. Install the providers you want:
-   - **Crazyshit** — Viral/shocking videos (30 streams)
-   - **LiveGore** — Raw footage (100 streams)
-   - **Worldstar** — Street videos (30 streams)
+   - **Crazyshit** — Viral/shocking videos
+   - **LiveGore** — Raw footage
+   - **Worldstar** — Street videos
+   - **Kaotic** — Shocking content
+   - **DaftPorn** — Adult content
+   - **eFukt** — Shocking/funny videos
+   - **HeavyFetish** — Fetish content
+   - **NothingToxic** — Shocking videos
+   - **Xrares** — Rare/extreme content
+   - **TheYNC** — Shocking/gore content
+   - **USACrime** — Crime footage
+   - **Live Sports** — Live sports streams
 
 ## Build from Source
 
@@ -31,56 +40,73 @@ CloudStream 3 plugins for raw/shocking video content from Crazyshit, LiveGore, a
 git clone https://github.com/Robbdeeze/rdnutz-cloudstream-extensions.git
 cd rdnutz-cloudstream-extensions
 
-# Build release AAR (use Android Studio)
-./gradlew assembleRelease
+# Build all extensions
+./gradlew assemble compileDex --no-daemon
 
-# Or build a .cs3 file
-./gradlew buildCs3
+# .cs3 files will be in each module's build/ directory
 ```
 
 ### Output Files
-- `app/build/outputs/aar/app-release.aar` — Release build
-- `.cs3` file created automatically by CloudStream gradle plugin
+Each module produces a `.cs3` file in its `build/` directory (e.g., `crazyshit/build/crazyshit.cs3`)
 
 ## Providers
 
-| Provider | Base URL | Content | Max Streams |
-|----------|----------|---------|-------------|
-| Crazyshit | crazyshit.com | Viral/shocking | 30 |
-| LiveGore | livegore.com | Raw footage | 100 |
-| Worldstar | worldstarhiphop.com | Street videos | 30 |
+| Provider | Base URL | Content Type |
+|----------|----------|--------------|
+| Crazyshit | crazyshit.com | Viral/shocking videos |
+| LiveGore | livegore.com | Raw/gore footage |
+| Worldstar | worldstarhiphop.com | Street/fight videos |
+| Kaotic | kaotic.com | Shocking/extreme content |
+| DaftPorn | daftporn.com | Adult content |
+| eFukt | efukt.com | Shocking/funny videos |
+| HeavyFetish | heavyfetish.com | Fetish content |
+| NothingToxic | nothingtoxic.com | Shocking videos |
+| Xrares | xrares.com | Rare/extreme content |
+| TheYNC | theync.com | Shocking/gore content |
+| USACrime | usacrime.com | Crime footage |
+| Live Sports | Custom API | Live sports streams |
 
 ## File Structure
-
 ```
 rdnutz-cloudstream-extensions/
-├── providers/
-│   ├── CrazyshitProvider.kt
-│   ├── LiveGoreProvider.kt
-│   └── WorldstarProvider.kt
-├── extractors/          # Video host extractors (for future)
-│   └── VidplayExtractor.kt
-├── settings.gradle.kts
-├── build.gradle.kts
-├── repo.json            # Repository manifest for CloudStream
-├── plugins.json         # Plugin list
-├── *.csmeta             # Individual plugin manifests
+├── repo.json                 # Repository manifest for CloudStream
+├── plugins.json              # Plugin list → .cs3 URLs in releases
+├── *.csmeta                  # Individual plugin manifests (metadata)
+├── build.gradle.kts          # Root build config
+├── settings.gradle.kts       # Module inclusion
+├── gradle.properties         # Gradle/JVM settings
+├── gradle/                   # Gradle wrapper
+├── crazyshit/                # Crazyshit provider module
+├── livegore/                 # LiveGore provider module
+├── worldstar/                # Worldstar provider module
+├── kaotic/                   # Kaotic provider module
+├── daftporn/                 # DaftPorn provider module
+├── efukt/                    # eFukt provider module
+├── heavyfetish/              # HeavyFetish provider module
+├── nothingtoxic/             # NothingToxic provider module
+├── xrares/                   # Xrares provider module
+├── theync/                   # TheYNC provider module
+├── usacrime/                 # USACrime provider module
+├── sports/                   # Live Sports provider module
 └── README.md
 ```
 
-## Dependencies
+## Build System
+- **Kotlin 2.4.0** / **Gradle 8.10** / **AGP 8.5.2**
+- CloudStream Gradle Plugin (master-SNAPSHOT)
+- Each provider is an Android Library module
+- Output: `.cs3` plugin files (DEX + resources)
 
-- **CloudStream 3 SDK** — Base classes for providers
+## Dependencies
+- **CloudStream 3 SDK** (pre-release) — Base provider classes
 - **JSoup** — HTML parsing
-- **Jackson** — JSON parsing
+- **Jackson** — JSON serialization
 
 ## License
-
 MIT — Free to use and modify.
 
-## Based On
-
-Original Python scrapers from:
-- `/home/robbdeeze/Documents/projects/iptv/New working scrapers/crazyshit.py`
-- `/home/robbdeeze/Documents/projects/iptv/New working scrapers/livegore.py`
-- `/home/robbdeeze/Documents/projects/iptv/New working scrapers/worldstar.py`
+## Notes
+- Repo uses `master` branch (not `main`)
+- Release assets hosted at `github.com/.../releases/download/v0.1.0/`
+- Metadata served via `raw.githubusercontent.com/master/`
+- CS3 files currently accessible via GitHub API; direct download URLs may have propagation delay
