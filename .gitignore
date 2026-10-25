@@ -1,0 +1,19 @@
+# Gradle
+.gradle/
+build/
+*/build/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# OS
+.DS_Store
+
+# Local properties
+local.properties
+
+# Build outputs (keep .cs3 and .csmeta in root)
+*.cs3
+!*.csmeta
