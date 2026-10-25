@@ -1,0 +1,7 @@
+com.rdnutz.providers.worldstar-pngs-0 /Users/robbdeeze/Documents/projects/rdnutz-cloudstream-extensions/worldstar/build/generated/res/pngs/release
+com.rdnutz.providers.worldstar-resValues-1 /Users/robbdeeze/Documents/projects/rdnutz-cloudstream-extensions/worldstar/build/generated/res/resValues/release
+com.rdnutz.providers.worldstar-mergeReleaseResources-2 /Users/robbdeeze/Documents/projects/rdnutz-cloudstream-extensions/worldstar/build/intermediates/incremental/release/mergeReleaseResources/merged.dir
+com.rdnutz.providers.worldstar-mergeReleaseResources-3 /Users/robbdeeze/Documents/projects/rdnutz-cloudstream-extensions/worldstar/build/intermediates/incremental/release/mergeReleaseResources/stripped.dir
+com.rdnutz.providers.worldstar-release-4 /Users/robbdeeze/Documents/projects/rdnutz-cloudstream-extensions/worldstar/build/intermediates/merged_res/release/mergeReleaseResources
+com.rdnutz.providers.worldstar-main-5 /Users/robbdeeze/Documents/projects/rdnutz-cloudstream-extensions/worldstar/src/main/res
+com.rdnutz.providers.worldstar-release-6 /Users/robbdeeze/Documents/projects/rdnutz-cloudstream-extensions/worldstar/src/release/res

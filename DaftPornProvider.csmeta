@@ -1,0 +1,10 @@
+{
+  "name": "DaftPorn",
+  "url": "https://github.com/Robbdeeze/rdnutz-cloudstream-extensions",
+  "description": "DaftPorn video content provider for CloudStream",
+  "language": "en",
+  "version": 1,
+  "type": 2,
+  "mainActivity": "com.rdnutz.providers.DaftPornProvider",
+  "bundle": "app/build/outputs/aar/app-release.aar"
+}

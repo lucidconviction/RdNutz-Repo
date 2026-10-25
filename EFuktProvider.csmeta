@@ -1,0 +1,10 @@
+{
+  "name": "eFukt",
+  "url": "https://github.com/Robbdeeze/rdnutz-cloudstream-extensions",
+  "description": "eFukt video content provider for CloudStream",
+  "language": "en",
+  "version": 1,
+  "type": 2,
+  "mainActivity": "com.rdnutz.providers.EFuktProvider",
+  "bundle": "app/build/outputs/aar/app-release.aar"
+}

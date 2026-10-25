@@ -1,0 +1,10 @@
+{
+  "name": "Xrares",
+  "url": "https://github.com/Robbdeeze/rdnutz-cloudstream-extensions",
+  "description": "Xrares video content provider for CloudStream",
+  "language": "en",
+  "version": 1,
+  "type": 2,
+  "mainActivity": "com.rdnutz.providers.XraresProvider",
+  "bundle": "app/build/outputs/aar/app-release.aar"
+}

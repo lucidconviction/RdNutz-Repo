@@ -1,0 +1,10 @@
+{
+  "name": "Worldstar",
+  "url": "https://github.com/Robbdeeze/rdnutz-cloudstream-extensions",
+  "description": "Worldstar Hip Hop videos provider for CloudStream",
+  "language": "en",
+  "version": 1,
+  "type": 2,
+  "mainActivity": "com.rdnutz.providers.WorldstarProvider",
+  "bundle": "app/build/outputs/aar/app-release.aar"
+}

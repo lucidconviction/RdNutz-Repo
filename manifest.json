@@ -1,0 +1,21 @@
+{
+  "name": "RdNutz Nett Smutt",
+  "description": "CloudStream 3 extension for raw/shocking video content",
+  "version": "1.0.0",
+  "language": "en",
+  "authors": ["robbdeeze"],
+  "sources": [
+    {"name": "Crazyshit", "url": "https://crazyshit.com"},
+    {"name": "LiveGore", "url": "https://www.livegore.com"},
+    {"name": "Worldstar", "url": "https://worldstarhiphop.com"},
+    {"name": "Kaotic", "url": "https://kaotic.com"},
+    {"name": "DaftPorn", "url": "https://www.daftporn.com"},
+    {"name": "eFukt", "url": "https://efukt.com"},
+    {"name": "HeavyFetish", "url": "https://heavyfetish.com"},
+    {"name": "NothingToxic", "url": "https://nothingtoxic.com"},
+    {"name": "Xrares", "url": "https://www.xrares.com"},
+    {"name": "TheYNC", "url": "https://theync.com"},
+    {"name": "USACrime", "url": "https://usacrime.com"},
+    {"name": "Live Sports", "url": "https://nuvio.moaqeel6679.my.id"}
+  ]
+}
