@@ -11,16 +11,36 @@ class KaoticProvider : MainAPI() {
     override val hasMainPage = true
 
     override val mainPage = mainPageOf(
-        "${mainUrl}/videos/" to "Latest"
+        "${mainUrl}/recent/" to "Latest"
     )
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
-        val document = app.get("${request.data}${page}").document
-        val home = document.select("a[href*='/video/']").mapNotNull { el ->
-            val title = el.selectFirst(".video-title, .title, h3")?.text()?.trim() ?: return@mapNotNull null
-            val href = fixUrlNull(el.attr("href")) ?: return@mapNotNull null
-            val posterUrl = fixUrlNull(el.selectFirst("img")?.attr("data-src") ?: el.selectFirst("img")?.attr("src"))
-            newMovieSearchResponse(title, href, TvType.NSFW) { this.posterUrl = posterUrl }
+        val pageUrl = if (page == 1) "$mainUrl/recent/" else "$mainUrl/recent/page/$page/"
+        val document = app.get(pageUrl).document
+        
+        val postLinks = document.select("a[href*=/video/]")
+            .mapNotNull { el ->
+                val href = fixUrlNull(el.attr("href"))
+                if (href != null && href.contains("/video/")) href else null
+            }
+            .distinct()
+            .take(30)
+
+        val home = postLinks.mapNotNull { postUrl ->
+            val postDoc = app.get(postUrl).document
+            val videoUrl = postDoc.selectFirst("video source, source[src]")?.attr("src")
+                ?: postDoc.selectFirst("video[src]")?.attr("src")
+                ?: ""
+            if (videoUrl.isEmpty()) return@mapNotNull null
+            
+            val title = postDoc.selectFirst("title")?.text()
+                ?: "Kaotic Video"
+            
+            val posterUrl = fixUrlNull(postDoc.selectFirst("meta[property='og:image']")?.attr("content"))
+            
+            newMovieSearchResponse(title, postUrl, TvType.NSFW) {
+                this.posterUrl = posterUrl
+            }
         }
 
         return newHomePageResponse(
@@ -35,45 +55,56 @@ class KaoticProvider : MainAPI() {
 
     override suspend fun search(query: String): List<SearchResponse> {
         val document = app.get("${mainUrl}/search/${query.replace(" ", "-")}").document
-        return document.select("a[href*='/video/']").mapNotNull { el ->
-            val title = el.selectFirst(".video-title, .title, h3")?.text()?.trim() ?: return@mapNotNull null
-            val href = fixUrlNull(el.attr("href")) ?: return@mapNotNull null
-            val posterUrl = fixUrlNull(el.selectFirst("img")?.attr("data-src") ?: el.selectFirst("img")?.attr("src"))
-            newMovieSearchResponse(title, href, TvType.NSFW) { this.posterUrl = posterUrl }
+        val postLinks = document.select("a[href*=/video/]")
+            .mapNotNull { el ->
+                val href = fixUrlNull(el.attr("href"))
+                if (href != null && href.contains("/video/")) href else null
+            }
+            .distinct()
+            .take(30)
+
+        return postLinks.mapNotNull { postUrl ->
+            val postDoc = app.get(postUrl).document
+            val videoUrl = postDoc.selectFirst("video source, source[src]")?.attr("src")
+                ?: postDoc.selectFirst("video[src]")?.attr("src")
+                ?: ""
+            if (videoUrl.isEmpty()) return@mapNotNull null
+            
+            val title = postDoc.selectFirst("title")?.text()
+                ?: "Kaotic Video"
+            
+            val posterUrl = fixUrlNull(postDoc.selectFirst("meta[property='og:image']")?.attr("content"))
+            
+            newMovieSearchResponse(title, postUrl, TvType.NSFW) {
+                this.posterUrl = posterUrl
+            }
         }
     }
 
     override suspend fun load(url: String): LoadResponse {
         val document = app.get(url).document
-        val title = document.selectFirst("h1, .video-title")?.text()?.trim()?.toString() ?: ""
+        val title = document.selectFirst("title")?.text()
+            ?: "Kaotic Video"
         val posterUrl = fixUrlNull(document.selectFirst("meta[property='og:image']")?.attr("content"))
-        val description = document.selectFirst("meta[property='og:description']")?.attr("content") ?: ""
-        val duration = document.selectFirst(".duration")?.text()?.trim()?.toIntOrNull()
-        val tags = document.select("a.tag, a.category").map { it.text().trim() }
-
+        
         return newMovieLoadResponse(title, url, TvType.NSFW, url) {
             this.posterUrl = posterUrl
-            this.plot = description
-            this.duration = duration
-            this.tags = tags
         }
     }
 
     override suspend fun loadLinks(data: String, isCasting: Boolean, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit): Boolean {
         val document = app.get(data).document
-        val videoUrl = document.selectFirst("video source[src$='.m3u8']")?.attr("src")
-            ?: document.selectFirst("video source")?.attr("src")
+        val videoUrl = document.selectFirst("video source, source[src]")?.attr("src")
             ?: document.selectFirst("video[src]")?.attr("src")
-            ?: document.selectFirst("iframe[src*='player']")?.attr("src")
             ?: ""
         
         if (videoUrl.isNotEmpty()) {
             newExtractorLink(
-                        name,
-                        name,
-                        fixUrl(videoUrl),
-                        INFER_TYPE
-                    ) { callback(this) }
+                name,
+                name,
+                fixUrl(videoUrl),
+                INFER_TYPE
+            ) { callback(this) }
             return true
         }
         return false

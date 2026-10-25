@@ -4,7 +4,7 @@ import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.utils.*
 
 class EfuktProvider : MainAPI() {
-    override var mainUrl = "https://www.efukt.com"
+    override var mainUrl = "https://efukt.com"
     override var name = "eFukt"
     override val supportedTypes = setOf(TvType.NSFW)
     override var lang = "en"
@@ -15,12 +15,35 @@ class EfuktProvider : MainAPI() {
     )
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
-        val document = app.get("${request.data}${if (page > 1) "page/$page/" else ""}").document
-        val home = document.select("a[href*='/video/']").mapNotNull { el ->
-            val title = el.selectFirst(".video-title, .title")?.text()?.trim() ?: return@mapNotNull null
-            val href = fixUrlNull(el.attr("href")) ?: return@mapNotNull null
-            val posterUrl = fixUrlNull(el.selectFirst("img")?.attr("data-src") ?: el.selectFirst("img")?.attr("src"))
-            newMovieSearchResponse(title, href, TvType.NSFW) { this.posterUrl = posterUrl }
+        // Python scraper: page 1 = https://efukt.com/, page N = https://efukt.com/videos/page/N/
+        val pageUrl = if (page == 1) "$mainUrl/" else "$mainUrl/videos/page/$page/"
+        val document = app.get(pageUrl).document
+        
+        // Python: <a href="https?://efukt\.com/\d+_[^\"]*" title="([^\"]*)"
+        val videoLinks = document.select("a[href^=https://efukt.com/]")
+            .filter { it.attr("href").matches(Regex("\\d+_")) }
+            .mapNotNull { el ->
+                val href = fixUrlNull(el.attr("href"))
+                val title = el.attr("title")
+                if (href != null && title != null && title.isNotBlank()) Pair(href, title) else null
+            }
+            .distinctBy { it.first }
+            .take(30)
+
+        // Resolve each video link
+        val home = videoLinks.mapNotNull { (videoUrl, title) ->
+            val videoDoc = app.get(videoUrl).document
+            // Python: <source src="...mp4...">
+            val sourceUrl = videoDoc.selectFirst("video source, source[src]")?.attr("src")
+                ?: videoDoc.selectFirst("video[src]")?.attr("src")
+                ?: ""
+            if (sourceUrl.isEmpty()) return@mapNotNull null
+            
+            val posterUrl = fixUrlNull(videoDoc.selectFirst("meta[property='og:image']")?.attr("content"))
+            
+            newMovieSearchResponse(title, videoUrl, TvType.NSFW) {
+                this.posterUrl = posterUrl
+            }
         }
 
         return newHomePageResponse(
@@ -35,45 +58,57 @@ class EfuktProvider : MainAPI() {
 
     override suspend fun search(query: String): List<SearchResponse> {
         val document = app.get("${mainUrl}/search/${query.replace(" ", "-")}").document
-        return document.select("a[href*='/video/']").mapNotNull { el ->
-            val title = el.selectFirst(".video-title, .title")?.text()?.trim() ?: return@mapNotNull null
-            val href = fixUrlNull(el.attr("href")) ?: return@mapNotNull null
-            val posterUrl = fixUrlNull(el.selectFirst("img")?.attr("data-src") ?: el.selectFirst("img")?.attr("src"))
-            newMovieSearchResponse(title, href, TvType.NSFW) { this.posterUrl = posterUrl }
+        val videoLinks = document.select("a[href^=https://efukt.com/]")
+            .filter { it.attr("href").matches(Regex("\\d+_")) }
+            .mapNotNull { el ->
+                val href = fixUrlNull(el.attr("href"))
+                val title = el.attr("title")
+                if (href != null && title != null && title.isNotBlank()) Pair(href, title) else null
+            }
+            .distinctBy { it.first }
+            .take(30)
+
+        return videoLinks.mapNotNull { (videoUrl, title) ->
+            val videoDoc = app.get(videoUrl).document
+            val sourceUrl = videoDoc.selectFirst("video source, source[src]")?.attr("src")
+                ?: videoDoc.selectFirst("video[src]")?.attr("src")
+                ?: ""
+            if (sourceUrl.isEmpty()) return@mapNotNull null
+            
+            val posterUrl = fixUrlNull(videoDoc.selectFirst("meta[property='og:image']")?.attr("content"))
+            
+            newMovieSearchResponse(title, videoUrl, TvType.NSFW) {
+                this.posterUrl = posterUrl
+            }
         }
     }
 
     override suspend fun load(url: String): LoadResponse {
         val document = app.get(url).document
-        val title = document.selectFirst("h1, .video-title")?.text()?.trim()?.toString() ?: ""
+        val title = document.selectFirst("meta[property='og:title']")?.attr("content")
+            ?: document.selectFirst("title")?.text()
+            ?: "eFukt Video"
         val posterUrl = fixUrlNull(document.selectFirst("meta[property='og:image']")?.attr("content"))
-        val description = document.selectFirst("meta[property='og:description']")?.attr("content") ?: ""
-        val duration = document.selectFirst(".duration")?.text()?.trim()?.toIntOrNull()
-        val tags = document.select("a.tag, a.category").map { it.text().trim() }
-
+        
         return newMovieLoadResponse(title, url, TvType.NSFW, url) {
             this.posterUrl = posterUrl
-            this.plot = description
-            this.duration = duration
-            this.tags = tags
         }
     }
 
     override suspend fun loadLinks(data: String, isCasting: Boolean, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit): Boolean {
         val document = app.get(data).document
-        val videoUrl = document.selectFirst("video source[src$='.m3u8']")?.attr("src")
-            ?: document.selectFirst("video source")?.attr("src")
+        // Python: <source src="...mp4...">
+        val videoUrl = document.selectFirst("video source, source[src]")?.attr("src")
             ?: document.selectFirst("video[src]")?.attr("src")
-            ?: document.selectFirst("iframe[src*='player']")?.attr("src")
             ?: ""
         
         if (videoUrl.isNotEmpty()) {
             newExtractorLink(
-                        name,
-                        name,
-                        fixUrl(videoUrl),
-                        INFER_TYPE
-                    ) { callback(this) }
+                name,
+                name,
+                fixUrl(videoUrl),
+                INFER_TYPE
+            ) { callback(this) }
             return true
         }
         return false
