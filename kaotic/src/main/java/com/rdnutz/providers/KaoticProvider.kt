@@ -11,6 +11,7 @@ class KaoticProvider : MainAPI() {
     override val supportedTypes = setOf(TvType.NSFW)
     override var lang = "en"
     override val hasMainPage = true
+    private val favicon = "$mainUrl/favicon.ico"
 
     private fun getRequest(url: String): org.jsoup.nodes.Document {
         return Jsoup.connect(url)
@@ -24,7 +25,7 @@ class KaoticProvider : MainAPI() {
             ?: el.select("img")?.firstOrNull()?.attr("src")
             ?: el.select("img")?.firstOrNull()?.attr("data-original")
             ?: el.parent()?.select("img")?.firstOrNull()?.attr("src")
-            ?: ""
+            ?: favicon
     }
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
@@ -39,7 +40,7 @@ class KaoticProvider : MainAPI() {
 
             if (title.isNotEmpty() && href.isNotEmpty()) {
                 newMovieSearchResponse(title, href, TvType.NSFW, false) {
-                    this.posterUrl = if (poster.isNotEmpty()) fixUrl(poster) else ""
+                    this.posterUrl = if (poster.isNotEmpty()) fixUrl(poster) else favicon
                 }
             } else null
         }.distinctBy { it.url }.take(30)
@@ -59,7 +60,7 @@ class KaoticProvider : MainAPI() {
 
             if (title.isNotEmpty() && href.isNotEmpty()) {
                 newMovieSearchResponse(title, href, TvType.NSFW, false) {
-                    this.posterUrl = if (poster.isNotEmpty()) fixUrl(poster) else ""
+                    this.posterUrl = if (poster.isNotEmpty()) fixUrl(poster) else favicon
                 }
             } else null
         }.distinctBy { it.url }
@@ -81,7 +82,7 @@ class KaoticProvider : MainAPI() {
         if (tags.isNotEmpty()) plot = "Tags: $tags\n$plot"
 
         return newMovieLoadResponse(name, url, TvType.NSFW, url) {
-            this.posterUrl = fixUrl(poster)
+            this.posterUrl = if (poster.isNotEmpty()) fixUrl(poster) else favicon
             this.plot = plot
         }
     }
