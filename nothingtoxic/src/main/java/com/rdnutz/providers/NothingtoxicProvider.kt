@@ -2,8 +2,6 @@ package com.rdnutz.providers
 
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.utils.*
-import org.jsoup.Jsoup
-import org.jsoup.select.Elements
 
 class NothingtoxicProvider : MainAPI() {
     override var mainUrl = "https://www.nothingtoxic.com"
@@ -12,116 +10,72 @@ class NothingtoxicProvider : MainAPI() {
     override var lang = "en"
     override val hasMainPage = true
 
-    private fun getRequest(url: String): org.jsoup.nodes.Document {
-        return Jsoup.connect(url)
-            .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
-            .timeout(15000)
-            .get()
-    }
-
-    private fun getPosterUrl(el: org.jsoup.nodes.Element): String {
-        return el.select("img")?.firstOrNull()?.attr("data-src")
-            ?: el.select("img")?.firstOrNull()?.attr("src")
-            ?: el.select("img")?.firstOrNull()?.attr("data-original")
-            ?: el.parent()?.select("img")?.firstOrNull()?.attr("src")
-            ?: ""
-    }
+    override val mainPage = mainPageOf(
+        "${mainUrl}/videos/" to "Latest"
+    )
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
-        val pageUrl = if (page == 1) "$mainUrl/videos/" else "$mainUrl/videos/page/$page/"
-        val doc = getRequest(pageUrl)
+        val document = app.get("${request.data}${page}").document
+        val home = document.select("a[href*='/video/']").mapNotNull { el ->
+            val title = el.selectFirst(".video-title, .title")?.text()?.trim() ?: return@mapNotNull null
+            val href = fixUrlNull(el.attr("href")) ?: return@mapNotNull null
+            val posterUrl = fixUrlNull(el.selectFirst("img")?.attr("data-src") ?: el.selectFirst("img")?.attr("src"))
+            newMovieSearchResponse(title, href, TvType.NSFW) { this.posterUrl = posterUrl }
+        }
 
-        val links = doc.select("a[href*=/video/]") ?: Elements()
-        val items = links.mapNotNull { el: org.jsoup.nodes.Element ->
-            val title = el.text().trim()
-            val href = fixUrl(el.attr("href"))
-            val poster = getPosterUrl(el)
-
-            if (title.isNotEmpty() && href.isNotEmpty()) {
-                newMovieSearchResponse(title, href, TvType.NSFW, false) {
-                    this.posterUrl = if (poster.isNotEmpty()) fixUrl(poster) else ""
-                }
-            } else null
-        }.distinctBy { it.url }.take(30)
-
-        return newHomePageResponse(listOf(HomePageList("Videos", items, false)))
+        return newHomePageResponse(
+            list = HomePageList(
+                name = request.name,
+                list = home,
+                isHorizontalImages = true
+            ),
+            hasNext = home.isNotEmpty()
+        )
     }
 
     override suspend fun search(query: String): List<SearchResponse> {
-        val searchUrl = "$mainUrl/search/$query/"
-        val doc = getRequest(searchUrl)
-        val links = doc.select("a[href*=/video/]") ?: Elements()
-
-        return links.mapNotNull { el: org.jsoup.nodes.Element ->
-            val title = el.text().trim()
-            val href = fixUrl(el.attr("href"))
-            val poster = getPosterUrl(el)
-
-            if (title.isNotEmpty() && href.isNotEmpty()) {
-                newMovieSearchResponse(title, href, TvType.NSFW, false) {
-                    this.posterUrl = if (poster.isNotEmpty()) fixUrl(poster) else ""
-                }
-            } else null
-        }.distinctBy { it.url }
-    }
-
-    override suspend fun load(url: String): LoadResponse? {
-        val doc = getRequest(url)
-        val title = doc.select("h1, property=og:title").text().trim()
-        val poster = doc.select("meta[property=og:image]").attr("content")
-        val description = doc.select("meta[property=og:description]").attr("content")
-
-        val duration = doc.select(".duration, .video-duration, [class*='duration']").text().trim()
-        val uploadDate = doc.select(".date, .upload-date, [class*='date']").text().trim()
-        val tags = doc.select(".tags a, .categories a, [class*='tag'] a").map { it.text().trim() }.joinToString(", ")
-
-        var plot = description
-        if (duration.isNotEmpty()) plot = "Duration: $duration\n$plot"
-        if (uploadDate.isNotEmpty()) plot = "Uploaded: $uploadDate\n$plot"
-        if (tags.isNotEmpty()) plot = "Tags: $tags\n$plot"
-
-        return newMovieLoadResponse(name, url, TvType.NSFW, url) {
-            this.posterUrl = fixUrl(poster)
-            this.plot = plot
+        val document = app.get("${mainUrl}/search/${query.replace(" ", "-")}").document
+        return document.select("a[href*='/video/']").mapNotNull { el ->
+            val title = el.selectFirst(".video-title, .title")?.text()?.trim() ?: return@mapNotNull null
+            val href = fixUrlNull(el.attr("href")) ?: return@mapNotNull null
+            val posterUrl = fixUrlNull(el.selectFirst("img")?.attr("data-src") ?: el.selectFirst("img")?.attr("src"))
+            newMovieSearchResponse(title, href, TvType.NSFW) { this.posterUrl = posterUrl }
         }
     }
 
-    override suspend fun loadLinks(
-        data: String,
-        isCasting: Boolean,
-        subtitleCallback: (SubtitleFile) -> Unit,
-        callback: (ExtractorLink) -> Unit
-    ): Boolean {
-        val doc = getRequest(data)
+    override suspend fun load(url: String): LoadResponse {
+        val document = app.get(url).document
+        val title = document.selectFirst("h1, .video-title")?.text()?.trim()?.toString() ?: ""
+        val posterUrl = fixUrlNull(document.selectFirst("meta[property='og:image']")?.attr("content"))
+        val description = document.selectFirst("meta[property='og:description']")?.attr("content") ?: ""
+        val duration = document.selectFirst(".duration")?.text()?.trim()?.toIntOrNull()
+        val tags = document.select("a.tag, a.category").map { it.text().trim() }
 
-        val videoUrl = doc.select("video source, video[src], source[src]").firstOrNull()?.attr("src")
-            ?: doc.select("iframe[src*='player'], iframe[src*='embed']").firstOrNull()?.attr("src")
+        return newMovieLoadResponse(title, url, TvType.NSFW, url) {
+            this.posterUrl = posterUrl
+            this.plot = description
+            this.duration = duration
+            this.tags = tags
+        }
+    }
+
+    override suspend fun loadLinks(data: String, isCasting: Boolean, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit): Boolean {
+        val document = app.get(data).document
+        val videoUrl = document.selectFirst("video source[src$='.m3u8']")?.attr("src")
+            ?: document.selectFirst("video source")?.attr("src")
+            ?: document.selectFirst("video[src]")?.attr("src")
+            ?: document.selectFirst("iframe[src*='player']")?.attr("src")
             ?: ""
-
+        
         if (videoUrl.isNotEmpty()) {
             newExtractorLink(
-                name,
-                name,
-                fixUrl(videoUrl),
-                if (videoUrl.contains(".m3u8")) ExtractorLinkType.M3U8 else ExtractorLinkType.VIDEO
-            ) { callback(this) }
+                        name,
+                        name,
+                        fixUrl(videoUrl),
+                        INFER_TYPE
+                    ) { callback(this) }
             return true
         }
-
-        val scripts = doc.select("script") ?: Elements()
-        val scriptContent = scripts.map { it.html() }.joinToString("\n")
-        val mp4Urls = """https?://[^"'\s]+\.mp4[^"'\s]*""".toRegex().findAll(scriptContent)
-            .map { it.value }.distinct().toList()
-
-        mp4Urls.forEach { url ->
-            newExtractorLink(
-                name,
-                name,
-                fixUrl(url),
-                ExtractorLinkType.VIDEO
-            ) { callback(this) }
-        }
-
-        return !mp4Urls.isEmpty()
+        return false
     }
 }

@@ -32,4 +32,5 @@ dependencies {
     cloudstream("com.github.recloudstream:cloudstream:pre-release")
     implementation("org.jsoup:jsoup:1.17.2")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.17.0")
+    implementation("com.github.Blatzar:NiceHttp:0.4.18")
 }
