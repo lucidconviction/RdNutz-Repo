@@ -10,7 +10,7 @@
 4. Select **"Add CloudStream repo"**
 5. Paste this URL and tap Add:
    ```
-   https://raw.githubusercontent.com/Robbdeeze/rdnutz-cloudstream-extensions/master/repo.json
+   https://raw.githubusercontent.com/Robbdeeze/RdNutz-Repo/master/repo.json
    ```
 6. Tap the **"RdNutz Nett Smutt"** card that appears
 7. Install the providers you want:
@@ -37,8 +37,8 @@
 ### Steps
 ```bash
 # Clone the repository
-git clone https://github.com/Robbdeeze/rdnutz-cloudstream-extensions.git
-cd rdnutz-cloudstream-extensions
+git clone https://github.com/Robbdeeze/RdNutz-Repo.git
+cd RdNutz-Repo
 
 # Build all extensions
 ./gradlew assemble compileDex --no-daemon
@@ -68,7 +68,7 @@ Each module produces a `.cs3` file in its `build/` directory (e.g., `crazyshit/b
 
 ## File Structure
 ```
-rdnutz-cloudstream-extensions/
+RdNutz-Repo/
 ├── repo.json                 # Repository manifest for CloudStream
 ├── plugins.json              # Plugin list → .cs3 URLs in releases
 ├── *.csmeta                  # Individual plugin manifests (metadata)
@@ -107,6 +107,6 @@ MIT — Free to use and modify.
 
 ## Notes
 - Repo uses `master` branch (not `main`)
-- Release assets hosted at `github.com/.../releases/download/v0.1.0/`
-- Metadata served via `raw.githubusercontent.com/master/`
+- Release assets hosted at `github.com/Robbdeeze/RdNutz-Repo/releases/download/v0.1.0/`
+- Metadata served via `raw.githubusercontent.com/Robbdeeze/RdNutz-Repo/master/`
 - CS3 files currently accessible via GitHub API; direct download URLs may have propagation delay
