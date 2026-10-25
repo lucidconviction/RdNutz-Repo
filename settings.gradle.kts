@@ -20,3 +20,14 @@ dependencyResolutionManagement {
 
 rootProject.name = "rdnutz-cloudstream-extensions"
 include(":crazyshit")
+include(":kaotic")
+include(":worldstar")
+include(":xrares")
+include(":livegore")
+include(":daftporn")
+include(":efukt")
+include(":heavyfetish")
+include(":nothingtoxic")
+include(":theync")
+include(":usacrime")
+include(":sports")
