@@ -15,8 +15,6 @@ class InhumanityProvider : MainAPI() {
     )
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
-        // Python: pagination is /page/{n}/ for page > 1
-        // Links are: href="(https?://inhumanity\.com/plug/\d+/)" with title="([^"]+)"
         val pageUrl = if (page == 1) mainUrl else "$mainUrl/page/$page/"
         val document = app.get(pageUrl).document
 
@@ -30,10 +28,14 @@ class InhumanityProvider : MainAPI() {
             .take(30)
 
         val home = videoLinks.mapNotNull { (videoUrl, title) ->
-            // The videoUrl is the plug page, which likely redirects to the actual video
             val cleanTitle = if (title.isNotBlank()) title else "Inhumanity Video"
+            // Try to fetch the plug page to get a thumbnail
+            val plugDoc = app.get(videoUrl).document
+            val posterUrl = fixUrlNull(plugDoc.selectFirst("meta[property='og:image']")?.attr("content"))
+                ?: fixUrlNull(plugDoc.selectFirst("video[poster]")?.attr("poster"))
+                ?: ""
             newMovieSearchResponse(cleanTitle, videoUrl, TvType.NSFW) {
-                this.posterUrl = ""
+                this.posterUrl = posterUrl
             }
         }
 
@@ -60,8 +62,12 @@ class InhumanityProvider : MainAPI() {
 
         return videoLinks.mapNotNull { (videoUrl, title) ->
             val cleanTitle = if (title.isNotBlank()) title else "Inhumanity Video"
+            val plugDoc = app.get(videoUrl).document
+            val posterUrl = fixUrlNull(plugDoc.selectFirst("meta[property='og:image']")?.attr("content"))
+                ?: fixUrlNull(plugDoc.selectFirst("video[poster]")?.attr("poster"))
+                ?: ""
             newMovieSearchResponse(cleanTitle, videoUrl, TvType.NSFW) {
-                this.posterUrl = ""
+                this.posterUrl = posterUrl
             }
         }
     }
@@ -71,27 +77,28 @@ class InhumanityProvider : MainAPI() {
         val title = document.selectFirst("title")?.text()
             ?: "Inhumanity Video"
         val posterUrl = fixUrlNull(document.selectFirst("meta[property='og:image']")?.attr("content"))
-        
+            ?: fixUrlNull(document.selectFirst("video[poster]")?.attr("poster"))
+            ?: ""
+
         return newMovieLoadResponse(title, url, TvType.NSFW, url) {
             this.posterUrl = posterUrl
         }
     }
 
     override suspend fun loadLinks(data: String, isCasting: Boolean, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit): Boolean {
-        // The plug page likely contains the actual video embed
         val document = app.get(data).document
-        
+
         // Try to find iframe/video embed
-        val iframeUrl = document.selectFirst("iframe[src]")?.attr("src")
+        val videoUrl = document.selectFirst("iframe[src]")?.attr("src")
             ?: document.selectFirst("video source, source[src]")?.attr("src")
             ?: document.selectFirst("video[src]")?.attr("src")
             ?: ""
-        
-        if (iframeUrl.isNotEmpty()) {
+
+        if (videoUrl.isNotEmpty()) {
             newExtractorLink(
                 name,
                 name,
-                fixUrl(iframeUrl),
+                fixUrl(videoUrl),
                 INFER_TYPE
             ) { callback(this) }
             return true

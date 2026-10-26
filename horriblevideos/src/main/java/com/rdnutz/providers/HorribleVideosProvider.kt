@@ -15,11 +15,9 @@ class HorribleVideosProvider : MainAPI() {
     )
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
-        // Python: paginated pages (page1.html, page2.html) -> video links -> embed page -> MP4
         val pageUrl = if (page == 1) "$mainUrl/" else "$mainUrl/page${page}.html"
         val document = app.get(pageUrl).document
 
-        // Python: <a[^>]*href="(https?://horriblevideos\.com/video/[^"]+)"[^>]*title="([^"]*)"
         val videoLinks = document.select("a[href*=/video/]")
             .mapNotNull { el ->
                 val href = fixUrlNull(el.attr("href"))
@@ -30,21 +28,22 @@ class HorribleVideosProvider : MainAPI() {
             .take(30)
 
         val home = videoLinks.mapNotNull { (videoUrl, title) ->
-            // Python: embed URL is https://horriblevideos.com/embed/{id} from video URL ...-{id}.html
             val vidId = Regex("-(\\d+)\\.html").find(videoUrl)?.groupValues?.get(1)
             if (vidId == null) return@mapNotNull null
-            
+
             val embedUrl = "$mainUrl/embed/$vidId"
             val embedDoc = app.get(embedUrl).document
-            
-            // Python: <source[^>]+src="(https?://[^"]+\.mp4[^"]*)"
+
             val mp4Url = embedDoc.selectFirst("video source, source[src]")?.attr("src")
                 ?: embedDoc.selectFirst("video[src]")?.attr("src")
                 ?: ""
             if (mp4Url.isEmpty()) return@mapNotNull null
 
             val cleanTitle = if (title.isNotBlank()) title else "HorribleVideos Video $vidId"
-            val posterUrl = fixUrlNull(embedDoc.selectFirst("meta[property='og:image']")?.attr("content"))
+            // Try multiple sources for poster
+            val posterUrl = fixUrlNull(embedDoc.selectFirst("video[poster]")?.attr("poster"))
+                ?: fixUrlNull(embedDoc.selectFirst("meta[property='og:image']")?.attr("content"))
+                ?: ""
 
             newMovieSearchResponse(cleanTitle, videoUrl, TvType.NSFW) {
                 this.posterUrl = posterUrl
@@ -62,7 +61,6 @@ class HorribleVideosProvider : MainAPI() {
     }
 
     override suspend fun search(query: String): List<SearchResponse> {
-        // Search likely uses a different URL pattern
         val document = app.get("${mainUrl}/search?q=${query.replace(" ", "+")}").document
         val videoLinks = document.select("a[href*=/video/]")
             .mapNotNull { el ->
@@ -76,7 +74,7 @@ class HorribleVideosProvider : MainAPI() {
         return videoLinks.mapNotNull { (videoUrl, title) ->
             val vidId = Regex("-(\\d+)\\.html").find(videoUrl)?.groupValues?.get(1)
             if (vidId == null) return@mapNotNull null
-            
+
             val embedUrl = "$mainUrl/embed/$vidId"
             val embedDoc = app.get(embedUrl).document
             val mp4Url = embedDoc.selectFirst("video source, source[src]")?.attr("src")
@@ -85,7 +83,9 @@ class HorribleVideosProvider : MainAPI() {
             if (mp4Url.isEmpty()) return@mapNotNull null
 
             val cleanTitle = if (title.isNotBlank()) title else "HorribleVideos Video $vidId"
-            val posterUrl = fixUrlNull(embedDoc.selectFirst("meta[property='og:image']")?.attr("content"))
+            val posterUrl = fixUrlNull(embedDoc.selectFirst("video[poster]")?.attr("poster"))
+                ?: fixUrlNull(embedDoc.selectFirst("meta[property='og:image']")?.attr("content"))
+                ?: ""
 
             newMovieSearchResponse(cleanTitle, videoUrl, TvType.NSFW) {
                 this.posterUrl = posterUrl
@@ -95,26 +95,28 @@ class HorribleVideosProvider : MainAPI() {
 
     override suspend fun load(url: String): LoadResponse {
         val document = app.get(url).document
+        val vidId = Regex("-(\\d+)\\.html").find(url)?.groupValues?.get(1)
         val title = document.selectFirst("title")?.text()
             ?: "HorribleVideos Video"
-        val posterUrl = fixUrlNull(document.selectFirst("meta[property='og:image']")?.attr("content"))
-        
+        val posterUrl = fixUrlNull(document.selectFirst("video[poster]")?.attr("poster"))
+            ?: fixUrlNull(document.selectFirst("meta[property='og:image']")?.attr("content"))
+            ?: ""
+
         return newMovieLoadResponse(title, url, TvType.NSFW, url) {
             this.posterUrl = posterUrl
         }
     }
 
     override suspend fun loadLinks(data: String, isCasting: Boolean, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit): Boolean {
-        // Python: embed URL from video URL
         val vidId = Regex("-(\\d+)\\.html").find(data)?.groupValues?.get(1)
         if (vidId == null) return false
-        
+
         val embedUrl = "$mainUrl/embed/$vidId"
         val document = app.get(embedUrl).document
         val videoUrl = document.selectFirst("video source, source[src]")?.attr("src")
             ?: document.selectFirst("video[src]")?.attr("src")
             ?: ""
-        
+
         if (videoUrl.isNotEmpty()) {
             newExtractorLink(
                 name,

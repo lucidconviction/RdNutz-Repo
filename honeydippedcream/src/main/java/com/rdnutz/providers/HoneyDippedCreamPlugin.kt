@@ -4,8 +4,8 @@ import com.lagradost.cloudstream3.plugins.CloudstreamPlugin
 import com.lagradost.cloudstream3.plugins.Plugin
 
 @CloudstreamPlugin
-class HoneyDippedCreamPlugin : Plugin() {
+class HoneydippedcreamPlugin : Plugin() {
     override fun load() {
-        registerMainAPI(HoneyDippedCreamProvider())
+        registerMainAPI(HoneydippedcreamProvider())
     }
 }

@@ -2,8 +2,9 @@ package com.rdnutz.providers
 
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.utils.*
+import org.jsoup.nodes.Document
 
-class HoneyDippedCreamProvider : MainAPI() {
+class HoneydippedcreamProvider : MainAPI() {
     override var mainUrl = "https://honeydippedcream.com"
     override var name = "HoneyDippedCream"
     override val supportedTypes = setOf(TvType.NSFW)
@@ -14,28 +15,37 @@ class HoneyDippedCreamProvider : MainAPI() {
         "${mainUrl}/" to "Latest"
     )
 
-    override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
-        // Python: extract direct MP4s from listing page
-        // MP4s: https://thumbs.honeydippedcream.yppcdn.com/.../hdcXXX_honedc_TITLE_large.mp4
-        val pageUrl = if (page == 1) mainUrl else "${mainUrl}/page/${page}/"
-        val document = app.get(pageUrl).document
+    private fun slugToTitle(slug: String): String {
+        return slug.replace("-", " ")
+            .replace("amp", "&")
+            .split(" ")
+            .map { it.capitalize() }
+            .joinToString(" ")
+    }
 
-        // Find all video source URLs with _large.mp4
-        val videoSources = document.select("video source[src*=_large.mp4], source[src*=_large.mp4]")
-            .map { fixUrlNull(it.attr("src")) }
-            .filterNotNull()
+    private fun Document.findAllMp4Urls(): List<String> {
+        val pattern = "https?://[^\\s\\\"'<>]+\\.mp4[^\\s\\\"'<>]*".toRegex()
+        return pattern.findAll(this.html())
+            .map { it.value }
+            .filter { it.contains("_large.mp4") && !it.contains("trailer", ignoreCase = true) }
             .distinct()
-            .take(50)
+            .sorted()
+            .toList()
+    }
 
-        val home = videoSources.mapNotNull { videoUrl ->
-            // Extract title from URL: hdc123_honedc_video_title_large.mp4
-            val fileName = videoUrl.substringAfterLast("/")
-            val titlePart = fileName.removeSuffix(".mp4").replace("_honedc_", " ")
-            val title = titlePart.split("_").joinToString(" ").replace("large", "").trim()
+    override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
+        val document = app.get(mainUrl).document
+        val mp4s = document.findAllMp4Urls()
 
-            newMovieSearchResponse(title, videoUrl, TvType.NSFW) {
-                this.posterUrl = ""
-            }
+        val home = mutableListOf<SearchResponse>()
+        mp4s.take(30).forEach { url ->
+            val fname = url.substringAfterLast("/")
+            val title = slugToTitle(fname.replace(".mp4", "").replace("_honedc_", " "))
+            home.add(
+                newMovieSearchResponse(title, url, TvType.NSFW) {
+                    this.posterUrl = ""
+                }
+            )
         }
 
         return newHomePageResponse(
@@ -44,44 +54,28 @@ class HoneyDippedCreamProvider : MainAPI() {
                 list = home,
                 isHorizontalImages = true
             ),
-            hasNext = home.isNotEmpty()
+            hasNext = false
         )
     }
 
     override suspend fun search(query: String): List<SearchResponse> {
-        val document = app.get("${mainUrl}/search/${query.replace(" ", "+")}").document
-        val videoSources = document.select("video source[src*=_large.mp4], source[src*=_large.mp4]")
-            .map { fixUrlNull(it.attr("src")) }
-            .filterNotNull()
-            .distinct()
-            .take(30)
-
-        return videoSources.mapNotNull { videoUrl ->
-            val fileName = videoUrl.substringAfterLast("/")
-            val titlePart = fileName.removeSuffix(".mp4").replace("_honedc_", " ")
-            val title = titlePart.split("_").joinToString(" ").replace("large", "").trim()
-
-            newMovieSearchResponse(title, videoUrl, TvType.NSFW) {
-                this.posterUrl = ""
-            }
-        }
+        return emptyList()
     }
 
     override suspend fun load(url: String): LoadResponse {
-        return newMovieLoadResponse("HoneyDippedCream Video", url, TvType.NSFW, url)
+        val fname = url.substringAfterLast("/")
+        val title = slugToTitle(fname.replace(".mp4", "").replace("_honedc_", " "))
+        return newMovieLoadResponse(title, url, TvType.NSFW, url) {
+            this.posterUrl = ""
+        }
     }
 
     override suspend fun loadLinks(data: String, isCasting: Boolean, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit): Boolean {
-        val document = app.get(data).document
-        val videoUrl = document.selectFirst("video source[src*=_large.mp4], source[src*=_large.mp4]")?.attr("src")
-            ?: document.selectFirst("video[src]")?.attr("src")
-            ?: ""
-        
-        if (videoUrl.isNotEmpty()) {
+        if (data.endsWith(".mp4")) {
             newExtractorLink(
                 name,
                 name,
-                fixUrl(videoUrl),
+                fixUrl(data),
                 INFER_TYPE
             ) { callback(this) }
             return true

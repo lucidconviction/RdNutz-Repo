@@ -18,8 +18,6 @@ class WorldstarProvider : MainAPI() {
         val pageUrl = if (page == 1) "$mainUrl/videos/" else "$mainUrl/videos/page/$page/"
         val document = app.get(pageUrl).document
         
-        // Python: extracts from __NEXT_DATA__ JSON and __next_f chunks
-        // Also falls back to regex on stripped HTML
         val allVideos = mutableMapOf<String, Pair<String, String>>() // mp4 -> (title, mp4)
         
         // Try to extract from __NEXT_DATA__
@@ -32,10 +30,9 @@ class WorldstarProvider : MainAPI() {
         document.select("script").forEach { script ->
             val html = script.html()
             if (html.contains("__next_f.push")) {
-                // Extract the chunk data
-                val chunks = html.split("__next_f.push(\\[").drop(1)
+                val chunks = html.split("__next_f.push(\\[\"").drop(1)
                 chunks.forEach { chunk ->
-                    val endIdx = chunk.indexOf("])")
+                    val endIdx = chunk.indexOf("\"])")
                     if (endIdx > 0) {
                         val data = chunk.substring(0, endIdx)
                             .replace("\\\"", "\"")
@@ -58,17 +55,20 @@ class WorldstarProvider : MainAPI() {
                     }
                 }
         }
-
+        
         val home = allVideos.entries
             .take(30)
             .map { (mp4, pair) ->
                 val (title, _) = pair
-                val posterUrl = fixUrlNull(document.selectFirst("meta[property='og:image']")?.attr("content"))
+                // Get poster from the page's video elements or use a generic one
+                val posterUrl = fixUrlNull(document.select("video[poster]").firstOrNull()?.attr("poster"))
+                    ?: fixUrlNull(document.select("meta[property='og:image']").firstOrNull()?.attr("content"))
+                    ?: ""
                 newMovieSearchResponse(title, mp4, TvType.NSFW) {
                     this.posterUrl = posterUrl
                 }
             }
-
+        
         return newHomePageResponse(
             list = HomePageList(
                 name = request.name,
@@ -80,7 +80,6 @@ class WorldstarProvider : MainAPI() {
     }
 
     private fun extractFromJson(json: String, allVideos: MutableMap<String, Pair<String, String>>) {
-        // Python extracts videos by finding "title" and "utLocation" fields
         var pos = 0
         while (pos < json.length) {
             val tIdx = json.indexOf("\"title\"", pos)
@@ -117,20 +116,22 @@ class WorldstarProvider : MainAPI() {
     }
 
     override suspend fun search(query: String): List<SearchResponse> {
-        // Python doesn't implement search for Worldstar
         return emptyList()
     }
 
     override suspend fun load(url: String): LoadResponse {
-        // Worldstar URLs are direct mp4 links
         val title = url.split("/").last().replace(".mp4", "").replace("-", " ")
+        // Try to get a poster from the page
+        val document = app.get(url).document
+        val posterUrl = fixUrlNull(document.selectFirst("meta[property='og:image']")?.attr("content"))
+            ?: fixUrlNull(document.selectFirst("video[poster]")?.attr("poster"))
+            ?: ""
         return newMovieLoadResponse(title, url, TvType.NSFW, url) {
-            this.posterUrl = ""
+            this.posterUrl = posterUrl
         }
     }
 
     override suspend fun loadLinks(data: String, isCasting: Boolean, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit): Boolean {
-        // data is the direct mp4 URL
         if (data.endsWith(".mp4")) {
             newExtractorLink(
                 name,
