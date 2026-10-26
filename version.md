@@ -286,3 +286,61 @@ Some providers (Worldstar, LiveGore initially) had thumbnails not displaying. Fi
 ---
 *Documentation last updated: October 25, 2026*
 *Version: v0.2.2*
+---
+
+## v0.4.0 — NuvioSports All-in-One Sports Extension
+
+### New: NuvioSports (`nuviosports`)
+**Status:** ✅ Working
+
+An all-in-one sports streaming extension combining two APIs:
+
+#### Streamed.pk API
+- Clean REST API with no authentication required
+- 15 sports categories: Football, Basketball, NFL, Hockey, Baseball, Motor Sports, UFC/MMA, Tennis, Rugby, Golf, Billiards, AFL, Darts, Cricket, Other
+- Live matches endpoint: `/api/matches/live`
+- All matches: `/api/matches/all`
+- Sport-specific: `/api/matches/{sport}`
+- Streams: `/api/stream/{source}/{id}` → returns `embedUrl`, `language`, `hd`, `streamNo`
+- Team badges: `/api/images/proxy/{badge_path}`
+- Poster images: `/api/images/proxy/{poster_path}`
+
+#### ZLive.st
+- SPA-based site (no accessible API — uses iframe embeds)
+- Channel pattern: `https://zlive.st/embed/{channel-slug}`
+- 22+ sports channels included (Sky Sports, ESPN, beIN, Fox Sports, etc.)
+- Embeds proxy streams from various providers
+
+#### Catalog Structure
+```
+Live Now      → Live matches + ZLive channels
+All Matches   → All upcoming/past matches with times
+ZLive Channels → 22+ live TV channels
+Football      → Soccer matches
+Basketball    → NBA/games
+NFL           → American football
+Hockey        → NHL
+Baseball      → MLB
+Motor Sports  → F1, MotoGP, NASCAR
+UFC / MMA     → Fight events
+Tennis        → ATP/WTA
+Rugby         → Rugby league/union
+Golf          → PGA/DP World Tour
+Cricket       → International + T20
+```
+
+#### Technical Implementation
+- Regex-based JSON parsing (avoids Gson dependency issues)
+- `app.get(url, headers=...)` for API calls
+- `TvType.Live` for all sports content
+- Fallback to direct embed URLs when API returns 404
+- Time formatting: "In 2h 30m" / "Ended 15m ago"
+
+#### Build
+```bash
+./gradlew :nuviosports:make
+```
+
+#### Release
+- v0.4.0: https://github.com/lucidconviction/RdNutz-Repo/releases/tag/v0.4.0
+- cs3: https://github.com/lucidconviction/RdNutz-Repo/releases/download/v0.4.0/nuviosports.cs3
