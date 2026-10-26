@@ -3,7 +3,6 @@ package com.rdnutz.providers
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.utils.*
 
-data class ZliveChannel(val slug: String, val name: String)
 data class StreamSource(val source: String, val id: String)
 
 class RdNutzTVSportsProvider : MainAPI() {
@@ -13,35 +12,9 @@ class RdNutzTVSportsProvider : MainAPI() {
     override var lang = "en"
     override val hasMainPage = true
 
-    private val zliveChannels = listOf(
-        ZliveChannel("auto-sky-sports-premier-league", "Sky Sports Premier League"),
-        ZliveChannel("auto-sky-sports-main-event", "Sky Sports Main Event"),
-        ZliveChannel("auto-sky-sports-f1", "Sky Sports F1"),
-        ZliveChannel("auto-sky-sports-ultra-hd", "Sky Sports Ultra HD"),
-        ZliveChannel("auto-tnt-sports", "TNT Sports"),
-        ZliveChannel("auto-ebc-sports", "EBC Sports"),
-        ZliveChannel("auto-bein-sports-1", "beIN Sports 1"),
-        ZliveChannel("auto-bein-sports-2", "beIN Sports 2"),
-        ZliveChannel("auto-espn", "ESPN"),
-        ZliveChannel("auto-espn2", "ESPN 2"),
-        ZliveChannel("auto-espnu", "ESPN U"),
-        ZliveChannel("auto-fox-sports-1", "Fox Sports 1"),
-        ZliveChannel("auto-fox-sports-2", "Fox Sports 2"),
-        ZliveChannel("auto-nfl-network", "NFL Network"),
-        ZliveChannel("auto-nba-tv", "NBA TV"),
-        ZliveChannel("auto-nhl-network", "NHL Network"),
-        ZliveChannel("auto-eurosport-1", "Eurosport 1"),
-        ZliveChannel("auto-eurosport-2", "Eurosport 2"),
-        ZliveChannel("auto-golf-channel", "Golf Channel"),
-        ZliveChannel("auto-tennis-channel", "Tennis Channel"),
-        ZliveChannel("auto-cricket-world", "Cricket World"),
-        ZliveChannel("auto-willow-cricket", "Willow Cricket"),
-    )
-
     override val mainPage = mainPageOf(
         "live" to "Live Now",
         "all" to "All Matches",
-        "zlive" to "ZLive Channels",
         "football" to "Football",
         "basketball" to "Basketball",
         "american-football" to "NFL",
@@ -155,18 +128,6 @@ class RdNutzTVSportsProvider : MainAPI() {
                         this.posterUrl = posterUrl(posterPath)
                     })
                 }
-                zliveChannels.forEach { ch ->
-                    home.add(newMovieSearchResponse(ch.name, "zlive://${ch.slug}", TvType.Live) {
-                        this.posterUrl = ""
-                    })
-                }
-            }
-            "zlive" -> {
-                zliveChannels.forEach { ch ->
-                    home.add(newMovieSearchResponse(ch.name, "zlive://${ch.slug}", TvType.Live) {
-                        this.posterUrl = ""
-                    })
-                }
             }
             "all" -> {
                 val allMatches = fetchJsonArray("https://streamed.pk/api/matches/all")
@@ -208,7 +169,7 @@ class RdNutzTVSportsProvider : MainAPI() {
             list = HomePageList(
                 name = request.name,
                 list = home,
-                isHorizontalImages = request.name in listOf("live", "zlive")
+                isHorizontalImages = true
             ),
             hasNext = home.isNotEmpty()
         )
@@ -233,26 +194,11 @@ class RdNutzTVSportsProvider : MainAPI() {
             }
         }
 
-        zliveChannels.forEach { ch ->
-            if (ch.name.lowercase().contains(q) || ch.slug.contains(q)) {
-                home.add(newMovieSearchResponse(ch.name, "zlive://${ch.slug}", TvType.Live) {
-                    this.posterUrl = ""
-                })
-            }
-        }
-
         return home.take(50)
     }
 
     override suspend fun load(url: String): LoadResponse {
-        if (url.startsWith("zlive://")) {
-            val slug = url.removePrefix("zlive://")
-            val channel = zliveChannels.firstOrNull { it.slug == slug }
-            val title = channel?.name ?: slug.replace("-", " ").replace("amp", "&")
-            return newMovieLoadResponse(title, url, TvType.Live, url) {
-                this.posterUrl = ""
-            }
-        } else if (url.startsWith("streamed://")) {
+        if (url.startsWith("streamed://")) {
             val parts = url.removePrefix("streamed://").split("/")
             val streamSource = parts.getOrElse(0) { "admin" }
             return newMovieLoadResponse("Live Stream ($streamSource)", url, TvType.Live, url) {
@@ -263,12 +209,7 @@ class RdNutzTVSportsProvider : MainAPI() {
     }
 
     override suspend fun loadLinks(data: String, isCasting: Boolean, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit): Boolean {
-        if (data.startsWith("zlive://")) {
-            val slug = data.removePrefix("zlive://")
-            val embedUrl = "https://zlive.st/embed/$slug"
-            newExtractorLink(name, "ZLive", embedUrl, INFER_TYPE) { callback(this) }
-            return true
-        } else if (data.startsWith("streamed://")) {
+        if (data.startsWith("streamed://")) {
             val parts = data.removePrefix("streamed://").split("/")
             val streamSource = parts.getOrElse(0) { "admin" }
             val streamId = parts.getOrElse(1) { "" }
