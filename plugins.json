@@ -396,10 +396,10 @@
     "language": "en"
   },
   {
-    "fileHash": "sha256-placeholder",
+    "fileHash": "sha256-bf3e3dbb3f6cedeb4ed9d311a1016a4effe7ccf39b8b8279a23892cf65d55263",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
-    "fileSize": 0,
+    "fileSize": 20179,
     "status": 1,
     "authors": [
       "RdNutz"
