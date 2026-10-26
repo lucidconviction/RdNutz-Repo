@@ -1,6 +1,6 @@
 # RDNutz CloudStream Extensions
 
-12 NSFW CloudStream extensions for raw/shocking video content from Crazyshit, LiveGore, Worldstar Hip Hop, Kaotic, DaftPorn, eFukt, HeavyFetish, NothingToxic, Xrares, TheYNC, USACrime, and Live Sports.
+11 CloudStream extensions for viral, UFC/MMA, and shock content from Crazyshit, LiveGore, Worldstar Hip Hop, FullFightReplays, MMAReplays, MMACore, Kaotic, DaftPorn, eFukt, Xrares, and TheYNC.
 
 ## Quick Start
 
@@ -20,12 +20,11 @@
    - **Kaotic** — Shocking content
    - **DaftPorn** — Adult content
    - **eFukt** — Shocking/funny videos
-   - **HeavyFetish** — Fetish content
-   - **NothingToxic** — Shocking videos
    - **Xrares** — Rare/extreme content
    - **TheYNC** — Shocking/gore content
-   - **USACrime** — Crime footage
-   - **Live Sports** — Live sports streams
+   - **FullFightReplays** 🆕 — UFC fight replays (Dailymotion/OK.ru)
+   - **MMAReplays** 🆕 — MMA fight replays (gasobni.com HLS)
+   - **MMACore** 🆕 — MMA news and videos (YouTube embeds)
 
 ## Build from Source
 
@@ -41,7 +40,7 @@ git clone https://github.com/Robbdeeze/RdNutz-Repo.git
 cd RdNutz-Repo
 
 # Build all extensions
-./gradlew assemble compileDex --no-daemon
+./gradlew make --no-daemon
 
 # .cs3 files will be in each module's build/ directory
 ```
@@ -59,18 +58,18 @@ Each module produces a `.cs3` file in its `build/` directory (e.g., `crazyshit/b
 | Kaotic | kaotic.com | Shocking/extreme content |
 | DaftPorn | daftporn.com | Adult content |
 | eFukt | efukt.com | Shocking/funny videos |
-| HeavyFetish | heavyfetish.com | Fetish content |
-| NothingToxic | nothingtoxic.com | Shocking videos |
 | Xrares | xrares.com | Rare/extreme content |
 | TheYNC | theync.com | Shocking/gore content |
-| USACrime | usacrime.com | Crime footage |
-| Live Sports | Custom API | Live sports streams |
+| FullFightReplays | fullfightreplays.com | UFC fight replays |
+| MMAReplays | mmareplays.com | MMA fight replays |
+| MMACore | mma-core.com | MMA news & videos |
 
 ## File Structure
 ```
 RdNutz-Repo/
 ├── repo.json                 # Repository manifest for CloudStream
 ├── plugins.json              # Plugin list → .cs3 URLs in releases
+├── version.md                # Version changelog
 ├── *.csmeta                  # Individual plugin manifests (metadata)
 ├── build.gradle.kts          # Root build config
 ├── settings.gradle.kts       # Module inclusion
@@ -82,13 +81,12 @@ RdNutz-Repo/
 ├── kaotic/                   # Kaotic provider module
 ├── daftporn/                 # DaftPorn provider module
 ├── efukt/                    # eFukt provider module
-├── heavyfetish/              # HeavyFetish provider module
-├── nothingtoxic/             # NothingToxic provider module
 ├── xrares/                   # Xrares provider module
 ├── theync/                   # TheYNC provider module
-├── usacrime/                 # USACrime provider module
-├── sports/                   # Live Sports provider module
-└── README.md
+├── fullfightreplays/         # FullFightReplays provider module
+├── mmareplays/               # MMAReplays provider module
+└── macmcore/                 # MMACore provider module
+    └── README.md
 ```
 
 ## Build System
@@ -101,12 +99,13 @@ RdNutz-Repo/
 - **CloudStream 3 SDK** (pre-release) — Base provider classes
 - **JSoup** — HTML parsing
 - **Jackson** — JSON serialization
+- **NiceHttp 0.4.18** — HTTP client (JSON POST support)
 
 ## License
 MIT — Free to use and modify.
 
 ## Notes
 - Repo uses `master` branch (not `main`)
-- Release assets hosted at `github.com/Robbdeeze/RdNutz-Repo/releases/download/v0.1.0/`
+- Release assets hosted at `github.com/Robbdeeze/RdNutz-Repo/releases/download/v0.2.0/`
 - Metadata served via `raw.githubusercontent.com/Robbdeeze/RdNutz-Repo/master/`
 - CS3 files currently accessible via GitHub API; direct download URLs may have propagation delay
