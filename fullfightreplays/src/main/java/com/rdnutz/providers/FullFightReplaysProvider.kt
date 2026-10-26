@@ -106,17 +106,22 @@ class FullFightReplaysProvider : MainAPI() {
     override suspend fun loadLinks(data: String, isCasting: Boolean, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit): Boolean {
         val document = app.get(data).document
 
-        // Extract Dailymotion links: dailymotion.com/video/{id}
-        val dmIds = Regex("""dailymotion\.com/video/([a-zA-Z0-9]+)""").findAll(document.html())
+        val html = document.html()
+        var addedAny = false
+
+        // Extract Dailymotion links: dailymotion.com/video/{id} and geo.dailymotion.com/player.html?video={id}
+        val dmIds = Regex("""(?:dailymotion\.com/video/|geo\.dailymotion\.com/player\.html\?video=)([a-zA-Z0-9]+)""")
+            .findAll(html)
             .map { it.groupValues[1] }
             .toList()
+            .distinct()
 
         // Extract OK.ru embed links: ok.ru/videoembed/{id}
-        val okIds = Regex("""ok\.ru/videoembed/(\d+)""").findAll(document.html())
+        val okIds = Regex("""ok\.ru/videoembed/(\d+)""")
+            .findAll(html)
             .map { it.groupValues[1] }
             .toList()
-
-        var addedAny = false
+            .distinct()
 
         for (id in dmIds) {
             val dmUrl = "https://www.dailymotion.com/embed/video/$id"
