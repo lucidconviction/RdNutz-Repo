@@ -1,18 +1,18 @@
 [
   {
-    "fileHash": "sha256-dfb0f714f52b39de0c6bdba668aeda81cebb63d748f49da56cdcae7e17658ff6",
+    "fileHash": "sha256-87202ecb4a4c7a0f9b7a28537005ab593295cdf1d53d40dae2e6e30b6f604903",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
-    "fileSize": 13960,
+    "fileSize": 14082,
     "status": 1,
     "authors": [
       "RdNutz"
     ],
-    "version": 1,
+    "version": 2,
     "internalName": "rdnutz-iptv",
-    "url": "https://github.com/lucidconviction/RdNutz-Repo/releases/download/v0.5.0/rdnutz-iptv.cs3",
+    "url": "https://github.com/lucidconviction/RdNutz-Repo/releases/download/v0.6.0/rdnutz-iptv.cs3",
     "name": "RdNutz IPTV",
-    "description": "IPTV channels from iptv.rdnutz.us/All_Resources_Combined_By_Language.m3u - 40+ Stalker portals, 24 region catalogs",
+    "description": "IPTV channels from iptv.rdnutz.us/All_Resources_Combined_By_Language.m3u - 40+ Stalker portals, 33k+ channels, 24 region catalogs with 30-min cache",
     "iconUrl": "https://iptv.rdnutz.us/favicon.ico",
     "supported": true,
     "language": "en"
