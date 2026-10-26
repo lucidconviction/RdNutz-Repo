@@ -141,3 +141,4 @@ MIT — Free to use and modify.
 - Release assets hosted at `github.com/lucidconviction/RdNutz-Repo/releases/download/v0.2.2/`
 - Metadata served via `raw.githubusercontent.com/lucidconviction/RdNutz-Repo/master/`
 - CS3 files currently accessible via GitHub API; direct download URLs may have propagation delay
+# Updated Sun Oct 25 20:55:49 PDT 2026
