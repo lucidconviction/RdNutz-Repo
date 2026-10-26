@@ -8,6 +8,6 @@
     {"name": "eFukt", "iconUrl": "https://www.efukt.com/favicon.ico", "url": "https://github.com/Robbdeeze/RdNutz-Repo/releases/download/v0.2.0/efukt.cs3", "language": "en", "version": 1, "type": 2},
     {"name": "TheYNC", "iconUrl": "https://theync.com/logo.png", "url": "https://github.com/Robbdeeze/RdNutz-Repo/releases/download/v0.2.0/theync.cs3", "language": "en", "version": 1, "type": 2},
     {"name": "FullFightReplays", "iconUrl": "https://fullfightreplays.com/favicon.ico", "url": "https://github.com/Robbdeeze/RdNutz-Repo/releases/download/v0.2.0/fullfightreplays.cs3", "language": "en", "version": 1, "type": 2},
-    {"name": "MMAReplays", "iconUrl": "https://mmareplays.com/favicon.ico", "url": "https://github.com/Robbdeeze/RdNutz-Repo/releases/download/v0.2.0/mmareplays.cs3", "language": "en", "version": 1, "type": 2},
-    {"name": "MMACore", "iconUrl": "https://www.mma-core.com/favicon.ico", "url": "https://github.com/Robbdeeze/RdNutz-Repo/releases/download/v0.2.0/mmacore.cs3", "language": "en", "version": 1, "type": 2}
+    {"name": "MMAReplays", "iconUrl": "https://mmareplays.com/apple-touch-icon.png", "url": "https://github.com/Robbdeeze/RdNutz-Repo/releases/download/v0.2.0/mmareplays.cs3", "language": "en", "version": 1, "type": 2},
+    {"name": "MMACore", "iconUrl": "https://images.mma-core.com/images/site/mmacore-logo.png", "url": "https://github.com/Robbdeeze/RdNutz-Repo/releases/download/v0.2.0/mmacore.cs3", "language": "en", "version": 1, "type": 2}
 ]
