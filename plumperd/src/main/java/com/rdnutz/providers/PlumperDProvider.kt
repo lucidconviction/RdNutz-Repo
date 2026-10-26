@@ -19,9 +19,9 @@ class PlumperDProvider : MainAPI() {
         // Previews: https://cdnstatic.imctransfer.com/static_01/.../preview_320.mp4
         val document = app.get(mainUrl).document
 
-        // Find all preview MP4 URLs
-        val previewUrls = document.select("source[src*=preview_320.mp4], video source[src*=preview_320.mp4]")
-            .map { fixUrlNull(it.attr("src")) }
+        // Find all preview MP4 URLs — PlumperD uses data-source on <video> tags, not <source src>
+        val previewUrls = document.select("video[data-source*=preview_320.mp4]")
+            .map { fixUrlNull(it.attr("data-source")) }
             .filterNotNull()
             .distinct()
             .take(50)
@@ -51,8 +51,8 @@ class PlumperDProvider : MainAPI() {
 
     override suspend fun search(query: String): List<SearchResponse> {
         val document = app.get("$mainUrl/search?q=${query.replace(" ", "+")}").document
-        val previewUrls = document.select("source[src*=preview_320.mp4], video source[src*=preview_320.mp4]")
-            .map { fixUrlNull(it.attr("src")) }
+        val previewUrls = document.select("video[data-source*=preview_320.mp4]")
+            .map { fixUrlNull(it.attr("data-source")) }
             .filterNotNull()
             .distinct()
             .take(30)
@@ -75,8 +75,19 @@ class PlumperDProvider : MainAPI() {
     }
 
     override suspend fun loadLinks(data: String, isCasting: Boolean, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit): Boolean {
+        // URL is already a direct preview MP4
+        if (data.endsWith(".mp4")) {
+            newExtractorLink(
+                name,
+                name,
+                fixUrl(data),
+                INFER_TYPE
+            ) { callback(this) }
+            return true
+        }
+
         val document = app.get(data).document
-        val videoUrl = document.selectFirst("source[src*=preview_320.mp4], video source[src*=preview_320.mp4]")?.attr("src")
+        val videoUrl = document.selectFirst("video[data-source*=preview_320.mp4]")?.attr("data-source")
             ?: document.selectFirst("video[src]")?.attr("src")
             ?: ""
         

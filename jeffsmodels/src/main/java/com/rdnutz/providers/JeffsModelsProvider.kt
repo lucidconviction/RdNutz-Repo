@@ -93,6 +93,17 @@ class JeffsModelsProvider : MainAPI() {
     }
 
     override suspend fun loadLinks(data: String, isCasting: Boolean, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit): Boolean {
+        // URL is already a direct preview MP4
+        if (data.endsWith(".mp4")) {
+            newExtractorLink(
+                name,
+                name,
+                fixUrl(data),
+                INFER_TYPE
+            ) { callback(this) }
+            return true
+        }
+
         val document = app.get(data).document
         val videoUrl = document.selectFirst("source[src*=/10_sec.mp4], video source[src*=/10_sec.mp4]")?.attr("src")
             ?: document.selectFirst("video[src]")?.attr("src")

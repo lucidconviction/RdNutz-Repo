@@ -44,8 +44,9 @@ class YouPornProvider : MainAPI() {
                 ?: "YouPorn Video"
             
             // Python: (ev-ph\.ypncdn\.com/videos/[^"\s]+_\d+P_\d+K_\d+_fb\.mp4\?[^\s"<>]+)
-            val mp4Url = videoDoc.select("script, body")
-                .flatMap { Regex("""(ev-ph\.ypncdn\.com/videos/[^"\s]+_\d+P_\d+K_\d+_fb\.mp4\?[^\s"<>]+)""").findAll(it.html()) }
+            // Search full HTML — MP4 URLs appear in script tags, not just body
+            val mp4Url = Regex("""(ev-ph\.ypncdn\.com/videos/[^"\s]+_\d+P_\d+K_\d+_fb\.mp4\?[^\s"<>]+)""")
+                .findAll(videoDoc.html())
                 .map { "https://${it.groupValues[1]}" }
                 .firstOrNull()
             if (mp4Url == null) return@mapNotNull null
@@ -86,8 +87,8 @@ class YouPornProvider : MainAPI() {
                     ?.trim()
                 ?: "YouPorn Video"
             
-            val mp4Url = videoDoc.select("script, body")
-                .flatMap { Regex("""(ev-ph\.ypncdn\.com/videos/[^"\s]+_\d+P_\d+K_\d+_fb\.mp4\?[^\s"<>]+)""").findAll(it.html()) }
+            val mp4Url = Regex("""(ev-ph\.ypncdn\.com/videos/[^"\s]+_\d+P_\d+K_\d+_fb\.mp4\?[^\s"<>]+)""")
+                .findAll(videoDoc.html())
                 .map { "https://${it.groupValues[1]}" }
                 .firstOrNull()
             if (mp4Url == null) return@mapNotNull null
@@ -117,8 +118,8 @@ class YouPornProvider : MainAPI() {
     override suspend fun loadLinks(data: String, isCasting: Boolean, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit): Boolean {
         val document = app.get(data).document
         
-        val mp4Url = document.select("script, body")
-            .flatMap { Regex("""(ev-ph\.ypncdn\.com/videos/[^"\s]+_\d+P_\d+K_\d+_fb\.mp4\?[^\s"<>]+)""").findAll(it.html()) }
+        val mp4Url = Regex("""(ev-ph\.ypncdn\.com/videos/[^"\s]+_\d+P_\d+K_\d+_fb\.mp4\?[^\s"<>]+)""")
+            .findAll(document.html())
             .map { "https://${it.groupValues[1]}" }
             .firstOrNull()
             ?: ""
