@@ -1,310 +1,288 @@
 [
-    {
-        "fileHash": "sha256-f1c53ebd1378fb020dca4cf1f7f245f97e6b94ca684ae13287fb99c283569910",
-        "apiVersion": 1,
-        "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
-        "fileSize": 11850,
-        "status": 1,
-        "authors": [
-            
-        ],
-        "version": 1,
-        "internalName": "crazyshit",
-        "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/crazyshit.cs3",
-        "name": "crazyshit"
-    },
-    {
-        "fileHash": "sha256-0973c8a296814c78e507fec85ad3ec043cd8ca3668c02ad03d05faf599866bab",
-        "apiVersion": 1,
-        "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
-        "fileSize": 12379,
-        "status": 1,
-        "authors": [
-            
-        ],
-        "version": 1,
-        "internalName": "daftporn",
-        "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/daftporn.cs3",
-        "name": "daftporn"
-    },
-    {
-        "fileHash": "sha256-9c5529b09730ef693cfc790f1dea36b02c4dab57162e602d3f4a6609365badbd",
-        "apiVersion": 1,
-        "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
-        "fileSize": 12327,
-        "status": 1,
-        "authors": [
-            
-        ],
-        "version": 1,
-        "internalName": "efukt",
-        "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/efukt.cs3",
-        "name": "efukt"
-    },
-    {
-        "fileHash": "sha256-ea91ef65e04af3b9f078476e5ed44c73523b705bcc175ba228cd73372995b282",
-        "apiVersion": 1,
-        "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
-        "fileSize": 14419,
-        "status": 1,
-        "authors": [
-            
-        ],
-        "version": 1,
-        "internalName": "fullfightreplays",
-        "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/fullfightreplays.cs3",
-        "name": "fullfightreplays"
-    },
-    {
-        "fileHash": "sha256-c0eaad10acb8a8e5bda6481406819c4f471ad757c1f41ad38de2d201cc79ef47",
-        "apiVersion": 1,
-        "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
-        "fileSize": 11773,
-        "status": 1,
-        "authors": [
-            
-        ],
-        "version": 1,
-        "internalName": "heavyr",
-        "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/heavyr.cs3",
-        "name": "heavyr"
-    },
-    {
-        "fileHash": "sha256-1180623f97622df10de343ff3c9f0a0a0051b47136a48a0a55650554d1bebe84",
-        "apiVersion": 1,
-        "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
-        "fileSize": 9458,
-        "status": 1,
-        "authors": [
-            
-        ],
-        "version": 1,
-        "internalName": "honeydippedcream",
-        "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/honeydippedcream.cs3",
-        "name": "honeydippedcream"
-    },
-    {
-        "fileHash": "sha256-71e6d85a2185b31d1a06bcc81bd8ff8e7dd7ed844647dab595faee8e8c380c21",
-        "apiVersion": 1,
-        "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
-        "fileSize": 12920,
-        "status": 1,
-        "authors": [
-            
-        ],
-        "version": 1,
-        "internalName": "horriblevideos",
-        "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/horriblevideos.cs3",
-        "name": "horriblevideos"
-    },
-    {
-        "fileHash": "sha256-80d1656f9db13bb4d26dfafa1e297339116574261d525dc3a3a9ba4eea72bff5",
-        "apiVersion": 1,
-        "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
-        "fileSize": 10502,
-        "status": 1,
-        "authors": [
-            
-        ],
-        "version": 1,
-        "internalName": "inhumanity",
-        "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/inhumanity.cs3",
-        "name": "inhumanity"
-    },
-    {
-        "fileHash": "sha256-2cdd4891e590ce3203a482d060e8efb39e6b138dffee8596be9b3ffdfe5f149a",
-        "apiVersion": 1,
-        "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
-        "fileSize": 10644,
-        "status": 1,
-        "authors": [
-            
-        ],
-        "version": 1,
-        "internalName": "jeffsmodels",
-        "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/jeffsmodels.cs3",
-        "name": "jeffsmodels"
-    },
-    {
-        "fileHash": "sha256-848ffeb82332639ef8377cf7e1550504540bc1672c2dea8e753fadde261e2b8e",
-        "apiVersion": 1,
-        "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
-        "fileSize": 11612,
-        "status": 1,
-        "authors": [
-            
-        ],
-        "version": 1,
-        "internalName": "kaotic",
-        "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/kaotic.cs3",
-        "name": "kaotic"
-    },
-    {
-        "fileHash": "sha256-c31f6b1632a71c46e4e7f6d7a1a25a3f1258dbc0fe814343a8c8c096802f9ec7",
-        "apiVersion": 1,
-        "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
-        "fileSize": 12051,
-        "status": 1,
-        "authors": [
-            
-        ],
-        "version": 1,
-        "internalName": "livegore",
-        "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/livegore.cs3",
-        "name": "livegore"
-    },
-    {
-        "fileHash": "sha256-245777fb88f2ab72f70214da2af7b578b494ede298833036742fd850d31e9dad",
-        "apiVersion": 1,
-        "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
-        "fileSize": 12873,
-        "status": 1,
-        "authors": [
-            
-        ],
-        "version": 1,
-        "internalName": "mmacore",
-        "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/mmacore.cs3",
-        "name": "mmacore"
-    },
-    {
-        "fileHash": "sha256-5019dfca20b995f7850b09e7218457cc3dfcfb9ad3196750e57fe329b6b83455",
-        "apiVersion": 1,
-        "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
-        "fileSize": 16325,
-        "status": 1,
-        "authors": [
-            
-        ],
-        "version": 1,
-        "internalName": "mmareplays",
-        "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/mmareplays.cs3",
-        "name": "mmareplays"
-    },
-    {
-        "fileHash": "sha256-52861401970fb79564c8721b12865d6dac837c52c030479c1fd5fbf0703b0e51",
-        "apiVersion": 1,
-        "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
-        "fileSize": 10506,
-        "status": 1,
-        "authors": [
-            
-        ],
-        "version": 1,
-        "internalName": "nothingtoxic",
-        "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/nothingtoxic.cs3",
-        "name": "nothingtoxic"
-    },
-    {
-        "fileHash": "sha256-0da53c713c7f5fa3899877a64f22375fe22c67b75ef0d13f8ec7880596d994d6",
-        "apiVersion": 1,
-        "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
-        "fileSize": 9501,
-        "status": 1,
-        "authors": [
-            
-        ],
-        "version": 1,
-        "internalName": "plumperd",
-        "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/plumperd.cs3",
-        "name": "plumperd"
-    },
-    {
-        "fileHash": "sha256-5610962f78ccb1ffb4b92cafa27eb5c12fd728a891aa29b99929c09fb11e1d3f",
-        "apiVersion": 1,
-        "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
-        "fileSize": 13384,
-        "status": 1,
-        "authors": [
-            
-        ],
-        "version": 1,
-        "internalName": "sexyandfunny",
-        "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/sexyandfunny.cs3",
-        "name": "sexyandfunny"
-    },
-    {
-        "fileHash": "sha256-d41210624542c8c90a34275d96d6dfb149f5a87ec2b622c97a1dbac287b5a074",
-        "apiVersion": 1,
-        "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
-        "fileSize": 12744,
-        "status": 1,
-        "authors": [
-            
-        ],
-        "version": 1,
-        "internalName": "sickjunk",
-        "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/sickjunk.cs3",
-        "name": "sickjunk"
-    },
-    {
-        "fileHash": "sha256-396c7b66683d4fc8cba84a2ec81182a68c5f6d548bbb3663855d814af2040bd8",
-        "apiVersion": 1,
-        "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
-        "fileSize": 10343,
-        "status": 1,
-        "authors": [
-            
-        ],
-        "version": 1,
-        "internalName": "theync",
-        "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/theync.cs3",
-        "name": "theync"
-    },
-    {
-        "fileHash": "sha256-9181de48172850adf9e98c1eb93e18c7f3058567ecb7fedef10931fb2fbcd333",
-        "apiVersion": 1,
-        "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
-        "fileSize": 10158,
-        "status": 1,
-        "authors": [
-            
-        ],
-        "version": 1,
-        "internalName": "worldstar",
-        "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/worldstar.cs3",
-        "name": "worldstar"
-    },
-    {
-        "fileHash": "sha256-64af01985b69a8c40d495b10038f0f7609212cc20be1a4cf0278eb63a9fea000",
-        "apiVersion": 1,
-        "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
-        "fileSize": 11642,
-        "status": 1,
-        "authors": [
-            
-        ],
-        "version": 1,
-        "internalName": "xrares",
-        "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/xrares.cs3",
-        "name": "xrares"
-    },
-    {
-        "fileHash": "sha256-91fa5cd197b9a09a9268703964cc67f75d971c4825fa4e491d93282d76088ecb",
-        "apiVersion": 1,
-        "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
-        "fileSize": 13484,
-        "status": 1,
-        "authors": [
-            
-        ],
-        "version": 1,
-        "internalName": "youporn",
-        "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/youporn.cs3",
-        "name": "youporn"
-    },
-    {
-        "fileHash": "sha256-e6ce3adc812bcd773848f5a1585d015daa4096c361b481f89bfbb40520d2fcc2",
-        "apiVersion": 1,
-        "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
-        "fileSize": 8725,
-        "status": 1,
-        "authors": [
-            
-        ],
-        "version": 1,
-        "internalName": "zfilmzoriginals",
-        "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/zfilmzoriginals.cs3",
-        "name": "zfilmzoriginals"
-    }
+  {
+    "fileHash": "sha256-f1c53ebd1378fb020dca4cf1f7f245f97e6b94ca684ae13287fb99c283569910",
+    "apiVersion": 1,
+    "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
+    "fileSize": 11850,
+    "status": 1,
+    "authors": [],
+    "version": 1,
+    "internalName": "crazyshit",
+    "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/crazyshit.cs3",
+    "name": "crazyshit",
+    "iconUrl": "https://crazyshit.com/favicon.ico"
+  },
+  {
+    "fileHash": "sha256-0973c8a296814c78e507fec85ad3ec043cd8ca3668c02ad03d05faf599866bab",
+    "apiVersion": 1,
+    "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
+    "fileSize": 12379,
+    "status": 1,
+    "authors": [],
+    "version": 1,
+    "internalName": "daftporn",
+    "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/daftporn.cs3",
+    "name": "daftporn",
+    "iconUrl": "https://daftporn.com/favicon.ico"
+  },
+  {
+    "fileHash": "sha256-9c5529b09730ef693cfc790f1dea36b02c4dab57162e602d3f4a6609365badbd",
+    "apiVersion": 1,
+    "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
+    "fileSize": 12327,
+    "status": 1,
+    "authors": [],
+    "version": 1,
+    "internalName": "efukt",
+    "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/efukt.cs3",
+    "name": "efukt",
+    "iconUrl": "https://efukt.com/favicon.ico"
+  },
+  {
+    "fileHash": "sha256-ea91ef65e04af3b9f078476e5ed44c73523b705bcc175ba228cd73372995b282",
+    "apiVersion": 1,
+    "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
+    "fileSize": 14419,
+    "status": 1,
+    "authors": [],
+    "version": 1,
+    "internalName": "fullfightreplays",
+    "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/fullfightreplays.cs3",
+    "name": "fullfightreplays",
+    "iconUrl": "https://fullfightreplays.com/favicon.ico"
+  },
+  {
+    "fileHash": "sha256-c0eaad10acb8a8e5bda6481406819c4f471ad757c1f41ad38de2d201cc79ef47",
+    "apiVersion": 1,
+    "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
+    "fileSize": 11773,
+    "status": 1,
+    "authors": [],
+    "version": 1,
+    "internalName": "heavyr",
+    "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/heavyr.cs3",
+    "name": "heavyr",
+    "iconUrl": "https://heavyr.com/favicon.ico"
+  },
+  {
+    "fileHash": "sha256-1180623f97622df10de343ff3c9f0a0a0051b47136a48a0a55650554d1bebe84",
+    "apiVersion": 1,
+    "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
+    "fileSize": 9458,
+    "status": 1,
+    "authors": [],
+    "version": 1,
+    "internalName": "honeydippedcream",
+    "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/honeydippedcream.cs3",
+    "name": "honeydippedcream",
+    "iconUrl": "https://honeydippedcream.com/favicon.ico"
+  },
+  {
+    "fileHash": "sha256-71e6d85a2185b31d1a06bcc81bd8ff8e7dd7ed844647dab595faee8e8c380c21",
+    "apiVersion": 1,
+    "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
+    "fileSize": 12920,
+    "status": 1,
+    "authors": [],
+    "version": 1,
+    "internalName": "horriblevideos",
+    "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/horriblevideos.cs3",
+    "name": "horriblevideos",
+    "iconUrl": "https://horriblevideos.com/favicon.ico"
+  },
+  {
+    "fileHash": "sha256-80d1656f9db13bb4d26dfafa1e297339116574261d525dc3a3a9ba4eea72bff5",
+    "apiVersion": 1,
+    "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
+    "fileSize": 10502,
+    "status": 1,
+    "authors": [],
+    "version": 1,
+    "internalName": "inhumanity",
+    "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/inhumanity.cs3",
+    "name": "inhumanity",
+    "iconUrl": "https://inhumanity.com/favicon.ico"
+  },
+  {
+    "fileHash": "sha256-2cdd4891e590ce3203a482d060e8efb39e6b138dffee8596be9b3ffdfe5f149a",
+    "apiVersion": 1,
+    "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
+    "fileSize": 10644,
+    "status": 1,
+    "authors": [],
+    "version": 1,
+    "internalName": "jeffsmodels",
+    "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/jeffsmodels.cs3",
+    "name": "jeffsmodels",
+    "iconUrl": "https://jeffsmodels.com/favicon.ico"
+  },
+  {
+    "fileHash": "sha256-848ffeb82332639ef8377cf7e1550504540bc1672c2dea8e753fadde261e2b8e",
+    "apiVersion": 1,
+    "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
+    "fileSize": 11612,
+    "status": 1,
+    "authors": [],
+    "version": 1,
+    "internalName": "kaotic",
+    "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/kaotic.cs3",
+    "name": "kaotic",
+    "iconUrl": "https://kaotic.com/logo.svg"
+  },
+  {
+    "fileHash": "sha256-c31f6b1632a71c46e4e7f6d7a1a25a3f1258dbc0fe814343a8c8c096802f9ec7",
+    "apiVersion": 1,
+    "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
+    "fileSize": 12051,
+    "status": 1,
+    "authors": [],
+    "version": 1,
+    "internalName": "livegore",
+    "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/livegore.cs3",
+    "name": "livegore",
+    "iconUrl": "https://livegore.com/favicon.png"
+  },
+  {
+    "fileHash": "sha256-245777fb88f2ab72f70214da2af7b578b494ede298833036742fd850d31e9dad",
+    "apiVersion": 1,
+    "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
+    "fileSize": 12873,
+    "status": 1,
+    "authors": [],
+    "version": 1,
+    "internalName": "mmacore",
+    "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/mmacore.cs3",
+    "name": "mmacore",
+    "iconUrl": "https://mmacore.tv/favicon.ico"
+  },
+  {
+    "fileHash": "sha256-5019dfca20b995f7850b09e7218457cc3dfcfb9ad3196750e57fe329b6b83455",
+    "apiVersion": 1,
+    "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
+    "fileSize": 16325,
+    "status": 1,
+    "authors": [],
+    "version": 1,
+    "internalName": "mmareplays",
+    "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/mmareplays.cs3",
+    "name": "mmareplays",
+    "iconUrl": "https://mmareplays.com/favicon.ico"
+  },
+  {
+    "fileHash": "sha256-52861401970fb79564c8721b12865d6dac837c52c030479c1fd5fbf0703b0e51",
+    "apiVersion": 1,
+    "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
+    "fileSize": 10506,
+    "status": 1,
+    "authors": [],
+    "version": 1,
+    "internalName": "nothingtoxic",
+    "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/nothingtoxic.cs3",
+    "name": "nothingtoxic",
+    "iconUrl": "https://nothingtoxic.com/favicon.ico"
+  },
+  {
+    "fileHash": "sha256-0da53c713c7f5fa3899877a64f22375fe22c67b75ef0d13f8ec7880596d994d6",
+    "apiVersion": 1,
+    "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
+    "fileSize": 9501,
+    "status": 1,
+    "authors": [],
+    "version": 1,
+    "internalName": "plumperd",
+    "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/plumperd.cs3",
+    "name": "plumperd",
+    "iconUrl": "https://plumperd.com/favicon.ico"
+  },
+  {
+    "fileHash": "sha256-5610962f78ccb1ffb4b92cafa27eb5c12fd728a891aa29b99929c09fb11e1d3f",
+    "apiVersion": 1,
+    "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
+    "fileSize": 13384,
+    "status": 1,
+    "authors": [],
+    "version": 1,
+    "internalName": "sexyandfunny",
+    "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/sexyandfunny.cs3",
+    "name": "sexyandfunny",
+    "iconUrl": "https://sexyandfunny.com/favicon.ico"
+  },
+  {
+    "fileHash": "sha256-d41210624542c8c90a34275d96d6dfb149f5a87ec2b622c97a1dbac287b5a074",
+    "apiVersion": 1,
+    "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
+    "fileSize": 12744,
+    "status": 1,
+    "authors": [],
+    "version": 1,
+    "internalName": "sickjunk",
+    "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/sickjunk.cs3",
+    "name": "sickjunk",
+    "iconUrl": "https://sickjunk.com/favicon.ico"
+  },
+  {
+    "fileHash": "sha256-396c7b66683d4fc8cba84a2ec81182a68c5f6d548bbb3663855d814af2040bd8",
+    "apiVersion": 1,
+    "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
+    "fileSize": 10343,
+    "status": 1,
+    "authors": [],
+    "version": 1,
+    "internalName": "theync",
+    "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/theync.cs3",
+    "name": "theync",
+    "iconUrl": "https://theync.com/favicon.ico"
+  },
+  {
+    "fileHash": "sha256-9181de48172850adf9e98c1eb93e18c7f3058567ecb7fedef10931fb2fbcd333",
+    "apiVersion": 1,
+    "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
+    "fileSize": 10158,
+    "status": 1,
+    "authors": [],
+    "version": 1,
+    "internalName": "worldstar",
+    "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/worldstar.cs3",
+    "name": "worldstar",
+    "iconUrl": "https://worldstarhiphop.com/apple-touch-icon.png"
+  },
+  {
+    "fileHash": "sha256-64af01985b69a8c40d495b10038f0f7609212cc20be1a4cf0278eb63a9fea000",
+    "apiVersion": 1,
+    "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
+    "fileSize": 11642,
+    "status": 1,
+    "authors": [],
+    "version": 1,
+    "internalName": "xrares",
+    "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/xrares.cs3",
+    "name": "xrares",
+    "iconUrl": "https://www.xrares.com/favicon.ico"
+  },
+  {
+    "fileHash": "sha256-91fa5cd197b9a09a9268703964cc67f75d971c4825fa4e491d93282d76088ecb",
+    "apiVersion": 1,
+    "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
+    "fileSize": 13484,
+    "status": 1,
+    "authors": [],
+    "version": 1,
+    "internalName": "youporn",
+    "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/youporn.cs3",
+    "name": "youporn",
+    "iconUrl": "https://youporn.com/favicon.ico"
+  },
+  {
+    "fileHash": "sha256-e6ce3adc812bcd773848f5a1585d015daa4096c361b481f89bfbb40520d2fcc2",
+    "apiVersion": 1,
+    "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
+    "fileSize": 8725,
+    "status": 1,
+    "authors": [],
+    "version": 1,
+    "internalName": "zfilmzoriginals",
+    "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/zfilmzoriginals.cs3",
+    "name": "zfilmzoriginals",
+    "iconUrl": "https://zfilmzoriginals.com/favicon.ico"
+  }
 ]
