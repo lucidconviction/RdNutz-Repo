@@ -8,7 +8,7 @@ data class StreamSource(val source: String, val id: String)
 
 class NuvioSportsProvider : MainAPI() {
     override var mainUrl = "https://streamed.pk"
-    override var name = "NuvioSports"
+    override var name = "RdNutz TV Sports n More"
     override val supportedTypes = setOf(TvType.Live)
     override var lang = "en"
     override val hasMainPage = true
