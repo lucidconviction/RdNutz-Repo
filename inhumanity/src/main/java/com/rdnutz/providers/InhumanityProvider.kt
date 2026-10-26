@@ -18,39 +18,23 @@ class InhumanityProvider : MainAPI() {
         val pageUrl = if (page == 1) mainUrl else "$mainUrl/page/$page/"
         val document = app.get(pageUrl).document
 
-        // Extract plug links - pattern is /plug/ID/
-        val videoLinks = document.select("a[href^='/plug/']")
+        val videoLinks = document.select("a[href*=/plug/]")
             .mapNotNull { el ->
-                val href = el.attr("href")
+                val href = fixUrlNull(el.attr("href"))
                 val title = el.attr("title")
-                if (href.startsWith("/plug/")) Pair(href, title) else null
+                if (href != null && href.contains("/plug/")) Pair(href, title) else null
             }
             .distinctBy { it.first }
             .take(30)
 
-        val home = videoLinks.mapNotNull { (videoPath, linkTitle) ->
-            val fullUrl = fixUrl(videoPath) ?: return@mapNotNull null
-            val plugDoc = app.get(fullUrl).document
-            
-            // Extract title from page
-            val title = plugDoc.selectFirst("title")?.text()
-                ?.replace(" - Inhumanity", "")
-                ?.trim()
-                ?: linkTitle
-                ?: "Inhumanity Video"
-            
-            // Try to find video/embed
-            val videoUrl = plugDoc.selectFirst("video source[src]")?.attr("src")
-                ?: plugDoc.selectFirst("video[src]")?.attr("src")
-                ?: plugDoc.selectFirst("iframe[src]")?.attr("src")
+        val home = videoLinks.mapNotNull { (videoUrl, title) ->
+            val cleanTitle = if (title.isNotBlank()) title else "Inhumanity Video"
+            // Try to fetch the plug page to get a thumbnail
+            val plugDoc = app.get(videoUrl).document
+            val posterUrl = fixUrlNull(plugDoc.selectFirst("meta[property='og:image']")?.attr("content"))
+                ?: fixUrlNull(plugDoc.selectFirst("video[poster]")?.attr("poster"))
                 ?: ""
-            
-            // Extract poster from og:image
-            val posterUrl = plugDoc.selectFirst("meta[property='og:image']")?.attr("content")
-                ?: plugDoc.selectFirst("video[poster]")?.attr("poster")
-                ?: ""
-
-            newMovieSearchResponse(title, fullUrl, TvType.NSFW) {
+            newMovieSearchResponse(cleanTitle, videoUrl, TvType.NSFW) {
                 this.posterUrl = posterUrl
             }
         }
@@ -67,26 +51,22 @@ class InhumanityProvider : MainAPI() {
 
     override suspend fun search(query: String): List<SearchResponse> {
         val document = app.get("$mainUrl/search?q=${query.replace(" ", "+")}").document
-        val videoLinks = document.select("a[href^='/plug/']")
+        val videoLinks = document.select("a[href*=/plug/]")
             .mapNotNull { el ->
-                val href = el.attr("href")
+                val href = fixUrlNull(el.attr("href"))
                 val title = el.attr("title")
-                if (href.startsWith("/plug/")) Pair(href, title) else null
+                if (href != null && href.contains("/plug/")) Pair(href, title) else null
             }
             .distinctBy { it.first }
             .take(30)
 
-        return videoLinks.mapNotNull { (videoPath, linkTitle) ->
-            val fullUrl = fixUrl(videoPath) ?: return@mapNotNull null
-            val plugDoc = app.get(fullUrl).document
-            val title = plugDoc.selectFirst("title")?.text()
-                ?.replace(" - Inhumanity", "")
-                ?.trim()
-                ?: linkTitle
-                ?: "Inhumanity Video"
-            val posterUrl = plugDoc.selectFirst("meta[property='og:image']")?.attr("content")
+        return videoLinks.mapNotNull { (videoUrl, title) ->
+            val cleanTitle = if (title.isNotBlank()) title else "Inhumanity Video"
+            val plugDoc = app.get(videoUrl).document
+            val posterUrl = fixUrlNull(plugDoc.selectFirst("meta[property='og:image']")?.attr("content"))
+                ?: fixUrlNull(plugDoc.selectFirst("video[poster]")?.attr("poster"))
                 ?: ""
-            newMovieSearchResponse(title, fullUrl, TvType.NSFW) {
+            newMovieSearchResponse(cleanTitle, videoUrl, TvType.NSFW) {
                 this.posterUrl = posterUrl
             }
         }
@@ -95,11 +75,11 @@ class InhumanityProvider : MainAPI() {
     override suspend fun load(url: String): LoadResponse {
         val document = app.get(url).document
         val title = document.selectFirst("title")?.text()
-            ?.replace(" - Inhumanity", "")
-            ?.trim()
             ?: "Inhumanity Video"
-        val posterUrl = document.selectFirst("meta[property='og:image']")?.attr("content")
+        val posterUrl = fixUrlNull(document.selectFirst("meta[property='og:image']")?.attr("content"))
+            ?: fixUrlNull(document.selectFirst("video[poster]")?.attr("poster"))
             ?: ""
+
         return newMovieLoadResponse(title, url, TvType.NSFW, url) {
             this.posterUrl = posterUrl
         }
@@ -107,13 +87,13 @@ class InhumanityProvider : MainAPI() {
 
     override suspend fun loadLinks(data: String, isCasting: Boolean, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit): Boolean {
         val document = app.get(data).document
-        
-        // Try multiple video sources
-        val videoUrl = document.selectFirst("video source[src]")?.attr("src")
+
+        // Try to find iframe/video embed - order matters!
+        val videoUrl = document.selectFirst("iframe[src]")?.attr("src")
+            ?: document.selectFirst("video source, source[src]")?.attr("src")
             ?: document.selectFirst("video[src]")?.attr("src")
-            ?: document.selectFirst("iframe[src]")?.attr("src")
             ?: ""
-        
+
         if (videoUrl.isNotEmpty()) {
             newExtractorLink(
                 name,
