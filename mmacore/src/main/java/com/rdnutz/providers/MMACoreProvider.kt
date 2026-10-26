@@ -16,20 +16,20 @@ class MMACoreProvider : MainAPI() {
     )
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
-        val pageUrl = when {
-            page == 1 -> mainUrl
-            request.name == "UFC" -> "$mainUrl/ufc?page=$page"
-            else -> "$mainUrl?page=$page"
+        val pageUrl = when (request.name) {
+            "Recent" -> if (page == 1) "${mainUrl}/videos/recent" else "${mainUrl}/videos/recent/page/$page"
+            "Trending" -> if (page == 1) "${mainUrl}/videos/trending" else "${mainUrl}/videos/trending/page/$page"
+            else -> mainUrl
         }
         val document = app.get(pageUrl).document
 
-        // Video links: /videos/{slug}/{id}
+        // Video links: /videos/{slug}/{id} where id is numeric
         val videoLinks = document.select("a[href]")
             .mapNotNull { el ->
                 val href = fixUrlNull(el.attr("href"))
-                if (href != null && href.startsWith("/videos/") && href.contains("/")) href else null
+                if (href != null && href.startsWith("/videos/") &&
+                    Regex("""^/videos/[^/]+/\d+$""").matches(href)) href else null
             }
-            .filter { it !in listOf("/videos/trending", "/videos/top") }
             .distinct()
             .take(30)
 
@@ -76,10 +76,11 @@ class MMACoreProvider : MainAPI() {
     }
 
     private suspend fun extractVideos(document: org.jsoup.nodes.Document): List<SearchResponse> {
-        val videoLinks = document.select("a[href^=\"/videos/\"]")
+        val videoLinks = document.select("a[href]")
             .mapNotNull { el ->
                 val href = fixUrlNull(el.attr("href"))
-                if (href != null && !href.startsWith("/videos/trending") && !href.startsWith("/videos/top")) href else null
+                if (href != null && href.startsWith("/videos/") &&
+                    Regex("""^/videos/[^/]+/\d+$""").matches(href)) href else null
             }
             .distinct()
             .take(30)

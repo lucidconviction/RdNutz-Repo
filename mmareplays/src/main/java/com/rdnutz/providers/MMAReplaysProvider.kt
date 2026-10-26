@@ -112,14 +112,17 @@ class MMAReplaysProvider : MainAPI() {
         val document = app.get(data).document
 
         // Extract video IDs from data-href attributes or direct vidara/gasobni URLs
-        val videoIds = Regex("""data-href="https?://(?:vidara\.so/v/|gasobni\.com/e/)([^"]+)"""").findAll(document.html())
-            .map { it.groupValues[1].trim() }
+        val videoIds = Regex("""data-href="(https?://[^"]+)"""")
+            .findAll(document.html())
+            .map { match ->
+                match.groupValues[1].substringAfterLast('/')
+            }
             .toList()
             .distinct()
             .toMutableList()
 
         if (videoIds.isEmpty()) {
-            val directMatches = Regex("""(?:vidara\.so/v|gasobni\.com/e)/([a-zA-Z0-9]+)""")
+            val directMatches = Regex("""(?:vidara\.so/v|vidara\.to/e)/([a-zA-Z0-9]+)""")
                 .findAll(document.html())
                 .map { it.groupValues[1] }
                 .toList()
@@ -129,15 +132,15 @@ class MMAReplaysProvider : MainAPI() {
 
         var addedAny = false
         for (videoId in videoIds) {
-            // Call gasobni.com /api/stream with JSON body {"filecode": videoId}
+            // Call vidara.so /api/stream with JSON body {"filecode": videoId}
             val jsonBody = """{"filecode":"$videoId"}"""
             val response = try {
                 app.post(
-                    "https://gasobni.com/api/stream",
+                    "https://vidara.so/api/stream",
                     requestBody = jsonBody.toRequestBody("application/json".toMediaTypeOrNull()),
                     headers = mapOf(
-                        "Referer" to "https://gasobni.com/e/$videoId",
-                        "Origin" to "https://gasobni.com"
+                        "Referer" to "https://vidara.so/v/$videoId",
+                        "Origin" to "https://vidara.so"
                     )
                 ).parsedSafe<GasobniStreamResponse>()
             } catch (e: Exception) {
@@ -152,9 +155,7 @@ class MMAReplaysProvider : MainAPI() {
                     INFER_TYPE
                 ) { callback(this); addedAny = true }
             } else if (response?.streamingUrl == null && response != null) {
-                // Fallback: if the API returned a response but no stream URL, use the player
-                // page URL as an extractor link (CloudStream may resolve it via a built-in extractor)
-                val playerUrl = "https://gasobni.com/e/$videoId"
+                val playerUrl = "https://vidara.so/v/$videoId"
                 newExtractorLink(
                     name,
                     "MMAReplays",
