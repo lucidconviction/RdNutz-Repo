@@ -1,0 +1,10 @@
+{
+  "name": "SickJunkProvider",
+  "packageName": "com.rdnutz.providers",
+  "className": "SickJunkProvider",
+  "version": 1,
+  "lang": "en",
+  "supportedTypes": ["NSFW"],
+  "hasSearch": true,
+  "hasMainPage": true
+}

@@ -1,0 +1,10 @@
+{
+  "name": "InhumanityProvider",
+  "packageName": "com.rdnutz.providers",
+  "className": "InhumanityProvider",
+  "version": 1,
+  "lang": "en",
+  "supportedTypes": ["NSFW"],
+  "hasSearch": true,
+  "hasMainPage": true
+}

@@ -1,6 +1,6 @@
 # RDNutz CloudStream Extensions
 
-11 CloudStream extensions for viral, UFC/MMA, and shock content from Crazyshit, LiveGore, Worldstar Hip Hop, FullFightReplays, MMAReplays, MMACore, Kaotic, DaftPorn, eFukt, Xrares, and TheYNC.
+22 CloudStream extensions for viral, UFC/MMA, and shock content from Crazyshit, LiveGore, Worldstar Hip Hop, FullFightReplays, MMAReplays, MMACore, Kaotic, DaftPorn, eFukt, Xrares, TheYNC, Heavy-R, HoneyDippedCream, HorribleVideos, Inhumanity, JeffsModels, NothingToxic, PlumperD, SickJunk, SexyAndFunny, YouPorn, and ZFilmzOriginals.
 
 ## Quick Start
 
@@ -25,6 +25,17 @@
    - **FullFightReplays** 🆕 — UFC fight replays (Dailymotion/OK.ru)
    - **MMAReplays** 🆕 — MMA fight replays (gasobni.com HLS)
    - **MMACore** 🆕 — MMA news and videos (YouTube embeds)
+   - **Heavy-R** 🆕 — Extreme videos (RSS feed → direct MP4)
+   - **HoneyDippedCream** 🆕 — Adult content (direct MP4)
+   - **HorribleVideos** 🆕 — Shocking clips (embed pages)
+   - **Inhumanity** 🆕 — Shocking content (plug pages)
+   - **JeffsModels** 🆕 — Adult previews (10-sec clips)
+   - **NothingToxic** 🆕 — Shocking videos (out links)
+   - **PlumperD** 🆕 — Adult previews (preview clips)
+   - **SickJunk** 🆕 — Extreme videos (WordPress MP4)
+   - **SexyAndFunny** 🆕 — Adult/Comedy (WordPress MP4)
+   - **YouPorn** 🆕 — Adult content (token-protected MP4)
+   - **ZFilmzOriginals** 🆕 — Adult trailers (Next.js JSON)
 
 ## Build from Source
 
@@ -63,6 +74,17 @@ Each module produces a `.cs3` file in its `build/` directory (e.g., `crazyshit/b
 | FullFightReplays | fullfightreplays.com | UFC fight replays |
 | MMAReplays | mmareplays.com | MMA fight replays |
 | MMACore | mma-core.com | MMA news & videos |
+| Heavy-R | heavy-r.com | Extreme videos |
+| HoneyDippedCream | honeydippedcream.com | Adult content |
+| HorribleVideos | horriblevideos.com | Shocking clips |
+| Inhumanity | inhumanity.com | Shocking content |
+| JeffsModels | jeffsmodels.com | Adult previews |
+| NothingToxic | nothingtoxic.com | Shocking videos |
+| PlumperD | plumperd.com | Adult previews |
+| SickJunk | sickjunk.com | Extreme videos |
+| SexyAndFunny | sexyandfunny.com | Adult/Comedy |
+| YouPorn | you-porn.com | Adult content |
+| ZFilmzOriginals | z-filmz-originals.com | Adult trailers |
 
 ## File Structure
 ```
@@ -85,8 +107,18 @@ RdNutz-Repo/
 ├── theync/                   # TheYNC provider module
 ├── fullfightreplays/         # FullFightReplays provider module
 ├── mmareplays/               # MMAReplays provider module
-└── macmcore/                 # MMACore provider module
-    └── README.md
+├── mmacore/                  # MMACore provider module
+├── heavyr/                   # Heavy-R provider module
+├── honeydippedcream/         # HoneyDippedCream provider module
+├── horriblevideos/           # HorribleVideos provider module
+├── inhumanity/               # Inhumanity provider module
+├── jeffsmodels/              # JeffsModels provider module
+├── nothingtoxic/             # NothingToxic provider module
+├── plumperd/                 # PlumperD provider module
+├── sickjunk/                 # SickJunk provider module
+├── sexyandfunny/             # SexyAndFunny provider module
+├── youporn/                  # YouPorn provider module
+└── zfilmzoriginals/          # ZFilmzOriginals provider module
 ```
 
 ## Build System

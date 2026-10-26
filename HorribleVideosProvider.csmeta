@@ -1,0 +1,10 @@
+{
+  "name": "HorribleVideosProvider",
+  "packageName": "com.rdnutz.providers",
+  "className": "HorribleVideosProvider",
+  "version": 1,
+  "lang": "en",
+  "supportedTypes": ["NSFW"],
+  "hasSearch": true,
+  "hasMainPage": true
+}

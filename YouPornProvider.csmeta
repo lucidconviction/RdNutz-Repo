@@ -1,0 +1,10 @@
+{
+  "name": "YouPornProvider",
+  "packageName": "com.rdnutz.providers",
+  "className": "YouPornProvider",
+  "version": 1,
+  "lang": "en",
+  "supportedTypes": ["NSFW"],
+  "hasSearch": true,
+  "hasMainPage": true
+}

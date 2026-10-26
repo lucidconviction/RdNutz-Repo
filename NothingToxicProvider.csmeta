@@ -1,10 +1,10 @@
 {
-  "name": "NothingToxic",
-  "url": "https://github.com/Robbdeeze/rdnutz-cloudstream-extensions",
-  "description": "NothingToxic video content provider for CloudStream",
-  "language": "en",
+  "name": "NothingToxicProvider",
+  "packageName": "com.rdnutz.providers",
+  "className": "NothingToxicProvider",
   "version": 1,
-  "type": 2,
-  "mainActivity": "com.rdnutz.providers.NothingToxicProvider",
-  "bundle": "app/build/outputs/aar/app-release.aar"
+  "lang": "en",
+  "supportedTypes": ["NSFW"],
+  "hasSearch": true,
+  "hasMainPage": true
 }

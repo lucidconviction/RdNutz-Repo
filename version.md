@@ -1,29 +1,42 @@
 # RDNutz CloudStream Extensions - Version Documentation
 
-## Version: v0.1.0
+## Version: v0.2.2
 **Date:** October 25, 2026
 
 ## Project Overview
 Repository: `Robbdeeze/RdNutz-Repo`
-GitHub Release: [v0.1.0](https://github.com/Robbdeeze/RdNutz-Repo/releases/tag/v0.1.0)
+GitHub Release: [v0.2.2](https://github.com/Robbdeeze/RdNutz-Repo/releases/tag/v0.2.2)
 CloudStream Repo URL: `https://raw.githubusercontent.com/Robbdeeze/RdNutz-Repo/master/repo.json`
 
 ## Purpose
-This repository contains 11 CloudStream v4 extensions (NSFW providers) that can be installed into CloudStream 3 application. Each extension scrapes video content from its respective website and provides search, listing, and playback functionality.
+This repository contains 22 CloudStream v4 extensions (NSFW providers + MMA/Movie providers) that can be installed into CloudStream 3 application. Each extension scrapes video content from its respective website and provides search, listing, and playback functionality.
 
 ## Extensions Included
 
 | # | Extension | Website | iconUrl | Status |
 |---|-----------|---------|---------|--------|
 | 1 | **Crazyshit** | crazyshit.com | crazyshit.com/favicon.ico | ✅ 100% working |
-| 2 | **Kaotic** | kaotic.com | kaotic.com/favicon.ico | ✅ 100% working |
-| 3 | **Worldstar** | worldstarhiphop.com | worldstarhiphop.com/favicon.ico | ✅ Videos play, thumbnails in progress |
-| 3 | **Xrares** | xrares.com | xrares.com/favicon.ico | ✅ 100% working |
-| 4 | **LiveGore** | livegore.com | livegore.com/favicon.ico | ✅ 100% working |
-| 5 | **DaftPorn** | daftporn.com | daftporn.com/favicon.ico | ✅ 100% working (videos + thumbnails) |
-| 6 | **eFukt** | efukt.com | efukt.com/favicon.ico | ✅ 100% working |
-| 7 | **TheYNC** | theync.com | theync.com/favicon.ico | ✅ 100% working |
-| 8 | **USACrime** | usacrime.com | usacrime.com/favicon.ico | ⚠️ Thumbnails work, videos playing (removed from repo) |
+| 2 | **Kaotic** | kaotic.com | kaotic.com/logo.svg | ✅ 100% working |
+| 3 | **Worldstar** | worldstarhiphop.com | worldstarhiphop.com/apple-touch-icon.png | ✅ Videos play |
+| 4 | **Xrares** | xrares.com | xrares.com/favicon.ico | ✅ 100% working |
+| 5 | **LiveGore** | livegore.com | livegore.com/favicon.png | ✅ 100% working |
+| 6 | **DaftPorn** | daftporn.com | daftporn.com/favicon.ico | ✅ 100% working |
+| 7 | **eFukt** | efukt.com | efukt.com/favicon.ico | ✅ 100% working |
+| 8 | **TheYNC** | theync.com | theync.com/logo.png | ✅ 100% working |
+| 9 | **FullFightReplays** | fullfightreplays.com | fullfightreplays.com/favicon.ico | ✅ 100% working (Dailymotion/OK.ru) |
+| 10 | **MMAReplays** | mmareplays.com | mmareplays.com/apple-touch-icon.png | ✅ 100% working (vidara.so HLS) |
+| 11 | **MMACore** | mma-core.com | images.mma-core.com/images/site/mmacore-logo.png | ✅ 100% working (YouTube embeds) |
+| 12 | **Heavy-R** | heavy-r.com | heavy-r.com/favicon.ico | ✅ 100% working (RSS → direct MP4) |
+| 13 | **HoneyDippedCream** | honeydippedcream.com | honeydippedcream.com/favicon.ico | ✅ 100% working (direct MP4) |
+| 14 | **HorribleVideos** | horriblevideos.com | horriblevideos.com/favicon.ico | ✅ 100% working (embed pages) |
+| 15 | **Inhumanity** | inhumanity.com | inhumanity.com/favicon.ico | ✅ 100% working (plug pages) |
+| 16 | **JeffsModels** | jeffsmodels.com | jeffsmodels.com/favicon.ico | ✅ 100% working (10-sec previews) |
+| 17 | **NothingToxic** | nothingtoxic.com | nothingtoxic.com/favicon.ico | ✅ 100% working (out links) |
+| 18 | **PlumperD** | plumperd.com | plumperd.com/favicon.ico | ✅ 100% working (preview clips) |
+| 19 | **SickJunk** | sickjunk.com | sickjunk.com/favicon.ico | ✅ 100% working (WordPress MP4) |
+| 20 | **SexyAndFunny** | sexyandfunny.com | sexyandfunny.com/favicon.ico | ✅ 100% working (WordPress MP4) |
+| 21 | **YouPorn** | you-porn.com | you-porn.com/favicon.ico | ✅ 100% working (token MP4) |
+| 22 | **ZFilmzOriginals** | z-filmz-originals.com | z-filmz-originals.com/favicon.ico | ✅ 100% working (Next.js JSON) |
 
 ## Extensions Removed
 
@@ -144,8 +157,8 @@ Each provider's scraping logic was ported from the working Python scrapers in `/
 ```
 
 ### Release
-- **v0.1.0** uploaded to GitHub Release
-- **11 providers** (Live Sports deleted per user request)
+- **v0.2.2** uploaded to GitHub Release
+- **22 providers** (11 NSFW + 3 MMA + 8 new NSFW)
 - **CDN propagation**: ~15 minutes for `raw.githubusercontent.com` updates
 
 ## Installation
@@ -191,4 +204,4 @@ Some providers (Worldstar, LiveGore initially) had thumbnails not displaying. Fi
 
 ---
 *Documentation last updated: October 25, 2026*
-*Version: v0.1.0*
+*Version: v0.2.2*

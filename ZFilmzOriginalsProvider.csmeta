@@ -1,0 +1,10 @@
+{
+  "name": "ZFilmzOriginalsProvider",
+  "packageName": "com.rdnutz.providers",
+  "className": "ZFilmzOriginalsProvider",
+  "version": 1,
+  "lang": "en",
+  "supportedTypes": ["Movie"],
+  "hasSearch": true,
+  "hasMainPage": true
+}
