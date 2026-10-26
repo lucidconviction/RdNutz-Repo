@@ -1,10 +1,13 @@
 [
-    {"name": "Crazyshit", "iconUrl": "https://crazyshit.com/favicon.ico", "url": "https://github.com/Robbdeeze/RdNutz-Repo/releases/download/v0.1.0/crazyshit.cs3", "language": "en", "version": 1, "type": 2},
-    {"name": "Kaotic", "iconUrl": "https://kaotic.com/logo.svg", "url": "https://github.com/Robbdeeze/RdNutz-Repo/releases/download/v0.1.0/kaotic.cs3", "language": "en", "version": 1, "type": 2},
-    {"name": "Worldstar", "iconUrl": "https://worldstarhiphop.com/apple-touch-icon.png", "url": "https://github.com/Robbdeeze/RdNutz-Repo/releases/download/v0.1.0/worldstar.cs3", "language": "en", "version": 1, "type": 2},
-    {"name": "Xrares", "iconUrl": "https://www.xrares.com/favicon.ico", "url": "https://github.com/Robbdeeze/RdNutz-Repo/releases/download/v0.1.0/xrares.cs3", "language": "en", "version": 1, "type": 2},
-    {"name": "LiveGore", "iconUrl": "https://livegore.com/favicon.png", "url": "https://github.com/Robbdeeze/RdNutz-Repo/releases/download/v0.1.0/livegore.cs3", "language": "en", "version": 1, "type": 2},
-    {"name": "DaftPorn", "iconUrl": "https://daftporn.com/favicon.ico", "url": "https://github.com/Robbdeeze/RdNutz-Repo/releases/download/v0.1.0/daftporn.cs3", "language": "en", "version": 1, "type": 2},
-    {"name": "eFukt", "iconUrl": "https://www.efukt.com/favicon.ico", "url": "https://github.com/Robbdeeze/RdNutz-Repo/releases/download/v0.1.0/efukt.cs3", "language": "en", "version": 1, "type": 2},
-    {"name": "TheYNC", "iconUrl": "https://theync.com/logo.png", "url": "https://github.com/Robbdeeze/RdNutz-Repo/releases/download/v0.1.0/theync.cs3", "language": "en", "version": 1, "type": 2}
+    {"name": "Crazyshit", "iconUrl": "https://crazyshit.com/favicon.ico", "url": "https://github.com/Robbdeeze/RdNutz-Repo/releases/download/v0.2.0/crazyshit.cs3", "language": "en", "version": 1, "type": 2},
+    {"name": "Kaotic", "iconUrl": "https://kaotic.com/logo.svg", "url": "https://github.com/Robbdeeze/RdNutz-Repo/releases/download/v0.2.0/kaotic.cs3", "language": "en", "version": 1, "type": 2},
+    {"name": "Worldstar", "iconUrl": "https://worldstarhiphop.com/apple-touch-icon.png", "url": "https://github.com/Robbdeeze/RdNutz-Repo/releases/download/v0.2.0/worldstar.cs3", "language": "en", "version": 1, "type": 2},
+    {"name": "Xrares", "iconUrl": "https://www.xrares.com/favicon.ico", "url": "https://github.com/Robbdeeze/RdNutz-Repo/releases/download/v0.2.0/xrares.cs3", "language": "en", "version": 1, "type": 2},
+    {"name": "LiveGore", "iconUrl": "https://livegore.com/favicon.png", "url": "https://github.com/Robbdeeze/RdNutz-Repo/releases/download/v0.2.0/livegore.cs3", "language": "en", "version": 1, "type": 2},
+    {"name": "DaftPorn", "iconUrl": "https://daftporn.com/favicon.ico", "url": "https://github.com/Robbdeeze/RdNutz-Repo/releases/download/v0.2.0/daftporn.cs3", "language": "en", "version": 1, "type": 2},
+    {"name": "eFukt", "iconUrl": "https://www.efukt.com/favicon.ico", "url": "https://github.com/Robbdeeze/RdNutz-Repo/releases/download/v0.2.0/efukt.cs3", "language": "en", "version": 1, "type": 2},
+    {"name": "TheYNC", "iconUrl": "https://theync.com/logo.png", "url": "https://github.com/Robbdeeze/RdNutz-Repo/releases/download/v0.2.0/theync.cs3", "language": "en", "version": 1, "type": 2},
+    {"name": "FullFightReplays", "iconUrl": "https://fullfightreplays.com/favicon.ico", "url": "https://github.com/Robbdeeze/RdNutz-Repo/releases/download/v0.2.0/fullfightreplays.cs3", "language": "en", "version": 1, "type": 2},
+    {"name": "MMAReplays", "iconUrl": "https://mmareplays.com/favicon.ico", "url": "https://github.com/Robbdeeze/RdNutz-Repo/releases/download/v0.2.0/mmareplays.cs3", "language": "en", "version": 1, "type": 2},
+    {"name": "MMACore", "iconUrl": "https://www.mma-core.com/favicon.ico", "url": "https://github.com/Robbdeeze/RdNutz-Repo/releases/download/v0.2.0/mmacore.cs3", "language": "en", "version": 1, "type": 2}
 ]
