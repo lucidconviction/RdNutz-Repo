@@ -407,7 +407,7 @@
     "version": 3,
     "internalName": "nuviosports",
     "url": "https://github.com/lucidconviction/RdNutz-Repo/releases/download/v0.4.0/nuviosports.cs3",
-    "name": "NuvioSports",
+    "name": "RdNutz TV Sports n More",
     "description": "All-in-one sports streaming from Streamed.pk and ZLive.st APIs - live football, basketball, F1, UFC, and 20+ sports with HD streams",
     "iconUrl": "https://streamed.pk/favicon.ico",
     "supported": true,
