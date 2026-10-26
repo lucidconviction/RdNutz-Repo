@@ -1,0 +1,10 @@
+{
+  "name": "FullFightReplays",
+  "url": "https://github.com/Robbdeeze/rdnutz-cloudstream-extensions",
+  "description": "Full fight replays for UFC, MMA, Boxing provider for CloudStream",
+  "language": "en",
+  "version": 1,
+  "type": 2,
+  "mainActivity": "com.rdnutz.providers.FullFightReplaysProvider",
+  "bundle": "fullfightreplays/app/build/outputs/aar/app-release.aar"
+}
