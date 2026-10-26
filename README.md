@@ -10,7 +10,7 @@
 4. Select **"Add CloudStream repo"**
 5. Paste this URL and tap Add:
    ```
-   https://raw.githubusercontent.com/Robbdeeze/RdNutz-Repo/master/repo.json
+   https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/master/repo.json
    ```
 6. Tap the **"RdNutz Nett Smutt"** card that appears
 7. Install the providers you want:
@@ -47,7 +47,7 @@
 ### Steps
 ```bash
 # Clone the repository
-git clone https://github.com/Robbdeeze/RdNutz-Repo.git
+git clone https://github.com/lucidconviction/RdNutz-Repo.git
 cd RdNutz-Repo
 
 # Build all extensions
@@ -138,6 +138,6 @@ MIT — Free to use and modify.
 
 ## Notes
 - Repo uses `master` branch (not `main`)
-- Release assets hosted at `github.com/Robbdeeze/RdNutz-Repo/releases/download/v0.2.0/`
-- Metadata served via `raw.githubusercontent.com/Robbdeeze/RdNutz-Repo/master/`
+- Release assets hosted at `github.com/lucidconviction/RdNutz-Repo/releases/download/v0.2.2/`
+- Metadata served via `raw.githubusercontent.com/lucidconviction/RdNutz-Repo/master/`
 - CS3 files currently accessible via GitHub API; direct download URLs may have propagation delay
