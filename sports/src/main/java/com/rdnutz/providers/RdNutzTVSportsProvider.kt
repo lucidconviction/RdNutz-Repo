@@ -6,7 +6,7 @@ import com.lagradost.cloudstream3.utils.*
 data class ZliveChannel(val slug: String, val name: String)
 data class StreamSource(val source: String, val id: String)
 
-class NuvioSportsProvider : MainAPI() {
+class RdNutzTVSportsProvider : MainAPI() {
     override var mainUrl = "https://streamed.pk"
     override var name = "RdNutz TV Sports n More"
     override val supportedTypes = setOf(TvType.Live)
@@ -71,12 +71,6 @@ class NuvioSportsProvider : MainAPI() {
         val pattern = "\"$key\"\\s*:\\s*(true|false)"
         val match = Regex(pattern).find(json)
         return match?.groupValues?.get(1) == "true"
-    }
-
-    private fun extractJsonNested(json: String, key: String): String {
-        val pattern = "\"$key\"\\s*:\\s*\\{([^}]+)\\}"
-        val match = Regex(pattern).find(json)
-        return match?.groupValues?.get(1) ?: ""
     }
 
     private fun extractSources(json: String): List<StreamSource> {

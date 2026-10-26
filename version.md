@@ -288,9 +288,9 @@ Some providers (Worldstar, LiveGore initially) had thumbnails not displaying. Fi
 *Version: v0.2.2*
 ---
 
-## v0.4.0 — NuvioSports All-in-One Sports Extension
+## v0.4.0 — RdNutz TV Sports n More All-in-One Sports Extension
 
-### New: NuvioSports (`nuviosports`)
+### New: RdNutz TV Sports n More (sports module)
 **Status:** ✅ Working
 
 An all-in-one sports streaming extension combining two APIs:
@@ -338,9 +338,9 @@ Cricket       → International + T20
 
 #### Build
 ```bash
-./gradlew :nuviosports:make
+./gradlew :sports:make
 ```
 
 #### Release
 - v0.4.0: https://github.com/lucidconviction/RdNutz-Repo/releases/tag/v0.4.0
-- cs3: https://github.com/lucidconviction/RdNutz-Repo/releases/download/v0.4.0/nuviosports.cs3
+- cs3: https://github.com/lucidconviction/RdNutz-Repo/releases/download/v0.4.0/rdnutz-sports.cs3

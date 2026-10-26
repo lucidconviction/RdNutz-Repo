@@ -4,8 +4,8 @@ import com.lagradost.cloudstream3.plugins.CloudstreamPlugin
 import com.lagradost.cloudstream3.plugins.Plugin
 
 @CloudstreamPlugin
-class NuvioSportsPlugin : Plugin() {
+class RdNutzTVSportsPlugin : Plugin() {
     override fun load() {
-        registerMainAPI(NuvioSportsProvider())
+        registerMainAPI(RdNutzTVSportsProvider())
     }
 }

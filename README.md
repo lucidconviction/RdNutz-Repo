@@ -1,10 +1,10 @@
 # RDNutz CloudStream Extensions
 
-22 CloudStream extensions for viral, UFC/MMA, and shock content from Crazyshit, LiveGore, Worldstar Hip Hop, FullFightReplays, MMAReplays, MMACore, Kaotic, DaftPorn, eFukt, Xrares, TheYNC, Heavy-R, HoneyDippedCream, HorribleVideos, Inhumanity, JeffsModels, NothingToxic, PlumperD, SickJunk, SexyAndFunny, YouPorn, and ZFilmzOriginals.
+**RdNutz CloudStream extensions** — a curated collection of providers for CloudStream v4 (pre-release), covering viral/shock content, adult entertainment, and live sports streaming.
 
-## Quick Start
+## 🚀 Install in CloudStream
 
-1. **Open CloudStream** on your Android device
+1. Open **CloudStream** on your Android device
 2. Go to **Extensions** tab (puzzle piece icon at bottom)
 3. Tap **+** (top-left corner)
 4. Select **"Add CloudStream repo"**
@@ -13,31 +13,56 @@
    https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/master/repo.json
    ```
 6. Tap the **"RdNutz Nett Smutt"** card that appears
-7. Install the providers you want:
-   - **Crazyshit** — Viral/shocking videos
-   - **LiveGore** — Raw footage
-   - **Worldstar** — Street videos
-   - **Kaotic** — Shocking content
-   - **DaftPorn** — Adult content
-   - **eFukt** — Shocking/funny videos
-   - **Xrares** — Rare/extreme content
-   - **TheYNC** — Shocking/gore content
-   - **FullFightReplays** 🆕 — UFC fight replays (Dailymotion/OK.ru)
-   - **MMAReplays** 🆕 — MMA fight replays (gasobni.com HLS)
-   - **MMACore** 🆕 — MMA news and videos (YouTube embeds)
-   - **Heavy-R** 🆕 — Extreme videos (RSS feed → direct MP4)
-   - **HoneyDippedCream** 🆕 — Adult content (direct MP4)
-   - **HorribleVideos** 🆕 — Shocking clips (embed pages)
-   - **Inhumanity** 🆕 — Shocking content (plug pages)
-   - **JeffsModels** 🆕 — Adult previews (10-sec clips)
-   - **NothingToxic** 🆕 — Shocking videos (out links)
-   - **PlumperD** 🆕 — Adult previews (preview clips)
-   - **SickJunk** 🆕 — Extreme videos (WordPress MP4)
-   - **SexyAndFunny** 🆕 — Adult/Comedy (WordPress MP4)
-   - **YouPorn** 🆕 — Adult content (token-protected MP4)
-   - **ZFilmzOriginals** 🆕 — Adult trailers (Next.js JSON)
+7. Install the providers you want
 
-## Build from Source
+## 📦 All Extensions (23 total)
+
+| # | Extension | Display Name | Content | Status |
+|---|-----------|-------------|---------|--------|
+| 1 | crazyshit | Crazyshit | Viral/shocking videos | ✅ Works |
+| 2 | daftporn | DaftPorn | Extreme adult content | ✅ Works |
+| 3 | efukt | eFukt | Funny/shocking clips | ✅ Works |
+| 4 | kaotic | Kaotic | Shocking/extreme videos | ✅ Works |
+| 5 | livegore | LiveGore | Raw gore footage | ✅ Works |
+| 6 | sexyandfunny | Sexyandfunny | Adult/comedy videos | ✅ Works |
+| 7 | theync | TheYNC | Shock/gore content | ✅ Works |
+| 8 | xrares | Xrares | Rare/extreme content | ✅ Works |
+| 9 | worldstar | Worldstar | Hip hop/street fight videos | ⚠️ Partial |
+| 10 | horriblevideos | HorribleVideos | Shocking clips | ⚠️ Partial |
+| 11 | inhumanity | Inhumanity | Shock content | ⚠️ Partial |
+| 12 | zfilmzoriginals | ZFilmzOriginals | Adult films | ⚠️ Partial |
+| 13 | fullfightreplays | FullFightReplays | UFC/MMA fight replays | ❌ Needs fix |
+| 14 | heavyr | Heavy-R | Extreme adult content | ❌ Needs fix |
+| 15 | honeydippedcream | HoneyDippedCream | Adult content | ❌ Needs fix |
+| 16 | jeffsmodels | JeffModels | Adult previews | ❌ Needs fix |
+| 17 | plumperd | PlumperD | BBW adult content | ❌ Needs fix |
+| 18 | sickjunk | SickJunk | Extreme shock content | ❌ Needs fix |
+| 19 | youporn | YouPorn | Adult content | ❌ Needs fix |
+| 20 | mmacore | MMA Core | MMA news/videos | ❌ Needs fix |
+| 21 | mmareplays | MMA Replays | MMA fight replays | ❌ Needs fix |
+| 22 | nothingtoxic | NothingToxic | Shock videos | ❌ Needs fix |
+| 23 | rdnutz-sports | **RdNutz TV Sports n More** | Live sports (Streamed.pk + ZLive.st) | ✅ Works |
+
+## 🏆 RdNutz TV Sports n More
+
+An all-in-one sports streaming extension combining two data sources:
+
+**Streamed.pk API** — REST API with 15 sports categories:
+- Live/upcoming matches with team badges and posters
+- Stream URLs via `/api/stream/{source}/{id}`
+- Categories: Football, Basketball, NFL, Hockey, Baseball, Motor Sports, UFC/MMA, Tennis, Rugby, Golf, Cricket, and more
+
+**ZLive.st** — 22+ live TV channels:
+- Sky Sports, ESPN, beIN Sports, Fox Sports, TNT Sports, Eurosport, and more
+- Embed format: `https://zlive.st/embed/{channel-slug}`
+
+### Catalog Tabs
+- **Live Now** — Currently live matches + ZLive channels
+- **All Matches** — All upcoming/ongoing matches with kickoff times
+- **ZLive Channels** — 22+ live sports TV channels
+- **Football / Basketball / NFL / Hockey / Baseball / Motor Sports / UFC-MMA / Tennis / Rugby / Golf / Cricket** — Sport-specific listings
+
+## 🔧 Build from Source
 
 ### Prerequisites
 - Android Studio
@@ -59,85 +84,58 @@ cd RdNutz-Repo
 ### Output Files
 Each module produces a `.cs3` file in its `build/` directory (e.g., `crazyshit/build/crazyshit.cs3`)
 
-## Providers
-
-| Provider | Base URL | Content Type |
-|----------|----------|--------------|
-| Crazyshit | crazyshit.com | Viral/shocking videos |
-| LiveGore | livegore.com | Raw/gore footage |
-| Worldstar | worldstarhiphop.com | Street/fight videos |
-| Kaotic | kaotic.com | Shocking/extreme content |
-| DaftPorn | daftporn.com | Adult content |
-| eFukt | efukt.com | Shocking/funny videos |
-| Xrares | xrares.com | Rare/extreme content |
-| TheYNC | theync.com | Shocking/gore content |
-| FullFightReplays | fullfightreplays.com | UFC fight replays |
-| MMAReplays | mmareplays.com | MMA fight replays |
-| MMACore | mma-core.com | MMA news & videos |
-| Heavy-R | heavy-r.com | Extreme videos |
-| HoneyDippedCream | honeydippedcream.com | Adult content |
-| HorribleVideos | horriblevideos.com | Shocking clips |
-| Inhumanity | inhumanity.com | Shocking content |
-| JeffsModels | jeffsmodels.com | Adult previews |
-| NothingToxic | nothingtoxic.com | Shocking videos |
-| PlumperD | plumperd.com | Adult previews |
-| SickJunk | sickjunk.com | Extreme videos |
-| SexyAndFunny | sexyandfunny.com | Adult/Comedy |
-| YouPorn | you-porn.com | Adult content |
-| ZFilmzOriginals | z-filmz-originals.com | Adult trailers |
-
-## File Structure
+## 📁 File Structure
 ```
 RdNutz-Repo/
 ├── repo.json                 # Repository manifest for CloudStream
 ├── plugins.json              # Plugin list → .cs3 URLs in releases
 ├── version.md                # Version changelog
-├── *.csmeta                  # Individual plugin manifests (metadata)
+├── README.md                 # This file
 ├── build.gradle.kts          # Root build config
 ├── settings.gradle.kts       # Module inclusion
 ├── gradle.properties         # Gradle/JVM settings
 ├── gradle/                   # Gradle wrapper
 ├── crazyshit/                # Crazyshit provider module
-├── livegore/                 # LiveGore provider module
-├── worldstar/                # Worldstar provider module
-├── kaotic/                   # Kaotic provider module
 ├── daftporn/                 # DaftPorn provider module
 ├── efukt/                    # eFukt provider module
-├── xrares/                   # Xrares provider module
+├── kaotic/                   # Kaotic provider module
+├── livegore/                 # LiveGore provider module
+├── sexyandfunny/             # Sexyandfunny provider module
 ├── theync/                   # TheYNC provider module
-├── fullfightreplays/         # FullFightReplays provider module
-├── mmareplays/               # MMAReplays provider module
-├── mmacore/                  # MMACore provider module
-├── heavyr/                   # Heavy-R provider module
-├── honeydippedcream/         # HoneyDippedCream provider module
+├── xrares/                   # Xrares provider module
+├── worldstar/                # Worldstar provider module
 ├── horriblevideos/           # HorribleVideos provider module
 ├── inhumanity/               # Inhumanity provider module
-├── jeffsmodels/              # JeffsModels provider module
-├── nothingtoxic/             # NothingToxic provider module
+├── zfilmzoriginals/          # ZFilmzOriginals provider module
+├── fullfightreplays/         # FullFightReplays provider module
+├── heavyr/                   # Heavy-R provider module
+├── honeydippedcream/         # HoneyDippedCream provider module
+├── jeffsmodels/              # JeffModels provider module
 ├── plumperd/                 # PlumperD provider module
 ├── sickjunk/                 # SickJunk provider module
-├── sexyandfunny/             # SexyAndFunny provider module
 ├── youporn/                  # YouPorn provider module
-└── zfilmzoriginals/          # ZFilmzOriginals provider module
+├── mmacore/                  # MMACore provider module
+├── mmareplays/               # MMA Replays provider module
+├── nothingtoxic/             # NothingToxic provider module
+└── sports/                   # RdNutz TV Sports n More provider module
 ```
 
-## Build System
+## 🛠️ Build System
 - **Kotlin 2.4.0** / **Gradle 8.10** / **AGP 8.5.2**
 - CloudStream Gradle Plugin (master-SNAPSHOT)
 - Each provider is an Android Library module
 - Output: `.cs3` plugin files (DEX + resources)
 
-## Dependencies
-- **CloudStream 3 SDK** (pre-release) — Base provider classes
+## 📦 Dependencies
+- **CloudStream SDK** (pre-release) — Base provider classes
 - **JSoup** — HTML parsing
 - **Jackson** — JSON serialization
-- **NiceHttp 0.4.18** — HTTP client (JSON POST support)
 
-## License
+## 📜 License
 MIT — Free to use and modify.
 
-## Notes
+## 📝 Notes
 - Repo uses `master` branch (not `main`)
-- Release assets hosted at `github.com/lucidconviction/RdNutz-Repo/releases/download/v0.2.2/`
+- Release assets hosted at `github.com/lucidconviction/RdNutz-Repo/releases/download/v0.4.0/`
 - Metadata served via `raw.githubusercontent.com/lucidconviction/RdNutz-Repo/master/`
 - CS3 files currently accessible via GitHub API; direct download URLs may have propagation delay

@@ -396,17 +396,17 @@
     "language": "en"
   },
   {
-    "fileHash": "sha256-78d52ea8fd992697f4853274ce94741a6b11cb407f7266d7529ca8b95a83f48e",
+    "fileHash": "sha256-placeholder",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
-    "fileSize": 20195,
+    "fileSize": 0,
     "status": 1,
     "authors": [
       "RdNutz"
     ],
     "version": 3,
-    "internalName": "nuviosports",
-    "url": "https://github.com/lucidconviction/RdNutz-Repo/releases/download/v0.4.0/nuviosports.cs3",
+    "internalName": "rdnutz-sports",
+    "url": "https://github.com/lucidconviction/RdNutz-Repo/releases/download/v0.4.0/rdnutz-sports.cs3",
     "name": "RdNutz TV Sports n More",
     "description": "All-in-one sports streaming from Streamed.pk and ZLive.st APIs - live football, basketball, F1, UFC, and 20+ sports with HD streams",
     "iconUrl": "https://streamed.pk/favicon.ico",
