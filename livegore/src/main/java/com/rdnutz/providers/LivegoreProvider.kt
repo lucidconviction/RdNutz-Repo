@@ -19,21 +19,26 @@ class LivegoreProvider : MainAPI() {
         val document = app.get(pageUrl).document
         
         val postLinks = mutableSetOf<String>()
-        
-        // Pattern 1: direct post links - href starts with https://www.livegore.com/ followed by digits
+
+        // Pattern 1: direct post links - /{digits}/{slug}/ format (excludes CSS/JS/plugin assets)
         document.select("a[href^=https://www.livegore.com/]")
-            .forEach { postLinks.add(fixUrl(it.attr("href"))!!) }
-        
-        // Pattern 2: post-card class anchors
-        document.select("a.post-card, a[class*=post]")
-            .forEach { 
+            .forEach { el ->
+                val href = fixUrlNull(el.attr("href"))
+                if (href != null && Regex("""https?://www\.livegore\.com/\d+/[^"'?#]+""").matches(href)) {
+                    postLinks.add(href)
+                }
+            }
+
+        // Pattern 2: post-card class anchors (fallback)
+        document.select("a[class*=post]")
+            .forEach {
                 val href = fixUrlNull(it.attr("href"))
                 if (href != null) postLinks.add(href)
             }
-        
-        // Pattern 3: data-link attributes
+
+        // Pattern 3: data-link attributes (fallback)
         document.select("[data-link]")
-            .forEach { 
+            .forEach {
                 val href = fixUrlNull(it.attr("data-link"))
                 if (href != null) postLinks.add(href)
             }
@@ -71,10 +76,10 @@ class LivegoreProvider : MainAPI() {
 
     override suspend fun search(query: String): List<SearchResponse> {
         val document = app.get("${mainUrl}/search/${query.replace(" ", "-")}").document
-        val postLinks = document.select("a[href*=/video/]")
+        val postLinks = document.select("a[href^=https://www.livegore.com/]")
             .mapNotNull { el ->
                 val href = fixUrlNull(el.attr("href"))
-                if (href != null && href.contains("/video/")) href else null
+                if (href != null && Regex("""https?://www\.livegore\.com/\d+/[^"'?#]+""").matches(href)) href else null
             }
             .distinct()
             .take(30)
