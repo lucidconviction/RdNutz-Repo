@@ -4,9 +4,9 @@
 **Date:** October 25, 2026
 
 ## Project Overview
-Repository: `Robbdeeze/RdNutz-Repo`
-GitHub Release: [v0.2.2](https://github.com/Robbdeeze/RdNutz-Repo/releases/tag/v0.2.2)
-CloudStream Repo URL: `https://raw.githubusercontent.com/Robbdeeze/RdNutz-Repo/master/repo.json`
+Repository: `lucidconviction/RdNutz-Repo`
+GitHub Release: [v0.2.2](https://github.com/lucidconviction/RdNutz-Repo/releases/tag/v0.2.2)
+CloudStream Repo URL: `https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/master/repo.json`
 
 ## Purpose
 This repository contains 22 CloudStream v4 extensions (NSFW providers + MMA/Movie providers) that can be installed into CloudStream 3 application. Each extension scrapes video content from its respective website and provides search, listing, and playback functionality.
@@ -165,12 +165,12 @@ Each provider's scraping logic was ported from the working Python scrapers in `/
 
 ### For CloudStream 3 Users
 1. Open CloudStream → Settings → Extensions → Add Repository
-2. Add repository URL: `https://raw.githubusercontent.com/Robbdeeze/RdNutz-Repo/master/repo.json`
+2. Add repository URL: `https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/master/repo.json`
 3. Browse available extensions and install desired ones
 4. Each extension appears as a provider in the home screen selector
 
 ### For Developers
-- Clone the repository: `git clone https://github.com/Robbdeeze/RdNutz-Repo`
+- Clone the repository: `git clone https://github.com/lucidconviction/RdNutz-Repo`
 - Modify provider files in `*/src/main/java/com/rdnutz/providers/`
 - Rebuild: `./gradlew make --no-daemon`
 - Upload release: `gh release create v0.1.0 ...`
@@ -198,7 +198,7 @@ Some providers (Worldstar, LiveGore initially) had thumbnails not displaying. Fi
 - Using `fixUrlNull()` for relative URL handling
 
 ## Contact & Support
-- **GitHub**: [Robbdeeze/RdNutz-Repo](https://github.com/Robbdeeze/RdNutz-Repo)
+- **GitHub**: [lucidconviction/RdNutz-Repo](https://github.com/lucidconviction/RdNutz-Repo)
 - **Issues**: Use GitHub Issues for bug reports
 - **Python scrapers**: Located at `/Users/robbdeeze/Documents/projects/iptv/New working scrapers/`
 
