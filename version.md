@@ -4,48 +4,133 @@
 **Date:** October 25, 2026
 
 ## Project Overview
-Repository: `lucidconviction/RdNutz-Repo`
-GitHub Release: [v0.2.2](https://github.com/lucidconviction/RdNutz-Repo/releases/tag/v0.2.2)
-CloudStream Repo URL: `https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/master/repo.json`
+Repository: `Robbdeeze/RdNutz-Repo`
+GitHub Release: [v0.2.2](https://github.com/Robbdeeze/RdNutz-Repo/releases/tag/v0.2.2)
+CloudStream Repo URL: `https://raw.githubusercontent.com/Robbdeeze/RdNutz-Repo/master/repo.json`
 
 ## Purpose
 This repository contains 22 CloudStream v4 extensions (NSFW providers + MMA/Movie providers) that can be installed into CloudStream 3 application. Each extension scrapes video content from its respective website and provides search, listing, and playback functionality.
 
-## Extensions Included
+## Extensions Status Summary (User Tested)
 
-| # | Extension | Website | iconUrl | Status |
-|---|-----------|---------|---------|--------|
-| 1 | **Crazyshit** | crazyshit.com | crazyshit.com/favicon.ico | ✅ 100% working |
-| 2 | **Kaotic** | kaotic.com | kaotic.com/logo.svg | ✅ 100% working |
-| 3 | **Worldstar** | worldstarhiphop.com | worldstarhiphop.com/apple-touch-icon.png | ✅ Videos play |
-| 4 | **Xrares** | xrares.com | xrares.com/favicon.ico | ✅ 100% working |
-| 5 | **LiveGore** | livegore.com | livegore.com/favicon.png | ✅ 100% working |
-| 6 | **DaftPorn** | daftporn.com | daftporn.com/favicon.ico | ✅ 100% working |
-| 7 | **eFukt** | efukt.com | efukt.com/favicon.ico | ✅ 100% working |
-| 8 | **TheYNC** | theync.com | theync.com/logo.png | ✅ 100% working |
-| 9 | **FullFightReplays** | fullfightreplays.com | fullfightreplays.com/favicon.ico | ✅ 100% working (Dailymotion/OK.ru) |
-| 10 | **MMAReplays** | mmareplays.com | mmareplays.com/apple-touch-icon.png | ✅ 100% working (vidara.so HLS) |
-| 11 | **MMACore** | mma-core.com | images.mma-core.com/images/site/mmacore-logo.png | ✅ 100% working (YouTube embeds) |
-| 12 | **Heavy-R** | heavy-r.com | heavy-r.com/favicon.ico | ✅ 100% working (RSS → direct MP4) |
-| 13 | **HoneyDippedCream** | honeydippedcream.com | honeydippedcream.com/favicon.ico | ✅ 100% working (direct MP4) |
-| 14 | **HorribleVideos** | horriblevideos.com | horriblevideos.com/favicon.ico | ✅ 100% working (embed pages) |
-| 15 | **Inhumanity** | inhumanity.com | inhumanity.com/favicon.ico | ✅ 100% working (plug pages) |
-| 16 | **JeffsModels** | jeffsmodels.com | jeffsmodels.com/favicon.ico | ✅ 100% working (10-sec previews) |
-| 17 | **NothingToxic** | nothingtoxic.com | nothingtoxic.com/favicon.ico | ✅ 100% working (out links) |
-| 18 | **PlumperD** | plumperd.com | plumperd.com/favicon.ico | ✅ 100% working (preview clips) |
-| 19 | **SickJunk** | sickjunk.com | sickjunk.com/favicon.ico | ✅ 100% working (WordPress MP4) |
-| 20 | **SexyAndFunny** | sexyandfunny.com | sexyandfunny.com/favicon.ico | ✅ 100% working (WordPress MP4) |
-| 21 | **YouPorn** | you-porn.com | you-porn.com/favicon.ico | ✅ 100% working (token MP4) |
-| 22 | **ZFilmzOriginals** | z-filmz-originals.com | z-filmz-originals.com/favicon.ico | ✅ 100% working (Next.js JSON) |
+| # | Extension | Website | Author | Supported | Language | Status |
+|---|-----------|---------|--------|-----------|----------|--------|
+| 1 | **Crazyshit** | crazyshit.com | RdNutz | ✅ | en | ✅ **100% Working** |
+| 2 | **DaftPorn** | daftporn.com | RdNutz | ✅ | en | ✅ **100% Working** |
+| 3 | **eFukt** | efukt.com | RdNutz | ✅ | en | ✅ **100% Working** |
+| 4 | **Kaotic** | kaotic.com | RdNutz | ✅ | en | ✅ **100% Working** |
+| 5 | **LiveGore** | livegore.com | RdNutz | ✅ | en | ✅ **100% Working** |
+| 6 | **Sexyandfunny** | sexyandfunny.com | RdNutz | ✅ | en | ✅ **100% Working** |
+| 7 | **TheYNC** | theync.com | RdNutz | ✅ | en | ✅ **100% Working** |
+| 8 | **Worldstar** | worldstarhiphop.com | RdNutz | ✅ | en | ⚠️ **Video works, no thumbnails** |
+| 9 | **HorribleVideos** | horriblevideos.com | RdNutz | ❌ | en | ⚠️ **Video works, no thumbnails** |
+| 10 | **Inhumanity** | inhumanity.com | RdNutz | ❌ | en | ⚠️ **Video works, no thumbnails** |
+| 11 | **ZFilmzOriginals** | zfilmzoriginals.com | RdNutz | ❌ | en | ⚠️ **Video works, no thumbnails** |
+| 12 | **Full Fight Replays** | fullfightreplays.com | RdNutz | ❌ | en | ❌ **Not working - no thumbnails** |
+| 13 | **Heavy-R** | heavy-r.com | RdNutz | ❌ | en | ❌ **Not working** |
+| 14 | **Honeydippedcream** | honeydippedcream.com | RdNutz | ❌ | en | ❌ **Not working** |
+| 15 | **JeffModels** | jeffmodels.com | RdNutz | ❌ | en | ❌ **Not working** |
+| 15 | **MMA Core** | mma-core.com | RdNutz | ❌ | en | ❌ **Not working** |
+| 16 | **MMA Replays** | mmareplays.com | RdNutz | ❌ | en | ❌ **Not working** |
+| 17 | **NothingToxic** | nothingtoxic.com | RdNutz | ❌ | en | ❌ **Error parsing video, no thumbnails** |
+| 18 | **PlumperD** | plumperd.com | RdNutz | ❌ | en | ❌ **Not working** |
+| 19 | **Sick Junk** | sickjunk.com | RdNutz | ❌ | en | ❌ **Not working** |
+| 20 | **YouPorn** | youporn.com | RdNutz | ❌ | en | ❌ **Thumbnails work, error pulling videos** |
+| 21 | **Xrares** | xrares.com | RdNutz | ❌ | en | ❌ **Not working** |
+| 22 | **ZFilmzOriginals** | zfilmzoriginals.com | RdNutz | ❌ | en | ⚠️ **Video works, no thumbnails** |
 
-## Extensions Removed
+## Extensions Included (Full Metadata)
 
-| Extension | Reason for Removal |
-|-----------|-------------------|
-| **HeavyFetish** | Scraper not functional; no working Python reference |
-| **NothingToxic** | Scraper not functional; no working Python reference |
-| **USACrime** | Removed per user request; thumbnails work but videos had issues |
-| **Live Sports** | Deleted per user request; replaced by other providers |
+### Working 100% (7 extensions)
+1. **Crazyshit** - Free porn videos from crazyshit.com - shocking, funny, and extreme content
+   - Author: RdNutz | Supported: true | Language: en | Status: ✅ 100% Working
+   - iconUrl: https://crazyshit.com/favicon.ico
+
+2. **DaftPorn** - Extreme porn videos from daftporn.com - amateur, teen, and hardcore content
+   - Author: RdNutz | Supported: true | Language: en | Status: ✅ 100% Working
+   - iconUrl: https://daftporn.com/favicon.ico
+
+3. **eFukt** - Funny and weird porn clips from efukt.com - humor meets adult content
+   - Author: RdNutz | Supported: true | Language: en | Status: ✅ 100% Working
+   - iconUrl: https://www.efukt.com/favicon.ico
+
+4. **Kaotic** - Shocking and extreme videos from kaotic.com - gore, accidents, and wild content
+   - Author: RdNutz | Supported: true | Language: en | Status: ✅ 100% Working
+   - iconUrl: https://kaotic.com/logo.svg
+
+5. **LiveGore** - Real gore and death videos from livegore.com - raw and uncensored footage
+   - Author: RdNutz | Supported: true | Language: en | Status: ✅ 100% Working
+   - iconUrl: https://livegore.com/favicon.png
+
+6. **Sexyandfunny** - Sexy and funny adult videos from sexyandfunny.com - humor and erotica
+   - Author: RdNutz | Supported: true | Language: en | Status: ✅ 100% Working
+   - iconUrl: https://www.sexyandfunny.com/favicon.ico
+
+7. **TheYNC** - Extreme shock videos from theync.com - gore, accidents, and disturbing content
+   - Author: RdNutz | Supported: true | Language: en | Status: ✅ 100% Working
+   - iconUrl: https://theync.com/logo.png
+
+### Working with Issues (5 extensions)
+8. **Worldstar** - Hip hop and street fight videos from worldstarhiphop.com - viral urban content
+   - Author: RdNutz | Supported: true | Language: en | Status: ⚠️ Video works, no thumbnails
+   - iconUrl: https://worldstarhiphop.com/apple-touch-icon.png
+
+9. **HorribleVideos** - Shocking and horrible videos from horriblevideos.com - extreme content
+   - Author: RdNutz | Supported: false | Language: en | Status: ⚠️ Video works, no thumbnails
+   - iconUrl: https://www.horriblevideos.com/favicon.ico
+
+10. **Inhumanity** - Extreme and inhuman content from inhumanity.com - gore and shock videos
+    - Author: RdNutz | Supported: false | Language: en | Status: ⚠️ Video works, no thumbnails
+    - iconUrl: https://www.inhumanity.com/favicon.ico
+
+11. **ZFilmzOriginals** - Original adult films from zfilmzoriginals.com - exclusive content
+    - Author: RdNutz | Supported: false | Language: en | Status: ⚠️ Video works, no thumbnails
+    - iconUrl: https://zfilmzoriginals.com/favicon.ico
+
+### Not Working (10 extensions)
+12. **Full Fight Replays** - Full fight replays and combat sports from fullfightreplays.com
+    - Author: RdNutz | Supported: false | Language: en | Status: ❌ Not working - no thumbnails
+    - iconUrl: https://fullfightreplays.com/favicon.ico
+
+13. **Heavy-R** - Extreme porn from heavy-r.com - hardcore and fetish content
+    - Author: RdNutz | Supported: false | Language: en | Status: ❌ Not working
+    - iconUrl: https://heavyr.com/favicon.ico
+
+13. **Honeydippedcream** - Adult content from honeydippedcream.com - ebony and amateur videos
+    - Author: RdNutz | Supported: false | Language: en | Status: ❌ Not working
+    - iconUrl: https://honeydippedcream.com/favicon.ico
+
+14. **JeffModels** - BBW and plus-size adult content from jeffmodels.com
+    - Author: RdNutz | Supported: false | Language: en | Status: ❌ Not working
+    - iconUrl: https://www.jeffmodels.com/favicon.ico
+
+15. **MMA Core** - MMA fight videos and highlights from mmacore.tv
+    - Author: RdNutz | Supported: false | Language: en | Status: ❌ Not working
+    - iconUrl: https://mmacore.tv/favicon.ico
+
+16. **MMA Replays** - Full MMA fight replays from mmareplays.com
+    - Author: RdNutz | Supported: false | Language: en | Status: ❌ Not working
+    - iconUrl: https://mmareplays.com/favicon.ico
+
+17. **NothingToxic** - Shock and extreme videos from nothingtoxic.com - gore and accidents
+    - Author: RdNutz | Supported: false | Language: en | Status: ❌ Error parsing video, no thumbnails
+    - iconUrl: https://www.nothingtoxic.com/favicon.ico
+
+18. **PlumperD** - BBW adult content from plumperd.com
+    - Author: RdNutz | Supported: false | Language: en | Status: ❌ Not working
+    - iconUrl: https://plumperd.com/favicon.ico
+
+19. **Sick Junk** - Extreme and sick content from sickjunk.com - gore and shock
+    - Author: RdNutz | Supported: false | Language: en | Status: ❌ Not working
+    - iconUrl: https://www.sickjunk.com/favicon.ico
+
+20. **YouPorn** - Free porn videos from youporn.com - mainstream adult content
+    - Author: RdNutz | Supported: false | Language: en | Status: ❌ Thumbnails work, error pulling videos
+    - iconUrl: https://www.youporn.com/favicon.ico
+
+21. **Xrares** - Rare and extreme amateur videos from xrares.com - unique adult content
+    - Author: RdNutz | Supported: false | Language: en | Status: ❌ Not working
+    - iconUrl: https://www.xrares.com/favicon.ico
 
 ## Extractor Architecture
 
@@ -129,10 +214,6 @@ Each provider's scraping logic was ported from the working Python scrapers in `/
   - Individual video pages → `get_file` URLs
 - **CF proxy**: `CF_PROXY_URL` environment variable for bypassing Cloudflare
 
-### USACrime (`usacrime`)
-- **Listing**: Same pattern as LiveGore (mirror domain)
-- **Video resolution**: Multiple pattern extraction from video page
-
 ## Build Information
 
 ### Technical Stack
@@ -158,19 +239,19 @@ Each provider's scraping logic was ported from the working Python scrapers in `/
 
 ### Release
 - **v0.2.2** uploaded to GitHub Release
-- **22 providers** (11 NSFW + 3 MMA + 8 new NSFW)
+- **22 providers** (7 working 100%, 5 working with issues, 10 not working)
 - **CDN propagation**: ~15 minutes for `raw.githubusercontent.com` updates
 
 ## Installation
 
 ### For CloudStream 3 Users
 1. Open CloudStream → Settings → Extensions → Add Repository
-2. Add repository URL: `https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/master/repo.json`
+2. Add repository URL: `https://raw.githubusercontent.com/Robbdeeze/RdNutz-Repo/master/repo.json`
 3. Browse available extensions and install desired ones
 4. Each extension appears as a provider in the home screen selector
 
 ### For Developers
-- Clone the repository: `git clone https://github.com/lucidconviction/RdNutz-Repo`
+- Clone the repository: `git clone https://github.com/Robbdeeze/RdNutz-Repo`
 - Modify provider files in `*/src/main/java/com/rdnutz/providers/`
 - Rebuild: `./gradlew make --no-daemon`
 - Upload release: `gh release create v0.1.0 ...`
@@ -198,7 +279,7 @@ Some providers (Worldstar, LiveGore initially) had thumbnails not displaying. Fi
 - Using `fixUrlNull()` for relative URL handling
 
 ## Contact & Support
-- **GitHub**: [lucidconviction/RdNutz-Repo](https://github.com/lucidconviction/RdNutz-Repo)
+- **GitHub**: [Robbdeeze/RdNutz-Repo](https://github.com/Robbdeeze/RdNutz-Repo)
 - **Issues**: Use GitHub Issues for bug reports
 - **Python scrapers**: Located at `/Users/robbdeeze/Documents/projects/iptv/New working scrapers/`
 
