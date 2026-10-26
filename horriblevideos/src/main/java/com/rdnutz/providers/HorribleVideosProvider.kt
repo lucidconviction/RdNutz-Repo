@@ -11,41 +11,46 @@ class HorribleVideosProvider : MainAPI() {
     override val hasMainPage = true
 
     override val mainPage = mainPageOf(
-        "${mainUrl}/" to "Latest"
+        "${mainUrl}/videos/" to "Latest"
     )
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
-        val pageUrl = if (page == 1) "$mainUrl/" else "$mainUrl/page${page}.html"
+        val pageUrl = if (page == 1) "$mainUrl/videos/" else "$mainUrl/page$page/"
         val document = app.get(pageUrl).document
 
-        val videoLinks = document.select("a[href*=/video/]")
+        // Extract video links: /video/slug-ID.html
+        val videoLinks = document.select("a[href^='/video/']")
             .mapNotNull { el ->
-                val href = fixUrlNull(el.attr("href"))
+                val href = el.attr("href")
                 val title = el.attr("title")
-                if (href != null && href.contains("/video/")) Pair(href, title) else null
+                if (href.startsWith("/video/")) Pair(href, title) else null
             }
             .distinctBy { it.first }
             .take(30)
 
-        val home = videoLinks.mapNotNull { (videoUrl, title) ->
-            val vidId = Regex("-(\\d+)\\.html").find(videoUrl)?.groupValues?.get(1)
-            if (vidId == null) return@mapNotNull null
-
-            val embedUrl = "$mainUrl/embed/$vidId"
-            val embedDoc = app.get(embedUrl).document
-
-            val mp4Url = embedDoc.selectFirst("video source, source[src]")?.attr("src")
-                ?: embedDoc.selectFirst("video[src]")?.attr("src")
+        val home = videoLinks.mapNotNull { (videoPath, linkTitle) ->
+            val fullUrl = fixUrl(videoPath) ?: return@mapNotNull null
+            val videoDoc = app.get(fullUrl).document
+            
+            // Extract video URL from video tag
+            val videoUrl = videoDoc.selectFirst("video source[src]")?.attr("src")
+                ?: videoDoc.selectFirst("video[src]")?.attr("src")
                 ?: ""
-            if (mp4Url.isEmpty()) return@mapNotNull null
+            if (videoUrl.isEmpty()) return@mapNotNull null
 
-            val cleanTitle = if (title.isNotBlank()) title else "HorribleVideos Video $vidId"
-            // Try multiple sources for poster
-            val posterUrl = fixUrlNull(embedDoc.selectFirst("video[poster]")?.attr("poster"))
-                ?: fixUrlNull(embedDoc.selectFirst("meta[property='og:image']")?.attr("content"))
+            // Extract title from page title or og:title
+            val title = videoDoc.selectFirst("title")?.text()
+                ?.replace(" - horriblevideos.com", "")
+                ?.trim()
+                ?: linkTitle
+                ?: "HorribleVideos Video"
+            
+            // Extract poster from video poster attribute or og:image
+            val posterUrl = videoDoc.selectFirst("video[poster]")?.attr("poster")
+                ?: videoDoc.selectFirst("meta[property='og:image']")?.attr("content")
                 ?: ""
 
-            newMovieSearchResponse(cleanTitle, videoUrl, TvType.NSFW) {
+            newMovieSearchResponse(title, fullUrl, TvType.NSFW) {
                 this.posterUrl = posterUrl
             }
         }
@@ -62,32 +67,34 @@ class HorribleVideosProvider : MainAPI() {
 
     override suspend fun search(query: String): List<SearchResponse> {
         val document = app.get("${mainUrl}/search?q=${query.replace(" ", "+")}").document
-        val videoLinks = document.select("a[href*=/video/]")
+        val videoLinks = document.select("a[href^='/video/']")
             .mapNotNull { el ->
-                val href = fixUrlNull(el.attr("href"))
+                val href = el.attr("href")
                 val title = el.attr("title")
-                if (href != null && href.contains("/video/")) Pair(href, title) else null
+                if (href.startsWith("/video/")) Pair(href, title) else null
             }
             .distinctBy { it.first }
             .take(30)
 
-        return videoLinks.mapNotNull { (videoUrl, title) ->
-            val vidId = Regex("-(\\d+)\\.html").find(videoUrl)?.groupValues?.get(1)
-            if (vidId == null) return@mapNotNull null
-
-            val embedUrl = "$mainUrl/embed/$vidId"
-            val embedDoc = app.get(embedUrl).document
-            val mp4Url = embedDoc.selectFirst("video source, source[src]")?.attr("src")
-                ?: embedDoc.selectFirst("video[src]")?.attr("src")
+        return videoLinks.mapNotNull { (videoPath, linkTitle) ->
+            val fullUrl = fixUrl(videoPath) ?: return@mapNotNull null
+            val videoDoc = app.get(fullUrl).document
+            val videoUrl = videoDoc.selectFirst("video source[src]")?.attr("src")
+                ?: videoDoc.selectFirst("video[src]")?.attr("src")
                 ?: ""
-            if (mp4Url.isEmpty()) return@mapNotNull null
+            if (videoUrl.isEmpty()) return@mapNotNull null
 
-            val cleanTitle = if (title.isNotBlank()) title else "HorribleVideos Video $vidId"
-            val posterUrl = fixUrlNull(embedDoc.selectFirst("video[poster]")?.attr("poster"))
-                ?: fixUrlNull(embedDoc.selectFirst("meta[property='og:image']")?.attr("content"))
+            val title = videoDoc.selectFirst("title")?.text()
+                ?.replace(" - horriblevideos.com", "")
+                ?.trim()
+                ?: linkTitle
+                ?: "HorribleVideos Video"
+            
+            val posterUrl = videoDoc.selectFirst("video[poster]")?.attr("poster")
+                ?: videoDoc.selectFirst("meta[property='og:image']")?.attr("content")
                 ?: ""
 
-            newMovieSearchResponse(cleanTitle, videoUrl, TvType.NSFW) {
+            newMovieSearchResponse(title, fullUrl, TvType.NSFW) {
                 this.posterUrl = posterUrl
             }
         }
@@ -95,28 +102,23 @@ class HorribleVideosProvider : MainAPI() {
 
     override suspend fun load(url: String): LoadResponse {
         val document = app.get(url).document
-        val vidId = Regex("-(\\d+)\\.html").find(url)?.groupValues?.get(1)
         val title = document.selectFirst("title")?.text()
+            ?.replace(" - horriblevideos.com", "")
+            ?.trim()
             ?: "HorribleVideos Video"
-        val posterUrl = fixUrlNull(document.selectFirst("video[poster]")?.attr("poster"))
-            ?: fixUrlNull(document.selectFirst("meta[property='og:image']")?.attr("content"))
+        val posterUrl = document.selectFirst("video[poster]")?.attr("poster")
+            ?: document.selectFirst("meta[property='og:image']")?.attr("content")
             ?: ""
-
         return newMovieLoadResponse(title, url, TvType.NSFW, url) {
             this.posterUrl = posterUrl
         }
     }
 
     override suspend fun loadLinks(data: String, isCasting: Boolean, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit): Boolean {
-        val vidId = Regex("-(\\d+)\\.html").find(data)?.groupValues?.get(1)
-        if (vidId == null) return false
-
-        val embedUrl = "$mainUrl/embed/$vidId"
-        val document = app.get(embedUrl).document
-        val videoUrl = document.selectFirst("video source, source[src]")?.attr("src")
+        val document = app.get(data).document
+        val videoUrl = document.selectFirst("video source[src]")?.attr("src")
             ?: document.selectFirst("video[src]")?.attr("src")
             ?: ""
-
         if (videoUrl.isNotEmpty()) {
             newExtractorLink(
                 name,

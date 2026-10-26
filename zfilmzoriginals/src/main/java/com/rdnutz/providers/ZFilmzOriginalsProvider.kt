@@ -2,7 +2,6 @@ package com.rdnutz.providers
 
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.utils.*
-import org.json.JSONObject
 
 class ZFilmzOriginalsProvider : MainAPI() {
     override var mainUrl = "https://z-filmz-originals.com"
@@ -29,21 +28,28 @@ class ZFilmzOriginalsProvider : MainAPI() {
 
         val videos = mutableListOf<Triple<String, String, String>>() // title, trailerUrl, posterUrl
         try {
-            val json = JSONObject(nextDataScript)
-            val contents = json.getJSONObject("props")
-                .getJSONObject("pageProps")
-                .getJSONObject("contents")
-                .getJSONArray("data")
-
-            for (i in 0 until contents.length()) {
-                val v = contents.getJSONObject(i)
-                val title = v.optString("title", "")
-                val trailerUrl = v.optString("trailer_url", "")
-                val posterUrl = v.optString("poster", "") // Try to get poster from JSON
-                    ?: v.optString("thumbnail", "")
-                    ?: v.optString("image", "")
-                if (title.isNotBlank() && trailerUrl.isNotBlank()) {
-                    videos.add(Triple(title, trailerUrl, posterUrl))
+            // Parse JSON manually to avoid dependencies
+            val json = nextDataScript.trim()
+            
+            // Extract contents.data array
+            val contentsMatch = Regex("""\"contents\"\s*:\s*\{[^}]*\"data\"\s*:\s*\[(.+?)\]""").find(json)
+            if (contentsMatch != null) {
+                val dataStr = contentsMatch.groupValues[1]
+                // Split by },{ to get individual items
+                val items = dataStr.split("},\\s*\\{").map { s ->
+                    if (!s.startsWith("{")) "{$s"
+                    else if (!s.endsWith("}")) "$s}"
+                    else s
+                }
+                
+                items.forEach { item ->
+                    val title = Regex("""\"title\"\s*:\s*\"([^\"]+)\"""").find(item)?.groupValues?.get(1) ?: ""
+                    val trailerUrl = Regex("""\"trailer_url\"\s*:\s*\"([^\"]+)\"""").find(item)?.groupValues?.get(1) ?: ""
+                    val thumb = Regex("""\"thumb\"\s*:\s*\"([^\"]+)\"""").find(item)?.groupValues?.get(1) ?: ""
+                    
+                    if (title.isNotBlank() && trailerUrl.isNotBlank()) {
+                        videos.add(Triple(title, trailerUrl, thumb))
+                    }
                 }
             }
         } catch (e: Exception) {
@@ -68,27 +74,29 @@ class ZFilmzOriginalsProvider : MainAPI() {
 
     override suspend fun search(query: String): List<SearchResponse> {
         val document = app.get("$mainUrl/videos?search=${query.replace(" ", "+")}").document
-
         val nextDataScript = document.selectFirst("script#__NEXT_DATA__")?.html() ?: ""
         if (nextDataScript.isEmpty()) return emptyList()
 
         val videos = mutableListOf<Triple<String, String, String>>()
         try {
-            val json = JSONObject(nextDataScript)
-            val contents = json.getJSONObject("props")
-                .getJSONObject("pageProps")
-                .getJSONObject("contents")
-                .getJSONArray("data")
-
-            for (i in 0 until contents.length()) {
-                val v = contents.getJSONObject(i)
-                val title = v.optString("title", "")
-                val trailerUrl = v.optString("trailer_url", "")
-                val posterUrl = v.optString("poster", "")
-                    ?: v.optString("thumbnail", "")
-                    ?: v.optString("image", "")
-                if (title.isNotBlank() && trailerUrl.isNotBlank()) {
-                    videos.add(Triple(title, trailerUrl, posterUrl))
+            val json = nextDataScript.trim()
+            val contentsMatch = Regex("""\"contents\"\s*:\s*\{[^}]*\"data\"\s*:\s*\[(.+?)\]""").find(json)
+            if (contentsMatch != null) {
+                val dataStr = contentsMatch.groupValues[1]
+                val items = dataStr.split("},\\s*\\{").map { s ->
+                    if (!s.startsWith("{")) "{$s"
+                    else if (!s.endsWith("}")) "$s}"
+                    else s
+                }
+                
+                items.forEach { item ->
+                    val title = Regex("""\"title\"\s*:\s*\"([^\"]+)\"""").find(item)?.groupValues?.get(1) ?: ""
+                    val trailerUrl = Regex("""\"trailer_url\"\s*:\s*\"([^\"]+)\"""").find(item)?.groupValues?.get(1) ?: ""
+                    val thumb = Regex("""\"thumb\"\s*:\s*\"([^\"]+)\"""").find(item)?.groupValues?.get(1) ?: ""
+                    
+                    if (title.isNotBlank() && trailerUrl.isNotBlank()) {
+                        videos.add(Triple(title, trailerUrl, thumb))
+                    }
                 }
             }
         } catch (e: Exception) {
@@ -103,8 +111,10 @@ class ZFilmzOriginalsProvider : MainAPI() {
     }
 
     override suspend fun load(url: String): LoadResponse {
-        // For trailer URLs, we just pass them through
-        return newMovieLoadResponse("ZFilmzOriginals Trailer", url, TvType.Movie, url) {
+        // For trailer URLs, extract title from URL or use default
+        val title = url.substringAfterLast("/").replace(".mp4", "").replace("_trailer", "")
+            .split("-").joinToString(" ") { it.replaceFirstChar { c -> c.uppercase() } }
+        return newMovieLoadResponse(title, url, TvType.Movie, url) {
             this.posterUrl = ""
         }
     }
