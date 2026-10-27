@@ -208,5 +208,19 @@
     "name": "streamedlive",
     "iconUrl": "https://strmfree.st/favicon.ico",
     "type": "Live"
+  },
+  {
+    "fileHash": "sha256-4510c8d176c3208aec8fd874933329afb2d56b6c0eb5f95155ca10a3851370b4",
+    "apiVersion": 1,
+    "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
+    "fileSize": 33781,
+    "status": 1,
+    "authors": [],
+    "version": 1,
+    "internalName": "sportsreplays",
+    "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/sportsreplays.cs3",
+    "name": "sportsreplays",
+    "iconUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Sports.svg/200px-Sports.svg.png",
+    "type": "Movie"
   }
 ]
