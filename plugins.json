@@ -260,19 +260,6 @@
     "iconUrl": "https://zfilmzoriginals.com/favicon.ico"
   },
   {
-    "fileHash": "sha256-831db0c1c41280ec6d86f7a6a9bcd186fbda5c3dfabf3057758d169c479fde87",
-    "apiVersion": 1,
-    "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
-    "fileSize": 15217,
-    "status": 1,
-    "authors": [],
-    "version": 1,
-    "internalName": "watchmmafull",
-    "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/watchmmafull.cs3",
-    "name": "watchmmafull",
-    "iconUrl": "https://mmafull.com/wp-content/uploads/logo.png"
-  },
-  {
     "fileHash": "sha256-16d6de9661dfff99fd2231a9b9702c1072c2ab9c28ff91043d325eee85c88c16",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
