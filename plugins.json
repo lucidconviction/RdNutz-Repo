@@ -156,19 +156,6 @@
     "iconUrl": "https://mmacore.tv/favicon.ico"
   },
   {
-    "fileHash": "sha256-5019dfca20b995f7850b09e7218457cc3dfcfb9ad3196750e57fe329b6b83455",
-    "apiVersion": 1,
-    "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
-    "fileSize": 16325,
-    "status": 1,
-    "authors": [],
-    "version": 1,
-    "internalName": "mmareplays",
-    "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/mmareplays.cs3",
-    "name": "mmareplays",
-    "iconUrl": "https://mmareplays.com/favicon.ico"
-  },
-  {
     "fileHash": "sha256-52861401970fb79564c8721b12865d6dac837c52c030479c1fd5fbf0703b0e51",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
@@ -271,5 +258,18 @@
     "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/zfilmzoriginals.cs3",
     "name": "zfilmzoriginals",
     "iconUrl": "https://zfilmzoriginals.com/favicon.ico"
+  },
+  {
+    "fileHash": "sha256-831db0c1c41280ec6d86f7a6a9bcd186fbda5c3dfabf3057758d169c479fde87",
+    "apiVersion": 1,
+    "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
+    "fileSize": 15217,
+    "status": 1,
+    "authors": [],
+    "version": 1,
+    "internalName": "watchmmafull",
+    "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/watchmmafull.cs3",
+    "name": "watchmmafull",
+    "iconUrl": "https://mmafull.com/wp-content/uploads/logo.png"
   }
 ]

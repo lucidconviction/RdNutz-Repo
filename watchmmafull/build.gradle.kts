@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.rdnutz.providers"
+    namespace = "com.rdnutz.providers.watchmmafull"
     compileSdk = 34
     buildToolsVersion = "34.0.0"
 
