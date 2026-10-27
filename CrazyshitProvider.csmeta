@@ -1,10 +1,11 @@
 {
   "name": "Crazyshit",
-  "url": "https://github.com/Robbdeeze/rdnutz-cloudstream-extensions",
-  "description": "Crazyshit viral videos provider for CloudStream",
-  "language": "en",
+  "packageName": "com.rdnutz.providers",
+  "className": "CrazyshitProvider",
   "version": 1,
-  "type": 2,
-  "mainActivity": "com.rdnutz.providers.CrazyshitProvider",
-  "bundle": "app/build/outputs/aar/app-release.aar"
+  "lang": "en",
+  "description": "Crazyshit viral videos provider for CloudStream",
+  "supportedTypes": ["NSFW"],
+  "hasSearch": true,
+  "hasMainPage": true
 }

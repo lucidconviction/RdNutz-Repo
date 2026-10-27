@@ -5,7 +5,7 @@
   "version": 1,
   "lang": "en",
   "description": "ZFilmzOriginals adult film content provider for CloudStream",
-  "supportedTypes": ["Movie"],
+  "supportedTypes": ["NSFW"],
   "hasSearch": true,
   "hasMainPage": true
 }
