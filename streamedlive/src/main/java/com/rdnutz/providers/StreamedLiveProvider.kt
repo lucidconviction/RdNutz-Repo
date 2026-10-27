@@ -28,10 +28,12 @@ class StreamedLiveProvider : MainAPI() {
 
     // ── Main page entries ──────────────────────────────────────────────────────
     // Format: "sourceId|||payload"  →  "SourceLabel - EntryName"
-    override val mainPage = mainPageOf(
+    override var mainPage = mainPageOf(
         *categories.map { cat -> "strmfree|||${"https://streamfree.top/api/v1/streams?category=${cat.key}"}" to "${cat.label} (StrmFree)" }.toTypedArray(),
         "daddylive|||https://daddylive.app/api/events" to "DaddyLive",
-        "ppv|||https://api.ppv.st/api/streams" to "PPV",
+        "mirrors|||https://api.mirrors.st/api/streams" to "Mirrors",
+        "ntv|||https://ntv.cx/api/get-matches?server=falcon&type=live" to "NTV Falcon",
+        "crichd|||https://crichd.at/" to "CricHD",
     )
 
     // ── getMainPage ────────────────────────────────────────────────────────────
@@ -42,7 +44,9 @@ class StreamedLiveProvider : MainAPI() {
         return when (sourceId) {
             "strmfree" -> getStrmFreeMainPage(payload)
             "daddylive" -> getDaddyLiveMainPage()
-            "ppv" -> getPpvMainPage()
+            "mirrors" -> getMirrorsMainPage()
+            "ntv" -> getNtvMainPage(payload)
+            "crichd" -> getCricHDMainPage()
             else -> newHomePageResponse(emptyList())
         }
     }
@@ -121,6 +125,7 @@ class StreamedLiveProvider : MainAPI() {
     }
 
     // ── PPV source ─────────────────────────────────────────────────────────────
+    // Kept for backward compatibility but deprecated (taifood-blog is ad-heavy)
     private suspend fun getPpvMainPage(): HomePageResponse {
         val response = app.get("https://api.ppv.st/api/streams")
         val body = response.body.string()
@@ -153,6 +158,121 @@ class StreamedLiveProvider : MainAPI() {
 
         return newHomePageResponse(
             list = HomePageList(name = "PPV", list = streams, isHorizontalImages = false),
+            hasNext = false
+        )
+    }
+
+    // ── Mirrors.st source ──────────────────────────────────────────────────────
+    private suspend fun getMirrorsMainPage(): HomePageResponse {
+        val response = app.get("https://api.mirrors.st/api/streams")
+        val body = response.body.string()
+        val streams = mutableListOf<SearchResponse>()
+
+        try {
+            val json = JSONObject(body)
+            val streamsArr = json.optJSONArray("streams") ?: JSONArray()
+            for (i in 0 until streamsArr.length()) {
+                val cat = streamsArr.getJSONObject(i)
+                val catName = cat.optString("category", "").trim()
+                val catStreams = cat.optJSONArray("streams") ?: continue
+                for (j in 0 until catStreams.length()) {
+                    val s = catStreams.getJSONObject(j)
+                    val name = s.optString("name", "").trim()
+                    val tag = s.optString("tag", "").trim()
+                    val display = if (tag.isNotEmpty()) "$name [$tag]" else name
+                    val iframe = s.optString("iframe", "").trim()
+                    if (iframe.isEmpty()) continue
+                    val poster = s.optString("poster", "")
+                    streams.add(newLiveSearchResponse(display, iframe, TvType.Live) {
+                        if (poster.isNotEmpty()) this.posterUrl = poster
+                    })
+                }
+                if (streams.size >= 100) break
+            }
+        } catch (e: Exception) {
+            println("StreamedLive[mirrors] error: ${e.message}")
+        }
+
+        return newHomePageResponse(
+            list = HomePageList(name = "Mirrors", list = streams, isHorizontalImages = false),
+            hasNext = false
+        )
+    }
+
+    // ── NTV Falcon source ──────────────────────────────────────────────────────
+    private suspend fun getNtvMainPage(payload: String): HomePageResponse {
+        val response = app.get(payload)
+        val body = response.body.string()
+        val streams = mutableListOf<SearchResponse>()
+
+        try {
+            val json = JSONObject(body)
+            val liveEvents = json.optJSONArray("live") ?: JSONArray()
+            for (i in 0 until liveEvents.length()) {
+                val ev = liveEvents.getJSONObject(i)
+                val title = ev.optString("title", "").trim()
+                val category = ev.optString("category", "").trim()
+                val tournament = ev.optString("tournament", "").trim()
+                val display = if (tournament.isNotEmpty()) "$title ($tournament)" else title
+                val sources = ev.optJSONArray("sources") ?: continue
+                for (j in 0 until sources.length()) {
+                    val src = sources.getJSONObject(j)
+                    val url = src.optString("url", "").trim()
+                    val channelName = src.optString("channelName", src.optString("name", "")).trim()
+                    if (url.isEmpty()) continue
+                    streams.add(newLiveSearchResponse("$display - $channelName", url, TvType.Live))
+                }
+                if (streams.size >= 100) break
+            }
+        } catch (e: Exception) {
+            println("StreamedLive[ntv] error: ${e.message}")
+        }
+
+        return newHomePageResponse(
+            list = HomePageList(name = "NTV Falcon", list = streams, isHorizontalImages = false),
+            hasNext = false
+        )
+    }
+
+    // ── CricHD source ──────────────────────────────────────────────────────────
+    private suspend fun getCricHDMainPage(): HomePageResponse {
+        val response = app.get("https://crichd.at/")
+        val body = response.body.string()
+        val streams = mutableListOf<SearchResponse>()
+
+        try {
+            // Extract all event links from the page
+            val eventLinks = Regex("""href=["'](/events/[^"']+)["']""").findAll(body)
+            for (linkMatch in eventLinks) {
+                val eventPath = linkMatch.groupValues[1]
+                val eventName = eventPath.replace("/", " ").trim()
+                try {
+                    val eventResp = app.get("https://crichd.at${eventPath}")
+                    val eventHtml = eventResp.body.string()
+                    
+                    // Extract stream URLs from the event page
+                    val streamUrls = Regex("""https?://[^"'\s<>]+""").findAll(eventHtml)
+                    val uniqueUrls = mutableSetOf<String>()
+                    for (urlMatch in streamUrls) {
+                        val fullUrl = urlMatch.groupValues[0]
+                        if (fullUrl.contains("daddylive1.cx") || fullUrl.contains("taifood-blog.asia") || fullUrl.contains("hitsportshdd.xyz")) {
+                            uniqueUrls.add(fullUrl)
+                        }
+                    }
+                    
+                    for (streamUrl in uniqueUrls) {
+                        streams.add(newLiveSearchResponse("$eventName", streamUrl, TvType.Live))
+                    }
+                } catch (_: Exception) {}
+                
+                if (streams.size >= 50) break
+            }
+        } catch (e: Exception) {
+            println("StreamedLive[crichd] error: ${e.message}")
+        }
+
+        return newHomePageResponse(
+            list = HomePageList(name = "CricHD", list = streams, isHorizontalImages = false),
             hasNext = false
         )
     }
@@ -262,13 +382,20 @@ class StreamedLiveProvider : MainAPI() {
             found = loadDaddyLiveLinks(data, callback) || found
         }
 
-        // Source 3: ppv.st / taifood-blog.asia / embed.st
+        // Source 3: mirrors.st / taifood-blog.asia embeds
         if (data.contains("taifood-blog.asia/embed")
-            || data.contains("embed.st/embed")
-            || data.contains("streamec.st")
-            || data.contains("ordernap.net")
-            || data.contains("bintv-sources.pages.dev")) {
+            || data.contains("mirrors.st")) {
             found = loadGenericEmbedLinks(data, callback) || found
+        }
+
+        // Source 4: ntv.cx / embedsports.me
+        if (data.contains("embedsports.me") || data.contains("livelive24.st")) {
+            found = loadNtvEmbedLinks(data, callback) || found
+        }
+
+        // Source 5: crichd.at / hitsportshdd.xyz / daddylive1.cx
+        if (data.contains("hitsportshdd.xyz") || data.contains("daddylive1.cx")) {
+            found = loadCricHDLinks(data, callback) || found
         }
 
         return found
@@ -392,6 +519,99 @@ class StreamedLiveProvider : MainAPI() {
             }
         } catch (e: Exception) {
             println("StreamedLive[generic] error: ${e.message}")
+        }
+        return false
+    }
+
+    // ── NTV / embedsports.me pipeline ─────────────────────────────────────────
+    private suspend fun loadNtvEmbedLinks(
+        ntvUrl: String,
+        callback: (ExtractorLink) -> Unit
+    ): Boolean {
+        try {
+            // extract slug from URL
+            val slug = Regex("""url=([a-zA-Z0-9_-]+)""").find(ntvUrl)?.groupValues?.get(1) ?: return false
+            val embedsportsUrl = "https://embedsports.me/a/$slug"
+            
+            val doc = app.get(embedsportsUrl).document
+            val html = doc.html()
+            
+            // The embedsports.me page has a siteConfig with tracking data
+            // It loads an iframe with the actual stream
+            val iframeMatch = Regex("""<iframe[^>]+src=["']([^"']+)["']""").find(html)
+            if (iframeMatch != null) {
+                val iframeUrl = iframeMatch.groupValues[1]
+                if (iframeUrl.contains("m3u8") || iframeUrl.startsWith("http")) {
+                    newExtractorLink(
+                        name = "StreamedLive",
+                        source = "embedsports.me",
+                        url = iframeUrl,
+                        type = INFER_TYPE
+                    ) {
+                        this.referer = embedsportsUrl
+                        callback(this)
+                    }
+                    return true
+                }
+            }
+            
+            // If no direct iframe, check for m3u8 in page
+            val m3u8Match = Regex("""https?://[^"'\s<>]+\.(?:m3u8|m3u)[^"'\s<>]*""").find(html)
+            if (m3u8Match != null) {
+                newExtractorLink(
+                    name = "StreamedLive",
+                    source = "embedsports.me",
+                    url = m3u8Match.value,
+                    type = INFER_TYPE
+                ) {
+                    this.referer = embedsportsUrl
+                    callback(this)
+                }
+                return true
+            }
+        } catch (e: Exception) {
+            println("StreamedLive[ntv] error: ${e.message}")
+        }
+        return false
+    }
+
+    // ── CricHD / hitsportshdd pipeline ────────────────────────────────────────
+    private suspend fun loadCricHDLinks(
+        crichdUrl: String,
+        callback: (ExtractorLink) -> Unit
+    ): Boolean {
+        try {
+            // hitsportshdd.xyz redirects to the actual stream - follow redirect
+            // and process the resulting page (daddylive1.cx or taifood-blog.asia)
+            if (crichdUrl.contains("hitsportshdd.xyz")) {
+                val doc = app.get(crichdUrl).document
+                val html = doc.html()
+                // Try to extract iframe src from the redirected page
+                val iframeMatch = Regex("""<iframe[^>]+src=["']([^"']+)["']""").find(html)
+                if (iframeMatch != null) {
+                    val iframeUrl = iframeMatch.groupValues[1]
+                    val fullIframe = if (iframeUrl.startsWith("http")) iframeUrl
+                        else "https://daddylive1.cx$iframeUrl"
+                    return loadGenericEmbedLinks(fullIframe, callback)
+                }
+                // If no iframe, try to find m3u8 directly
+                return loadGenericEmbedLinks(crichdUrl, callback)
+            }
+            
+            // daddylive1.cx redirects to embed URLs
+            if (crichdUrl.contains("daddylive1.cx")) {
+                val doc = app.get(crichdUrl).document
+                val html = doc.html()
+                val iframeMatch = Regex("""<iframe[^>]+src=["']([^"']+)["']""").find(html)
+                if (iframeMatch != null) {
+                    val iframeUrl = iframeMatch.groupValues[1]
+                    val fullIframe = if (iframeUrl.startsWith("http")) iframeUrl
+                        else "https://daddylive1.cx$iframeUrl"
+                    return loadGenericEmbedLinks(fullIframe, callback)
+                }
+            }
+        } catch (e: Exception) {
+            println("StreamedLive[crichd] error: ${e.message}")
         }
         return false
     }
