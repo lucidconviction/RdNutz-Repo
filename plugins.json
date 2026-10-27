@@ -10,7 +10,8 @@
     "internalName": "crazyshit",
     "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/crazyshit.cs3",
     "name": "crazyshit",
-    "iconUrl": "https://crazyshit.com/favicon.ico"
+    "iconUrl": "https://crazyshit.com/favicon.ico",
+    "type": "Movie"
   },
   {
     "fileHash": "sha256-0973c8a296814c78e507fec85ad3ec043cd8ca3668c02ad03d05faf599866bab",
@@ -23,7 +24,8 @@
     "internalName": "daftporn",
     "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/daftporn.cs3",
     "name": "daftporn",
-    "iconUrl": "https://daftporn.com/favicon.ico"
+    "iconUrl": "https://daftporn.com/favicon.ico",
+    "type": "NSFW"
   },
   {
     "fileHash": "sha256-9c5529b09730ef693cfc790f1dea36b02c4dab57162e602d3f4a6609365badbd",
@@ -36,7 +38,8 @@
     "internalName": "efukt",
     "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/efukt.cs3",
     "name": "efukt",
-    "iconUrl": "https://efukt.com/favicon.ico"
+    "iconUrl": "https://efukt.com/favicon.ico",
+    "type": "NSFW"
   },
   {
     "fileHash": "sha256-ea91ef65e04af3b9f078476e5ed44c73523b705bcc175ba228cd73372995b282",
@@ -49,7 +52,8 @@
     "internalName": "fullfightreplays",
     "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/fullfightreplays.cs3",
     "name": "fullfightreplays",
-    "iconUrl": "https://fullfightreplays.com/favicon.ico"
+    "iconUrl": "https://fullfightreplays.com/favicon.ico",
+    "type": "Movie"
   },
   {
     "fileHash": "sha256-71e6d85a2185b31d1a06bcc81bd8ff8e7dd7ed844647dab595faee8e8c380c21",
@@ -62,7 +66,8 @@
     "internalName": "horriblevideos",
     "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/horriblevideos.cs3",
     "name": "horriblevideos",
-    "iconUrl": "https://horriblevideos.com/favicon.ico"
+    "iconUrl": "https://horriblevideos.com/favicon.ico",
+    "type": "NSFW"
   },
   {
     "fileHash": "sha256-b393ee0e8e62233fc46955a9ba137a5aea6b8e5e16fd53f38408fca6d637aa7d",
@@ -75,7 +80,8 @@
     "internalName": "jeffsmodels",
     "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/jeffsmodels.cs3",
     "name": "jeffsmodels",
-    "iconUrl": "https://jeffsmodels.com/favicon.ico"
+    "iconUrl": "https://jeffsmodels.com/favicon.ico",
+    "type": "NSFW"
   },
   {
     "fileHash": "sha256-848ffeb82332639ef8377cf7e1550504540bc1672c2dea8e753fadde261e2b8e",
@@ -88,7 +94,8 @@
     "internalName": "kaotic",
     "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/kaotic.cs3",
     "name": "kaotic",
-    "iconUrl": "https://kaotic.com/logo.svg"
+    "iconUrl": "https://kaotic.com/logo.svg",
+    "type": "NSFW"
   },
   {
     "fileHash": "sha256-e149296f7e196d7083527fcd0a7b96a78aa6a79490745e16752d45268f2797c4",
@@ -101,7 +108,8 @@
     "internalName": "livegore",
     "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/livegore.cs3",
     "name": "livegore",
-    "iconUrl": "https://livegore.com/favicon.png"
+    "iconUrl": "https://livegore.com/favicon.png",
+    "type": "NSFW"
   },
   {
     "fileHash": "sha256-f8ad8893fdf244383c82ba022f8383449a9817ef026b5b462cafcdfc62296338",
@@ -114,7 +122,8 @@
     "internalName": "plumperd",
     "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/plumperd.cs3",
     "name": "plumperd",
-    "iconUrl": "https://plumperd.com/favicon.ico"
+    "iconUrl": "https://plumperd.com/favicon.ico",
+    "type": "NSFW"
   },
   {
     "fileHash": "sha256-5610962f78ccb1ffb4b92cafa27eb5c12fd728a891aa29b99929c09fb11e1d3f",
@@ -127,7 +136,8 @@
     "internalName": "sexyandfunny",
     "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/sexyandfunny.cs3",
     "name": "sexyandfunny",
-    "iconUrl": "https://sexyandfunny.com/favicon.ico"
+    "iconUrl": "https://sexyandfunny.com/favicon.ico",
+    "type": "NSFW"
   },
   {
     "fileHash": "sha256-396c7b66683d4fc8cba84a2ec81182a68c5f6d548bbb3663855d814af2040bd8",
@@ -140,7 +150,8 @@
     "internalName": "theync",
     "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/theync.cs3",
     "name": "theync",
-    "iconUrl": "https://theync.com/favicon.ico"
+    "iconUrl": "https://theync.com/favicon.ico",
+    "type": "NSFW"
   },
   {
     "fileHash": "sha256-9181de48172850adf9e98c1eb93e18c7f3058567ecb7fedef10931fb2fbcd333",
@@ -153,7 +164,8 @@
     "internalName": "worldstar",
     "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/worldstar.cs3",
     "name": "worldstar",
-    "iconUrl": "https://worldstarhiphop.com/apple-touch-icon.png"
+    "iconUrl": "https://worldstarhiphop.com/apple-touch-icon.png",
+    "type": "NSFW"
   },
   {
     "fileHash": "sha256-e6ce3adc812bcd773848f5a1585d015daa4096c361b481f89bfbb40520d2fcc2",
@@ -166,20 +178,22 @@
     "internalName": "zfilmzoriginals",
     "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/zfilmzoriginals.cs3",
     "name": "zfilmzoriginals",
-    "iconUrl": "https://zfilmzoriginals.com/favicon.ico"
+    "iconUrl": "https://zfilmzoriginals.com/favicon.ico",
+    "type": "Movie"
   },
   {
-    "fileHash": "sha256-16d6de9661dfff99fd2231a9b9702c1072c2ab9c28ff91043d325eee85c88c16",
+    "fileHash": "sha256-803317ef79867964ee9ef2a5ea52d35ae67859519203522885c224a634faa5b3",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
-    "fileSize": 15218,
+    "fileSize": 15216,
     "status": 1,
     "authors": [],
     "version": 1,
     "internalName": "watchmmafull",
     "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/watchmmafull.cs3",
     "name": "watchmmafull",
-    "iconUrl": "https://mmafull.com/wp-content/uploads/logo.png"
+    "iconUrl": "https://mmafull.com/wp-content/uploads/logo.png",
+    "type": "Movie"
   },
   {
     "fileHash": "sha256-2951bad42e66acafac417f57bb88e44599f660fe736c55161d77e52d9ab18e2e",
@@ -192,6 +206,7 @@
     "internalName": "streamedlive",
     "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/streamedlive.cs3",
     "name": "streamedlive",
-    "iconUrl": "https://strmfree.st/favicon.ico"
+    "iconUrl": "https://strmfree.st/favicon.ico",
+    "type": "Live"
   }
 ]

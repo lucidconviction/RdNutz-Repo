@@ -1,9 +1,10 @@
 {
-  "name": "SickJunkProvider",
+  "name": "SickJunk",
   "packageName": "com.rdnutz.providers",
   "className": "SickJunkProvider",
   "version": 1,
   "lang": "en",
+  "description": "SickJunk adult video content provider for CloudStream",
   "supportedTypes": ["NSFW"],
   "hasSearch": true,
   "hasMainPage": true

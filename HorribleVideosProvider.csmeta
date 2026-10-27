@@ -1,9 +1,10 @@
 {
-  "name": "HorribleVideosProvider",
+  "name": "HorribleVideos",
   "packageName": "com.rdnutz.providers",
   "className": "HorribleVideosProvider",
   "version": 1,
   "lang": "en",
+  "description": "HorribleVideos viral and shock content provider for CloudStream",
   "supportedTypes": ["NSFW"],
   "hasSearch": true,
   "hasMainPage": true

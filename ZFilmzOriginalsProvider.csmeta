@@ -1,9 +1,10 @@
 {
-  "name": "ZFilmzOriginalsProvider",
+  "name": "ZFilmzOriginals",
   "packageName": "com.rdnutz.providers",
   "className": "ZFilmzOriginalsProvider",
   "version": 1,
   "lang": "en",
+  "description": "ZFilmzOriginals adult film content provider for CloudStream",
   "supportedTypes": ["Movie"],
   "hasSearch": true,
   "hasMainPage": true

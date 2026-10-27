@@ -1,9 +1,10 @@
 {
-  "name": "JeffsModelsProvider",
+  "name": "JeffsModels",
   "packageName": "com.rdnutz.providers",
   "className": "JeffsModelsProvider",
   "version": 1,
   "lang": "en",
+  "description": "JeffsModels adult video content provider for CloudStream",
   "supportedTypes": ["NSFW"],
   "hasSearch": true,
   "hasMainPage": true

@@ -1,9 +1,10 @@
 {
-  "name": "HeavyRProvider",
+  "name": "HeavyR",
   "packageName": "com.rdnutz.providers",
   "className": "HeavyRProvider",
   "version": 1,
   "lang": "en",
+  "description": "Heavy-R adult video content provider for CloudStream",
   "supportedTypes": ["NSFW"],
   "hasSearch": true,
   "hasMainPage": true

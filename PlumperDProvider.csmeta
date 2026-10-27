@@ -1,9 +1,10 @@
 {
-  "name": "PlumperDProvider",
+  "name": "PlumperD",
   "packageName": "com.rdnutz.providers",
   "className": "PlumperDProvider",
   "version": 1,
   "lang": "en",
+  "description": "PlumperD adult video content provider for CloudStream",
   "supportedTypes": ["NSFW"],
   "hasSearch": true,
   "hasMainPage": true

@@ -1,9 +1,10 @@
 {
-  "name": "NothingToxicProvider",
+  "name": "NothingToxic",
   "packageName": "com.rdnutz.providers",
   "className": "NothingToxicProvider",
   "version": 1,
   "lang": "en",
+  "description": "NothingToxic adult video content provider for CloudStream",
   "supportedTypes": ["NSFW"],
   "hasSearch": true,
   "hasMainPage": true

@@ -1,9 +1,10 @@
 {
-  "name": "InhumanityProvider",
+  "name": "Inhumanity",
   "packageName": "com.rdnutz.providers",
   "className": "InhumanityProvider",
   "version": 1,
   "lang": "en",
+  "description": "Inhumanity adult video content provider for CloudStream",
   "supportedTypes": ["NSFW"],
   "hasSearch": true,
   "hasMainPage": true

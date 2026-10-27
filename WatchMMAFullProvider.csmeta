@@ -1,0 +1,11 @@
+{
+  "name": "WatchMMAFull",
+  "packageName": "com.rdnutz.providers",
+  "className": "WatchMMAFullProvider",
+  "version": 1,
+  "lang": "en",
+  "description": "MMA fight replays and highlights provider for CloudStream - UFC, ONE Championship, Bellator, PFL, KSW and more",
+  "supportedTypes": ["Movie"],
+  "hasSearch": false,
+  "hasMainPage": true
+}

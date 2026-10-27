@@ -1,0 +1,11 @@
+{
+  "name": "StreamedLive",
+  "packageName": "com.rdnutz.providers",
+  "className": "StreamedLiveProvider",
+  "version": 1,
+  "lang": "en",
+  "description": "Live sports streaming provider for CloudStream - covers soccer, basketball, hockey, combat sports, baseball, football, racing, tennis, and cricket from multiple sources",
+  "supportedTypes": ["Live"],
+  "hasSearch": true,
+  "hasMainPage": true
+}

@@ -1,9 +1,10 @@
 {
-  "name": "YouPornProvider",
+  "name": "YouPorn",
   "packageName": "com.rdnutz.providers",
   "className": "YouPornProvider",
   "version": 1,
   "lang": "en",
+  "description": "YouPorn adult video content provider for CloudStream",
   "supportedTypes": ["NSFW"],
   "hasSearch": true,
   "hasMainPage": true

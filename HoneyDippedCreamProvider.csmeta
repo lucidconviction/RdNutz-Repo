@@ -1,9 +1,10 @@
 {
-  "name": "HoneyDippedCreamProvider",
+  "name": "HoneyDippedCream",
   "packageName": "com.rdnutz.providers",
   "className": "HoneyDippedCreamProvider",
   "version": 1,
   "lang": "en",
+  "description": "HoneyDippedCream adult video content provider for CloudStream",
   "supportedTypes": ["NSFW"],
   "hasSearch": true,
   "hasMainPage": true
