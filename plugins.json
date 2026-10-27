@@ -182,10 +182,10 @@
     "iconUrl": "https://mmafull.com/wp-content/uploads/logo.png"
   },
   {
-    "fileHash": "sha256-7aded4083ec41cff61b75c7328e2e08973219fee2295b458e4bde08d24d08502",
+    "fileHash": "sha256-9e434b3cf0937f6a9829c06db1ad671ee1c26ce1ad76400449811df5c020fca1",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
-    "fileSize": 13863,
+    "fileSize": 22113,
     "status": 1,
     "authors": [],
     "version": 1,
