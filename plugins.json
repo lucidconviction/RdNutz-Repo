@@ -180,5 +180,18 @@
     "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/watchmmafull.cs3",
     "name": "watchmmafull",
     "iconUrl": "https://mmafull.com/wp-content/uploads/logo.png"
+  },
+  {
+    "fileHash": "sha256-7aded4083ec41cff61b75c7328e2e08973219fee2295b458e4bde08d24d08502",
+    "apiVersion": 1,
+    "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
+    "fileSize": 13863,
+    "status": 1,
+    "authors": [],
+    "version": 1,
+    "internalName": "streamedlive",
+    "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/streamedlive.cs3",
+    "name": "streamedlive",
+    "iconUrl": "https://strmfree.st/favicon.ico"
   }
 ]
