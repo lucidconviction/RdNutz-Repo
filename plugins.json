@@ -52,32 +52,6 @@
     "iconUrl": "https://fullfightreplays.com/favicon.ico"
   },
   {
-    "fileHash": "sha256-c0eaad10acb8a8e5bda6481406819c4f471ad757c1f41ad38de2d201cc79ef47",
-    "apiVersion": 1,
-    "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
-    "fileSize": 11773,
-    "status": 1,
-    "authors": [],
-    "version": 1,
-    "internalName": "heavyr",
-    "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/heavyr.cs3",
-    "name": "heavyr",
-    "iconUrl": "https://heavyr.com/favicon.ico"
-  },
-  {
-    "fileHash": "sha256-1180623f97622df10de343ff3c9f0a0a0051b47136a48a0a55650554d1bebe84",
-    "apiVersion": 1,
-    "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
-    "fileSize": 9458,
-    "status": 1,
-    "authors": [],
-    "version": 1,
-    "internalName": "honeydippedcream",
-    "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/honeydippedcream.cs3",
-    "name": "honeydippedcream",
-    "iconUrl": "https://honeydippedcream.com/favicon.ico"
-  },
-  {
     "fileHash": "sha256-71e6d85a2185b31d1a06bcc81bd8ff8e7dd7ed844647dab595faee8e8c380c21",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
@@ -89,19 +63,6 @@
     "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/horriblevideos.cs3",
     "name": "horriblevideos",
     "iconUrl": "https://horriblevideos.com/favicon.ico"
-  },
-  {
-    "fileHash": "sha256-80d1656f9db13bb4d26dfafa1e297339116574261d525dc3a3a9ba4eea72bff5",
-    "apiVersion": 1,
-    "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
-    "fileSize": 10502,
-    "status": 1,
-    "authors": [],
-    "version": 1,
-    "internalName": "inhumanity",
-    "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/inhumanity.cs3",
-    "name": "inhumanity",
-    "iconUrl": "https://inhumanity.com/favicon.ico"
   },
   {
     "fileHash": "sha256-b393ee0e8e62233fc46955a9ba137a5aea6b8e5e16fd53f38408fca6d637aa7d",
@@ -143,32 +104,6 @@
     "iconUrl": "https://livegore.com/favicon.png"
   },
   {
-    "fileHash": "sha256-245777fb88f2ab72f70214da2af7b578b494ede298833036742fd850d31e9dad",
-    "apiVersion": 1,
-    "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
-    "fileSize": 12873,
-    "status": 1,
-    "authors": [],
-    "version": 1,
-    "internalName": "mmacore",
-    "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/mmacore.cs3",
-    "name": "mmacore",
-    "iconUrl": "https://mmacore.tv/favicon.ico"
-  },
-  {
-    "fileHash": "sha256-52861401970fb79564c8721b12865d6dac837c52c030479c1fd5fbf0703b0e51",
-    "apiVersion": 1,
-    "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
-    "fileSize": 10506,
-    "status": 1,
-    "authors": [],
-    "version": 1,
-    "internalName": "nothingtoxic",
-    "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/nothingtoxic.cs3",
-    "name": "nothingtoxic",
-    "iconUrl": "https://nothingtoxic.com/favicon.ico"
-  },
-  {
     "fileHash": "sha256-f8ad8893fdf244383c82ba022f8383449a9817ef026b5b462cafcdfc62296338",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
@@ -195,19 +130,6 @@
     "iconUrl": "https://sexyandfunny.com/favicon.ico"
   },
   {
-    "fileHash": "sha256-d41210624542c8c90a34275d96d6dfb149f5a87ec2b622c97a1dbac287b5a074",
-    "apiVersion": 1,
-    "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
-    "fileSize": 12744,
-    "status": 1,
-    "authors": [],
-    "version": 1,
-    "internalName": "sickjunk",
-    "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/sickjunk.cs3",
-    "name": "sickjunk",
-    "iconUrl": "https://sickjunk.com/favicon.ico"
-  },
-  {
     "fileHash": "sha256-396c7b66683d4fc8cba84a2ec81182a68c5f6d548bbb3663855d814af2040bd8",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
@@ -232,19 +154,6 @@
     "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/worldstar.cs3",
     "name": "worldstar",
     "iconUrl": "https://worldstarhiphop.com/apple-touch-icon.png"
-  },
-  {
-    "fileHash": "sha256-59c0e970e27f7ed3ed2d60f60f8d4e59cfb050d82e642cd60d636347b6deae4b",
-    "apiVersion": 1,
-    "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
-    "fileSize": 12626,
-    "status": 1,
-    "authors": [],
-    "version": 1,
-    "internalName": "youporn",
-    "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/youporn.cs3",
-    "name": "youporn",
-    "iconUrl": "https://youporn.com/favicon.ico"
   },
   {
     "fileHash": "sha256-e6ce3adc812bcd773848f5a1585d015daa4096c361b481f89bfbb40520d2fcc2",
