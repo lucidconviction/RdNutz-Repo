@@ -45,7 +45,7 @@ class JeffsModelsProvider : MainAPI() {
             
             val title = titleMap["/update/$vidId/"] ?: "JeffsModels Update $vidId"
             newMovieSearchResponse(title, videoUrl, TvType.NSFW) {
-                this.posterUrl = ""
+                this.posterUrl = "$mainUrl/favicon.ico"
             }
         }
 
@@ -83,7 +83,7 @@ class JeffsModelsProvider : MainAPI() {
             
             val title = titleMap["/update/$vidId/"] ?: "JeffsModels Update $vidId"
             newMovieSearchResponse(title, videoUrl, TvType.NSFW) {
-                this.posterUrl = ""
+                this.posterUrl = "$mainUrl/favicon.ico"
             }
         }
     }

@@ -52,7 +52,7 @@ class ZFilmzOriginalsProvider : MainAPI() {
 
         val home = videos.take(30).mapNotNull { (title, trailerUrl) ->
             newMovieSearchResponse(title, trailerUrl, TvType.Movie) {
-                this.posterUrl = ""
+                this.posterUrl = "$mainUrl/favicon.ico"
             }
         }
 

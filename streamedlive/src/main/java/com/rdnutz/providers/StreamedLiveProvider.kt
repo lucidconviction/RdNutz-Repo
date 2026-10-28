@@ -36,9 +36,11 @@ class StreamedLiveProvider : MainAPI() {
     )
 
     // ── getMainPage ────────────────────────────────────────────────────────────
+    // NOTE: MainPageRequest.name = display label; actual payload is in .data.
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
-        val sourceId = request.name.substringBefore(" - ")
-        val payload = request.name.substringAfter(" - ", "").trim()
+        val raw = request.data ?: request.name
+        val sourceId = raw.substringBefore(" - ").trim()
+        val payload = raw.substringAfter(" - ", "").trim()
 
         return when (sourceId) {
             "strmfree" -> getStrmFreeMainPage(payload)

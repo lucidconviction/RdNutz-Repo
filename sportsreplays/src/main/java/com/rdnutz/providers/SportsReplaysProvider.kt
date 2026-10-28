@@ -24,8 +24,9 @@ class SportsReplaysProvider : MainAPI() {
     )
 
     // ── getMainPage ────────────────────────────────────────────────────────────
+    // NOTE: MainPageRequest.name = display label; actual payload is in .data.
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
-        val parts = request.name.split("|||")
+        val parts = (request.data ?: request.name).split("|||")
         val source = parts[0]
         val payload = parts.getOrNull(1) ?: ""
 

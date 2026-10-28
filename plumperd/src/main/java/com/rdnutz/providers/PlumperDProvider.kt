@@ -35,7 +35,7 @@ class PlumperDProvider : MainAPI() {
             val title = if (vidId.isNotBlank()) "PlumperD Preview $vidId" else "PlumperD Preview"
             
             newMovieSearchResponse(title, videoUrl, TvType.NSFW) {
-                this.posterUrl = ""
+                this.posterUrl = "$mainUrl/favicon.ico"
             }
         }
 
@@ -65,7 +65,7 @@ class PlumperDProvider : MainAPI() {
             val title = if (vidId.isNotBlank()) "PlumperD Preview $vidId" else "PlumperD Preview"
             
             newMovieSearchResponse(title, videoUrl, TvType.NSFW) {
-                this.posterUrl = ""
+                this.posterUrl = "$mainUrl/favicon.ico"
             }
         }
     }

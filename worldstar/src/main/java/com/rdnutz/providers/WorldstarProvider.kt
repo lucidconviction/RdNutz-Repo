@@ -65,7 +65,7 @@ class WorldstarProvider : MainAPI() {
                 val (title, _) = pair
                 val posterUrl = fixUrlNull(document.selectFirst("meta[property='og:image']")?.attr("content"))
                 newMovieSearchResponse(title, mp4, TvType.NSFW) {
-                    this.posterUrl = posterUrl
+                    this.posterUrl = posterUrl ?: "$mainUrl/favicon.ico"
                 }
             }
 
