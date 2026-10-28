@@ -6,7 +6,7 @@ import org.json.JSONArray
 import org.json.JSONObject
 
 class SportsReplaysProvider : MainAPI() {
-    override var mainUrl = "https://watchprowrestling.store"
+    override var mainUrl = "https://www.allthebestfights.com"
     override var name = "SportsReplays"
     override val supportedTypes = setOf(TvType.Movie)
     override var lang = "en"
@@ -14,10 +14,6 @@ class SportsReplaysProvider : MainAPI() {
 
     // ── Main page entries ──────────────────────────────────────────────────────
     override val mainPage = mainPageOf(
-        "watchprowrestling|||mma" to "MMA (WatchProWrestling)",
-        "watchprowrestling|||boxing" to "Boxing (WatchProWrestling)",
-        "watchprowrestling|||wwe" to "WWE (WatchProWrestling)",
-        "watchprowrestling|||aew" to "AEW (WatchProWrestling)",
         "allthebestfights" to "AllTheBestFights",
         "123wrestling" to "123Wrestling",
         "daddylive" to "DaddyLive Events",
@@ -31,52 +27,11 @@ class SportsReplaysProvider : MainAPI() {
         val payload = parts.getOrNull(1) ?: ""
 
         return when (source) {
-            "watchprowrestling" -> getWatchProWrestlingMainPage(payload, page)
             "allthebestfights" -> getAllTheBestFightsMainPage(page)
             "123wrestling" -> get123WrestlingMainPage(page)
             "daddylive" -> getDaddyLiveMainPage()
             else -> newHomePageResponse(emptyList())
         }
-    }
-
-    // ═══════════════════════════════════════════════════════════════════════════
-    //  WATCHPROWRESTLING.STORE  (MMA / Boxing / WWE / AEW)
-    // ═══════════════════════════════════════════════════════════════════════════
-    private suspend fun getWatchProWrestlingMainPage(category: String, page: Int): HomePageResponse {
-        // Pagination: site uses both ?paged=N and /page/N/
-        val pageUrl = if (page == 1)
-            "https://watchprowrestling.store/categorys/$category/"
-        else
-            "https://watchprowrestling.store/categorys/$category/?paged=$page"
-
-        val document = app.get(pageUrl).document
-        val html = document.html()
-
-        // Extract article links: /watch-slug/
-        val links = Regex("""href=["'](/watch-[^"']+?)["']""")
-            .findAll(html)
-            .map { "https://watchprowrestling.store$it.groupValues[1]" }
-            .distinct()
-            .take(30)
-            .toList()
-
-        val items = mutableListOf<SearchResponse>()
-        for (url in links) {
-            val doc = app.get(url).document
-            val title = doc.selectFirst("h1")?.text()?.trim()
-                ?: doc.selectFirst("title")?.text()?.trim()
-                ?: doc.selectFirst("meta[property='og:title']")?.attr("content")
-                ?: "${category.uppercase()} Replay"
-            val poster = fixUrlNull(doc.selectFirst("meta[property='og:image']")?.attr("content"))
-            items.add(newMovieSearchResponse(title, url, TvType.Movie) {
-                this.posterUrl = poster
-            })
-        }
-
-        return newHomePageResponse(
-            list = HomePageList(name = "${category.uppercase()} (WatchProWrestling)", list = items, isHorizontalImages = true),
-            hasNext = items.size >= 15
-        )
     }
 
     // ═══════════════════════════════════════════════════════════════════════════
@@ -208,28 +163,6 @@ class SportsReplaysProvider : MainAPI() {
     override suspend fun search(query: String): List<SearchResponse> {
         val all = mutableListOf<SearchResponse>()
 
-        // Search watchprowrestling.store
-        try {
-            val doc = app.get("https://watchprowrestling.store/?s=${query.replace(" ", "+")}").document
-            val html = doc.html()
-            val links = Regex("""href=["'](https://watchprowrestling\.store/watch-[^"']+?)["']""")
-                .findAll(html)
-                .map { it.groupValues[1] }
-                .distinct()
-                .take(20)
-                .toList()
-            for (url in links) {
-                val doc2 = app.get(url).document
-                val title = doc2.selectFirst("h1")?.text()?.trim() ?: doc2.selectFirst("title")?.text()?.trim() ?: continue
-                if (title.lowercase().contains(query.lowercase())) {
-                    val poster = fixUrlNull(doc2.selectFirst("meta[property='og:image']")?.attr("content"))
-                    all.add(newMovieSearchResponse(title, url, TvType.Movie) {
-                        if (poster != null) this.posterUrl = poster
-                    })
-                }
-            }
-        } catch (_: Exception) {}
-
         // Search allthebestfights.com
         try {
             val doc = app.get("https://www.allthebestfights.com/?s=${query.replace(" ", "+")}").document
@@ -303,9 +236,8 @@ class SportsReplaysProvider : MainAPI() {
     ): Boolean {
         var found = false
 
-        // WatchProWrestling / AllTheBestFights / 123Wrestling — extract YouTube embeds
-        if (data.contains("watchprowrestling.store") ||
-            data.contains("allthebestfights.com") ||
+        // AllTheBestFights / 123Wrestling — extract YouTube embeds
+        if (data.contains("allthebestfights.com") ||
             data.contains("123wrestling.com")) {
             found = loadVideoEmbedLinks(data, callback) || found
         }
