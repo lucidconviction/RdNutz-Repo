@@ -8,6 +8,22 @@
 
 ---
 
+## Progress / Status
+
+| Area | Status | Notes |
+|------|--------|-------|
+| **CF-bypass tooling** | ✅ Ready | SeleniumBase (Pure CDP + UC Mode) + nodriver (`verify_cf()`) installed and tested |
+| **BasketballVideo** | ❌ Dead source | CF bypass works but article pages have zero video embeds (JS-loaded only) |
+| **NFL-Video** | ❌ Dead source | HTTP 522 origin error even after CF bypass |
+| **MLBLive** | ❌ Dead source | iframe chain `bysesukior.com` → `n1mwq.org` unresolved |
+| **WatchProWrestling** | ✅ Working | Fixed `?paged=N` pagination |
+| **AllTheBestFights** | ✅ Working | Fixed `<article>` tag selectors |
+| **123Wrestling** | ✅ Working | `/page/N/` pagination confirmed |
+| **DaddyLive API** | ✅ Working | Live events endpoint functional |
+| **Sportsreplays .cs3** | ✅ Built | 22.3 KB — released as v0.8.4 |
+
+---
+
 ## Published Extensions (16)
 
 | # | Extension | Type | Size | Source(s) | Status |
@@ -76,13 +92,53 @@ Any `000` or `404` means the source is dead and should be removed before buildin
 
 ### 3. Cloudflare-Blocked Sources Should Be Excluded Upfront
 
-**Problem:** We tried adding StreamSurge (`streamsurge.org`), Sportsurge (`sportsurge.net`), and StreamEast (`streameast.bz`) to our sources list. All three returned Cloudflare challenge pages instead of content, making them unusable in CloudStream.
+**Problem:** We tried adding StreamSurge (`streamsurge.org`), Sportsurge (`sportsurge.net`), and StreamEast (`streameast.bz`) to our sources list. All three returned Cloudflare challenge pages instead of content, making them unusable in CloudStream. Later, BasketballVideo (`basketball-video.com`), NFL-Video (`nfl-video.com`), and MLBLive (`mlblive.net`) proved to be CF-protected as well.
 
 **Lesson:** Test a new source with a simple `curl` check BEFORE writing any code:
 ```bash
 curl -s -m 10 -o /dev/null -w "%{http_code}" "https://streamsurge.org/" -A "Mozilla/5.0"
 ```
 If the response is a Cloudflare HTML page (not JSON, not HTML with video links), skip it.
+
+**When a CF-protected source is worth keeping, use SeleniumBase:**
+
+Reference repo: **https://github.com/seleniumbase/SeleniumBase.git**
+
+SeleniumBase is the primary tool for testing Cloudflare bypasses against new sources. Escalate in this order:
+1. `curl` / plain HTTP request — fastest, catches sites that aren't actually protected
+2. SeleniumBase **Pure CDP Mode** (`sb_cdp`) — headless, fast
+3. SeleniumBase **UC Mode** (`uc=True`) — most aggressive; `solve_captcha()` works best in GUI (non-headless) mode
+4. **nodriver** — undetected-chromedriver successor; `verify_cf()` uses OpenCV template matching to click the Turnstile checkbox
+
+Setup (tested Oct 2026, Python 3.14, macOS arm64):
+```bash
+python3 -m venv /tmp/sb_venv
+/tmp/sb_venv/bin/pip install seleniumbase          # Pure CDP + UC Mode
+pip3 install nodriver opencv-python-headless --break-system-packages  # nodriver needs system Python + OpenCV
+```
+
+Quick CF detection script (nodriver):
+```python
+import asyncio, nodriver as uc
+CF_MARKERS = ['turnstile', 'challenges.cloudflare', 'just a moment',
+              'verify you are human', 'checking your browser', 'cf-browser-verification']
+
+async def check(url):
+    browser = await uc.start(headless=False)
+    tab = await browser.get(url)
+    await asyncio.sleep(3)
+    if any(m in (await tab.get_content() or "").lower() for m in CF_MARKERS):
+        await tab.verify_cf()
+        await asyncio.sleep(5)
+    html = await tab.get_content() or ""
+    browser.stop()
+    return not any(m in html.lower() for m in CF_MARKERS)
+```
+
+**Critical caveat (learned the hard way):** bypassing the challenge is NOT enough. After passing CF, always verify the article pages contain extractable video embeds (iframes/YouTube/OK.ru/Vimeo) in the static HTML. Our three sports sources all passed CF via nodriver but were still dead ends:
+- BasketballVideo — 44 KB of HTML, 26 game links, **zero embeds** (videos JS-loaded)
+- NFL-Video — HTTP 522 (origin down) even after bypass
+- MLBLive — iframe chain `bysesukior.com/e/{id}` → `n1mwq.org/8eu3/{id}` → unresolved
 
 ---
 
@@ -271,6 +327,10 @@ gh release view v<version> --json assets --jq '.assets[].name'
 - **What was fixed:** WatchProWrestling pagination → `?paged=N` (not `/page/N/`), AllTheBestFights article extraction → `<article>` tags with `full-fight-video` filter
 - **Prevention:** Before adding a CF-protected site, verify that article pages actually contain extractable video embeds in the static HTML
 
+---
+
+## Quick Reference — CF Bypass & Build Commands
+
 ```bash
 # Test if a site is reachable
 curl -s -m 12 -o /dev/null -w "%{http_code}\n" "URL" -A "Mozilla/5.0"
@@ -289,6 +349,41 @@ cat plugins.json | python3 -c "import sys,json; [print(e['internalName']) for e 
 
 # Check what's in the latest GitHub release
 gh release view vLATEST --repo lucidconviction/RdNutz-Repo --json assets --jq '.assets[].name'
+
+# CF bypass — quick nodriver check (install: pip install nodriver opencv-python-headless --break-system-packages)
+python3 << 'EOF'
+import asyncio, nodriver as uc
+async def check(url):
+    b = await uc.start(headless=False)
+    t = await b.get(url)
+    await asyncio.sleep(3)
+    h = (await t.get_content() or "").lower()
+    if any(m in h for m in ['turnstile','challenges.cloudflare','cf-browser-verification']):
+        await t.verify_cf()
+        await asyncio.sleep(5)
+    h = (await t.get_content() or "").lower()
+    b.stop()
+    return not any(m in h for m in ['turnstile','challenges.cloudflare','cf-browser-verification'])
+print(asyncio.run(check("https://basketball-video.com/2025-26")))
+EOF
+
+# CF bypass — SeleniumBase Pure CDP
+python3 << 'EOF'
+from seleniumbase import sb_cdp
+sb = sb_cdp.Chrome(headless=True)
+sb.goto("https://basketball-video.com/2025-26")
+print("CF blocked:", any(m in sb.get_page_source().lower() for m in ["turnstile","cf-browser-verification"]))
+sb.quit()
+EOF
+
+# CF bypass — SeleniumBase UC Mode (slowest, most reliable, works best in GUI)
+python3 << 'EOF'
+from seleniumbase import SB
+with SB(uc=True, test=True, headless=False) as sb:
+    sb.goto("https://basketball-video.com/2025-26")
+    sb.solve_captcha()
+    print("HTML size:", len(sb.get_page_source()))
+EOF
 ```
 
 ---
