@@ -1,207 +1,281 @@
-# RDNutz CloudStream Extensions - Version Documentation
+# RdNutz CloudStream Extensions — Version & Knowledge Base
 
-## Version: v0.2.2
-**Date:** October 25, 2026
-
-## Project Overview
-Repository: `lucidconviction/RdNutz-Repo`
-GitHub Release: [v0.2.2](https://github.com/lucidconviction/RdNutz-Repo/releases/tag/v0.2.2)
-CloudStream Repo URL: `https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/master/repo.json`
-
-## Purpose
-This repository contains 22 CloudStream v4 extensions (NSFW providers + MMA/Movie providers) that can be installed into CloudStream 3 application. Each extension scrapes video content from its respective website and provides search, listing, and playback functionality.
-
-## Extensions Included
-
-| # | Extension | Website | iconUrl | Status |
-|---|-----------|---------|---------|--------|
-| 1 | **Crazyshit** | crazyshit.com | crazyshit.com/favicon.ico | ✅ 100% working |
-| 2 | **Kaotic** | kaotic.com | kaotic.com/logo.svg | ✅ 100% working |
-| 3 | **Worldstar** | worldstarhiphop.com | worldstarhiphop.com/apple-touch-icon.png | ✅ Videos play |
-| 4 | **Xrares** | xrares.com | xrares.com/favicon.ico | ✅ 100% working |
-| 5 | **LiveGore** | livegore.com | livegore.com/favicon.png | ✅ 100% working |
-| 6 | **DaftPorn** | daftporn.com | daftporn.com/favicon.ico | ✅ 100% working |
-| 7 | **eFukt** | efukt.com | efukt.com/favicon.ico | ✅ 100% working |
-| 8 | **TheYNC** | theync.com | theync.com/logo.png | ✅ 100% working |
-| 9 | **FullFightReplays** | fullfightreplays.com | fullfightreplays.com/favicon.ico | ✅ 100% working (Dailymotion/OK.ru) |
-| 10 | **MMAReplays** | mmareplays.com | mmareplays.com/apple-touch-icon.png | ✅ 100% working (vidara.so HLS) |
-| 11 | **MMACore** | mma-core.com | images.mma-core.com/images/site/mmacore-logo.png | ✅ 100% working (YouTube embeds) |
-| 12 | **Heavy-R** | heavy-r.com | heavy-r.com/favicon.ico | ✅ 100% working (RSS → direct MP4) |
-| 13 | **HoneyDippedCream** | honeydippedcream.com | honeydippedcream.com/favicon.ico | ✅ 100% working (direct MP4) |
-| 14 | **HorribleVideos** | horriblevideos.com | horriblevideos.com/favicon.ico | ✅ 100% working (embed pages) |
-| 15 | **Inhumanity** | inhumanity.com | inhumanity.com/favicon.ico | ✅ 100% working (plug pages) |
-| 16 | **JeffsModels** | jeffsmodels.com | jeffsmodels.com/favicon.ico | ✅ 100% working (10-sec previews) |
-| 17 | **NothingToxic** | nothingtoxic.com | nothingtoxic.com/favicon.ico | ✅ 100% working (out links) |
-| 18 | **PlumperD** | plumperd.com | plumperd.com/favicon.ico | ✅ 100% working (preview clips) |
-| 19 | **SickJunk** | sickjunk.com | sickjunk.com/favicon.ico | ✅ 100% working (WordPress MP4) |
-| 20 | **SexyAndFunny** | sexyandfunny.com | sexyandfunny.com/favicon.ico | ✅ 100% working (WordPress MP4) |
-| 21 | **YouPorn** | you-porn.com | you-porn.com/favicon.ico | ✅ 100% working (token MP4) |
-| 22 | **ZFilmzOriginals** | z-filmz-originals.com | z-filmz-originals.com/favicon.ico | ✅ 100% working (Next.js JSON) |
-
-## Extensions Removed
-
-| Extension | Reason for Removal |
-|-----------|-------------------|
-| **HeavyFetish** | Scraper not functional; no working Python reference |
-| **NothingToxic** | Scraper not functional; no working Python reference |
-| **USACrime** | Removed per user request; thumbnails work but videos had issues |
-| **Live Sports** | Deleted per user request; replaced by other providers |
-
-## Extractor Architecture
-
-All providers implement the `MainAPI` interface from CloudStream 3 with the following methods:
-
-- `getMainPage(page, request)` - Retrieves the homepage video listing
-- `search(query)` - Searches for videos by query string
-- `load(url)` - Loads video metadata (title, poster, description, duration, tags)
-- `loadLinks(data)` - Extracts direct video URLs (MP4/M3U8)
-
-### Key API Changes from Original Scrapers
-All providers were rewritten to use CloudStream 4 API patterns:
-
-1. **`app.get(url).document`** instead of raw Jsoup requests
-2. **`mainPageOf()` DSL** instead of custom `HomePageList` construction
-3. **`newMovieSearchResponse()` / `newMovieLoadResponse()`** for response construction
-4. **`newExtractorLink()`** builder instead of direct `ExtractorLink` constructor
-5. **`INFER_TYPE`** for automatic video type detection (instead of hardcoded M3U8/Video)
-6. **`INFER_TYPE`** replaced deprecated `ExtractorLinkType.M3U8`/`ExtractorLinkType.VIDEO`
-
-### Scraping Logic
-Each provider's scraping logic was ported from the working Python scrapers in `/Users/robbdeeze/Documents/projects/iptv/New working scrapers/`. The key scraping patterns include:
-
-- **Listing page extraction**: CSS selector-based link extraction from homepage/category pages
-- **Video page resolution**: Fetching individual video pages and extracting `<source src="...mp4...">` 
-- **Referer/user-agent headers**: Required for bypassing hotlink protection on many sites
-- **POSTer URL extraction**: Using `meta[property='og:image']` or `video.poster` attribute
-- **INFER_TYPE**: Automatic video type detection based on URL content
-
-## Provider Details
-
-### Crazyshit (`crazyshit`)
-- **Listing**: `https://crazyshit.com/videos/` + pagination
-- **Video resolution**: Two-step: listing page → media page → `<source src="...mp4...">`
-- **Referer**: `https://crazyshit.com/`
-- **Thumbnails**: Extracted from `meta[property='og:image']` or video page image
-
-### Kaotic (`kaotic`)
-- **Listing**: `https://kaotic.com/recent/` (single page, no pagination)
-- **Video resolution**: Fetch post page → `<source src="...mp4|webm...">`
-- **Referer**: `https://kaotic.com/`
-
-### Worldstar (`worldstar`)
-- **Listing**: Parses `__NEXT_DATA__` JSON and `__next_f` chunks from the page
-- **Fallback**: Regex on stripped HTML for direct `.mp4` URLs
-- **Video resolution**: `<source src="...mp4...">` on video page
-- **Special**: Extracts `utLocation` field from JSON for direct URLs
-
-### Xrares (`xrares`)
-- **Listing**: Paginated `https://www.xrares.com/videos/?page=N`
-- **Video resolution**: Video page → `<source src="...">`
-- **Title cleanup**: Removes " - Xrares" and " - Free Amateur Porn" suffixes
-
-### LiveGore (`livegore`)
-- **Listing**: Multiple pattern extraction:
-  - Direct `href="https://www.livegore.com/\d+"` links
-  - `a.post-card` / `a[class*=post]` anchors
-  - `data-link` attributes
-- **Video resolution**: Tries multiple patterns:
-  - `<video source[src]>` / `<source src>`
-  - `<video[src]>` 
-  - `[data-src]`
-- **Mirror domains**: Also tries `livegore.net` and `livegore.org`
-
-### DaftPorn (`daftporn`)
-- **Listing**: Homepage → `a[href*=extreme-videos]` with `.php` extension
-- **Video resolution**: Video page → `<source src="...mp4...">`
-- **Title**: From link's `title` attribute
-- **Poster**: From `meta[property='og:image']` or `video.poster`
-
-### eFukt (`efukt`)
-- **Listing**: `https://efukt.com/` (page 1) and `https://efukt.com/videos/page/N/` (subsequent pages)
-- **Video links**: `<a href="https?://efukt.com/\d+_..." title="...">`
-- **Resolution**: Video page → `<source src="...mp4...">`
-
-### TheYNC (`theync`)
-- **Listing**: `https://theync.com/latest-updates/`
-- **Special**: Cloudflare fingerprinting protection; retry via CF proxy worker if direct fetch fails
-- **Video resolution**: 
-  - Direct `get_file/\d+/` URLs from listing page
-  - Individual video pages → `get_file` URLs
-- **CF proxy**: `CF_PROXY_URL` environment variable for bypassing Cloudflare
-
-### USACrime (`usacrime`)
-- **Listing**: Same pattern as LiveGore (mirror domain)
-- **Video resolution**: Multiple pattern extraction from video page
-
-## Build Information
-
-### Technical Stack
-- **Kotlin**: 2.4.0 (required for CloudStream v4 metadata)
-- **Gradle**: 8.10.x
-- **AGP**: 8.5.2
-- **Java**: OpenJDK 17 (`/usr/local/Cellar/openjdk@17/17.0.17/libexec/openjdk.jdk/Contents/Home`)
-- **NiceHttp**: `com.github.Blatzar:NiceHttp:0.4.18` (HTTP client library)
-- **Jsoup**: `org.jsoup:jsoup:1.17.2` (HTML parsing - kept for compatibility)
-
-### Gradle Configuration
-- `build.gradle.kts` root project configures all submodules
-- Each submodule has its own `build.gradle.kts`
-- CloudStream pre-release dependency: `com.github.recloudstream:cloudstream:pre-release`
-- NiceHttp added to all provider modules
-
-### Building
-```bash
-./gradlew make --no-daemon
-# or per-module:
-./gradlew :crazyshit:make --no-daemon
-```
-
-### Release
-- **v0.2.2** uploaded to GitHub Release
-- **22 providers** (11 NSFW + 3 MMA + 8 new NSFW)
-- **CDN propagation**: ~15 minutes for `raw.githubusercontent.com` updates
-
-## Installation
-
-### For CloudStream 3 Users
-1. Open CloudStream → Settings → Extensions → Add Repository
-2. Add repository URL: `https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/master/repo.json`
-3. Browse available extensions and install desired ones
-4. Each extension appears as a provider in the home screen selector
-
-### For Developers
-- Clone the repository: `git clone https://github.com/lucidconviction/RdNutz-Repo`
-- Modify provider files in `*/src/main/java/com/rdnutz/providers/`
-- Rebuild: `./gradlew make --no-daemon`
-- Upload release: `gh release create v0.1.0 ...`
-
-## Known Issues & Workarounds
-
-### Cloudflare Protection
-Some providers (TheYNC) use Cloudflare fingerprinting. If direct fetches fail:
-- Set `CF_PROXY_URL` environment variable
-- Or retry with `--via-worker` flag in the Python scrapers
-
-### Referer Headers
-Most sites require `Referer` header for video playback. All providers set appropriate referer headers.
-
-### Token Expiration
-Many sites use time-limited video URLs (expires in ~1 hour). The scrapers include:
-- Cache mechanism to keep tokens fresh
-- Batch resolution with error handling
-- Fallback to direct URL patterns
-
-### Thumbnail/Poster Issues
-Some providers (Worldstar, LiveGore initially) had thumbnails not displaying. Fixes included:
-- Extracting from `meta[property='og:image']`
-- Fallback to `video.poster` attribute
-- Using `fixUrlNull()` for relative URL handling
-
-## Contact & Support
-- **GitHub**: [lucidconviction/RdNutz-Repo](https://github.com/lucidconviction/RdNutz-Repo)
-- **Issues**: Use GitHub Issues for bug reports
-- **Python scrapers**: Located at `/Users/robbdeeze/Documents/projects/iptv/New working scrapers/`
+## Current Release: v0.8.3
+**Date:** October 28, 2026  
+**Branch:** `builds`  
+**Repo:** https://github.com/lucidconviction/RdNutz-Repo  
+**CloudStream Repo URL:** `https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/master/repo.json`
 
 ---
-*Documentation last updated: October 25, 2026*
-*Version: v0.2.2*
+
+## Published Extensions (16)
+
+| # | Extension | Type | Size | Source(s) | Status |
+|---|-----------|------|------|-----------|--------|
+| 1 | crazyshit | NSFW | 11.8 KB | crazyshit.com | ✅ Working |
+| 2 | daftporn | NSFW | 12.4 KB | daftporn.com | ✅ Working |
+| 3 | efukt | NSFW | 12.3 KB | efukt.com | ✅ Working |
+| 4 | fullfightreplays | Movie | 14.4 KB | fullfightreplays.com | ✅ Working |
+| 5 | horriblevideos | NSFW | 12.9 KB | horriblevideos.com | ✅ Working |
+| 6 | jeffsmodels | NSFW | 11.1 KB | jeffsmodels.com | ✅ Working |
+| 7 | kaotic | NSFW | 11.6 KB | kaotic.com | ✅ Working |
+| 8 | livegore | NSFW | 12.0 KB | livegore.com | ✅ Working |
+| 9 | plumperd | NSFW | 10.0 KB | plumperd.com | ✅ Working |
+| 10 | sexyandfunny | NSFW | 13.4 KB | sexyandfunny.com | ✅ Working |
+| 11 | sportsreplays | Movie | 34.1 KB | BasketballVideo, NFL-Video, MLBLive, WatchProWrestling, AllTheBestFights, 123Wrestling, DaddyLive | ✅ Working |
+| 12 | streamedlive | Live | 28.5 KB | StrmFree, DaddyLive, NTV Falcon, CricHD | ✅ Working |
+| 13 | theync | NSFW | 10.3 KB | theync.com | ✅ Working |
+| 14 | watchmmafull | Movie | 15.2 KB | watchmmafull.com | ✅ Working |
+| 15 | worldstar | NSFW | 10.2 KB | worldstarhiphop.com | ✅ Working |
+| 16 | zfilmzoriginals | NSFW | 8.7 KB | z-filmz-originals.com | ✅ Working |
+
+## Unpublished / Excluded (4 modules in source but not in releases)
+| Extension | Reason |
+|-----------|--------|
+| rdnutz-iptv | Not published — no `.cs3` on builds branch |
+| xrares | Not published — not included in settings.gradle.kts |
+| sports | Not published — legacy, replaced by streamedlive + sportsreplays |
+| YouPorn | Deprecated — source structure changed, no working release |
+
+---
+
+## Knowledge Base — What We Learned (Trial & Error)
+
+### 1. URL Path Drift Is the #1 Source of 404s
+
+**Problem:** Sites change their URL structure without warning. BasketballVideo, NFL-Video, and MLBLive all shifted their category paths between when we first scraped them and now:
+
+| Site | Old URL (broken) | New URL (fixed) |
+|------|-------------------|-----------------|
+| BasketballVideo | `/nba` | `/2025-26` |
+| BasketballVideo | `/wnba` | `/wnba-video` |
+| BasketballVideo | `/ncaa` | `/college-basketball` |
+| NFL-Video | `/` (homepage) | `/2026/` |
+| MLBLive | `/` (homepage) | `/2026-mlb-full-game-replays/` |
+
+**How to catch it early:** Always test category URLs with `curl -s -o /dev/null -w "%{http_code}"` before assuming a path works. Sites rotate URLs seasonally — what worked in August may break in October.
+
+---
+
+### 2. API Endpoints Die Without Notice
+
+**Problem:** `api.mirrors.st` was returning valid JSON one day and connection-refused (HTTP 000) the next. No deprecation notice, no warning.
+
+**How to catch it early:** Test all API endpoints in a loop before releasing:
+```bash
+for url in "https://api.mirrors.st/api/streams" "https://streamfree.top/api/v1/streams?category=soccer"; do
+    code=$(curl -s -m 12 -o /dev/null -w "%{http_code}" -A "Mozilla/5.0" "$url")
+    echo "$code  $url"
+done
+```
+Any `000` or `404` means the source is dead and should be removed before building.
+
+**Decision made:** Removed mirrors.st from streamedlive entirely. Kept StrmFree, DaddyLive, NTV Falcon, and CricHD which are all still live.
+
+---
+
+### 3. Cloudflare-Blocked Sources Should Be Excluded Upfront
+
+**Problem:** We tried adding StreamSurge (`streamsurge.org`), Sportsurge (`sportsurge.net`), and StreamEast (`streameast.bz`) to our sources list. All three returned Cloudflare challenge pages instead of content, making them unusable in CloudStream.
+
+**Lesson:** Test a new source with a simple `curl` check BEFORE writing any code:
+```bash
+curl -s -m 10 -o /dev/null -w "%{http_code}" "https://streamsurge.org/" -A "Mozilla/5.0"
+```
+If the response is a Cloudflare HTML page (not JSON, not HTML with video links), skip it.
+
+---
+
+### 4. Type Classification Matters for CloudStream UI
+
+**Problem:** We initially classified `crazyshit` and `zfilmzoriginals` as `Movie` type, but CloudStream's browser uses the `supportedTypes` field to group content. NSFW content should be tagged `NSFW` so it doesn't appear in the main Movies tab.
+
+**How we fixed it:** Updated both `.csmeta` files:
+- `CrazyshitProvider.csmeta` → `supportedTypes: ["NSFW"]`
+- `ZFilmzOriginalsProvider.csmeta` → `supportedTypes: ["NSFW"]`
+- Updated `plugins.json` entries to include `"type": "NSFW"`
+
+**General rule:**
+- `TvType.Movie` = recorded content (replays, movies, clips)
+- `TvType.Live` = live streams (sports, events)
+- `["NSFW"]` = adult/explicit content (controls browser grouping)
+
+---
+
+### 5. Gradle Module Inclusion Must Match .cs3 Build
+
+**Problem:** Added `sportsreplays` to `settings.gradle.kts` but forgot to rebuild and update `plugins.json`. The release contained the source code but not the compiled `.cs3`.
+
+**Checklist before releasing:**
+1. `settings.gradle.kts` includes the module
+2. `JAVA_HOME=... ./gradlew :modulename:make` succeeds
+3. `plugins.json` has the entry with correct hash and size
+4. `.cs3` file is committed with `git add -f` (it's in `.gitignore`)
+5. GitHub release has the `.cs3` asset uploaded
+
+---
+
+### 6. `.cs3` Files Are Gitignored — Must Use `-f` to Commit
+
+**Problem:** The root `.gitignore` has `*.cs3` to keep the working tree clean. When committing new builds, `git add` silently skips them.
+
+**Solution:** Always use `git add -f` for `.cs3` files:
+```bash
+git add -f sportsreplays.cs3 streamedlive.cs3
+```
+
+---
+
+### 7. Build Output Lives in `*/build/` — Not the Root
+
+**Problem:** New to CloudStream extension development, I expected `.cs3` files to appear at the project root. They actually land in each module's build directory:
+```
+sportsreplays/build/sportsreplays.cs3
+streamedlive/build/streamedlive.cs3
+```
+
+**Workflow:** After building, copy to root for committing and releasing:
+```bash
+cp sportsreplays/build/sportsreplays.cs3 .
+cp streamedlive/build/streamedlive.cs3 .
+```
+
+---
+
+### 8. JDK 17 Is Required — Not Available via Default `java`
+
+**Problem:** `./gradlew make` fails with "unspecified is not a valid version" or Kotlin compilation errors when using the wrong JDK.
+
+**Fix:** Always set `JAVA_HOME` explicitly:
+```bash
+JAVA_HOME=/usr/local/Cellar/openjdk@17/17.0.17/libexec/openjdk.jdk/Contents/Home ./gradlew :sportsreplays:make
+```
+
+---
+
+### 9. Search Must Cover All Categories, Not Just the First
+
+**Problem:** The sportsreplays `search()` method only searched the first BasketballVideo category, missing content from other sports.
+
+**Fix:** Loop through ALL categories in search:
+```kotlin
+for (cat in listOf("2025-26", "wnba-video", "college-basketball")) {
+    val response = getBasketballVideoMainPage(cat, 1, cat)
+    // add results...
+}
+```
+
+---
+
+### 10. `plugins.json` Must Match Reality
+
+**Problem:** `plugins.json` is the manifest CloudStream uses to discover extensions. If the hash or size doesn't match the actual `.cs3`, installation fails with a checksum error.
+
+**Always run this before releasing:**
+```bash
+sha256sum *.cs3 | sort
+cat plugins.json | python3 -c "import sys,json; [print(f\"{e['internalName']:25s} {e['fileHash']} size={e['fileSize']}\") for e in sorted(json.load(sys.stdin), key=lambda x: x['internalName'])]"
+```
+Compare the two outputs — they must match.
+
+---
+
+## Build & Release Workflow (Verified)
+
+```bash
+# 1. Build
+cd /Users/robbdeeze/Documents/projects/rdnutz-cloudstream-extensions
+JAVA_HOME=/usr/local/Cellar/openjdk@17/17.0.17/libexec/openjdk.jdk/Contents/Home \
+    ./gradlew :sportsreplays:make :streamedlive:make
+
+# 2. Copy to root
+cp sportsreplays/build/sportsreplays.cs3 .
+cp streamedlive/build/streamedlive.cs3 .
+
+# 3. Update plugins.json hashes
+#    (manually edit or use python script)
+
+# 4. Commit
+git add -f *.cs3 plugins.json
+git commit -m "fix: <description>"
+git push origin builds
+
+# 5. Upload to GitHub release
+gh release upload v<version> *.cs3 --clobber
+
+# 6. Verify
+gh release view v<version> --json assets --jq '.assets[].name'
+```
+
+---
+
+## Version History
+
+| Version | Date | Changes |
+|---------|------|---------|
+| v0.8.3 | Oct 28, 2026 | Fixed sportsreplays 404s (URL path corrections); removed dead mirrors.st from streamedlive |
+| v0.8.2 | Oct 27, 2026 | Added sportsreplays extension (7 sources); added streamedlive extension (4 sources) |
+| v0.8.1 | Oct 27, 2026 | Fixed NSFW type classification for crazyshit and zfilmzoriginals |
+| v0.8.0 | Oct 27, 2026 | Initial public release with 14 extensions |
+
+---
+
+## Quick Reference — Common Commands
+
+```bash
+# Test if a site is reachable
+curl -s -m 12 -o /dev/null -w "%{http_code}\n" "URL" -A "Mozilla/5.0"
+
+# Test API endpoint
+curl -s -m 12 "https://api.example.com/endpoint" | python3 -m json.tool | head -30
+
+# Build a single extension
+JAVA_HOME=/usr/local/Cellar/openjdk@17/.../home ./gradlew :modulename:make
+
+# Get hash of built .cs3
+sha256sum modulename/build/modulename.cs3
+
+# List all extensions in current plugins.json
+cat plugins.json | python3 -c "import sys,json; [print(e['internalName']) for e in sorted(json.load(sys.stdin), key=lambda x: x['internalName'])]"
+
+# Check what's in the latest GitHub release
+gh release view vLATEST --repo lucidconviction/RdNutz-Repo --json assets --jq '.assets[].name'
+```
+
+---
+
+## File Map
+
+```
+RdNutz-Repo/
+├── plugins.json              # Plugin manifest (hash, size, type) — MUST match releases
+├── repo.json                 # CloudStream repo entry point
+├── version.md                # This file
+├── *.cs3                     # Compiled extension binaries (committed with git add -f)
+├── *.csmeta                  # Per-extension metadata files
+├── settings.gradle.kts       # Module list — controls what gets built
+├── build.gradle.kts          # Root build config
+│
+├── sportsreplays/            # Multi-source sports replay aggregator
+│   └── src/main/java/com/rdnutz/providers/SportsReplaysProvider.kt
+├── streamedlive/             # Live sports streaming aggregator
+│   └── src/main/java/com/rdnutz/providers/StreamedLiveProvider.kt
+├── crazyshit/                # NSFW viral content
+├── daftporn/                 # NSFW adult content
+├── efukt/                    # NSFW shocking videos
+├── fullfightreplays/         # UFC/MMA fight replays
+├── horriblevideos/           # NSFW shocking clips
+├── jeffsmodels/              # NSFW adult previews
+├── kaotic/                   # NSFW shocking content
+├── livegore/                 # NSFW raw/gore footage
+├── plumperd/                 # NSFW adult previews
+├── sexyandfunny/             # NSFW adult/comedy
+├── theync/                   # NSFW shocking/gore (CF protected)
+├── watchmmafull/             # MMA full fights
+├── worldstar/                # NSFW street/fight videos
+└── zfilmzoriginals/          # NSFW adult trailers
+```
+
+---
+
+*Last updated: October 28, 2026 — v0.8.3*
