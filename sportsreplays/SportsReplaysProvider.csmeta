@@ -1,7 +1,0 @@
-{
-  "SupportedTypes": ["Movie"],
-  "HasMainPage": true,
-  "HasSearch": true,
-  "Description": "Sports replay aggregator covering NFL, NBA, MLB, NHL, MMA, Boxing, and Bare Knuckle content from multiple free sources including BasketballVideo, NFL-Video, MLBLive, WatchProWrestling, AllTheBestFights, DaddyLive, and 123Wrestling. Browse by sport category or search for specific games and fights.",
-  "Icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Sports.svg/200px-Sports.svg.png"
-}
