@@ -31,7 +31,6 @@ class StreamedLiveProvider : MainAPI() {
     override var mainPage = mainPageOf(
         *categories.map { cat -> "strmfree|||${"https://streamfree.top/api/v1/streams?category=${cat.key}"}" to "${cat.label} (StrmFree)" }.toTypedArray(),
         "daddylive|||https://daddylive.app/api/events" to "DaddyLive",
-        "mirrors|||https://api.mirrors.st/api/streams" to "Mirrors",
         "ntv|||https://ntv.cx/api/get-matches?server=falcon&type=live" to "NTV Falcon",
         "crichd|||https://crichd.at/" to "CricHD",
     )
@@ -44,7 +43,6 @@ class StreamedLiveProvider : MainAPI() {
         return when (sourceId) {
             "strmfree" -> getStrmFreeMainPage(payload)
             "daddylive" -> getDaddyLiveMainPage()
-            "mirrors" -> getMirrorsMainPage()
             "ntv" -> getNtvMainPage(payload)
             "crichd" -> getCricHDMainPage()
             else -> newHomePageResponse(emptyList())
@@ -158,43 +156,6 @@ class StreamedLiveProvider : MainAPI() {
 
         return newHomePageResponse(
             list = HomePageList(name = "PPV", list = streams, isHorizontalImages = false),
-            hasNext = false
-        )
-    }
-
-    // ── Mirrors.st source ──────────────────────────────────────────────────────
-    private suspend fun getMirrorsMainPage(): HomePageResponse {
-        val response = app.get("https://api.mirrors.st/api/streams")
-        val body = response.body.string()
-        val streams = mutableListOf<SearchResponse>()
-
-        try {
-            val json = JSONObject(body)
-            val streamsArr = json.optJSONArray("streams") ?: JSONArray()
-            for (i in 0 until streamsArr.length()) {
-                val cat = streamsArr.getJSONObject(i)
-                val catName = cat.optString("category", "").trim()
-                val catStreams = cat.optJSONArray("streams") ?: continue
-                for (j in 0 until catStreams.length()) {
-                    val s = catStreams.getJSONObject(j)
-                    val name = s.optString("name", "").trim()
-                    val tag = s.optString("tag", "").trim()
-                    val display = if (tag.isNotEmpty()) "$name [$tag]" else name
-                    val iframe = s.optString("iframe", "").trim()
-                    if (iframe.isEmpty()) continue
-                    val poster = s.optString("poster", "")
-                    streams.add(newLiveSearchResponse(display, iframe, TvType.Live) {
-                        if (poster.isNotEmpty()) this.posterUrl = poster
-                    })
-                }
-                if (streams.size >= 100) break
-            }
-        } catch (e: Exception) {
-            println("StreamedLive[mirrors] error: ${e.message}")
-        }
-
-        return newHomePageResponse(
-            list = HomePageList(name = "Mirrors", list = streams, isHorizontalImages = false),
             hasNext = false
         )
     }
@@ -382,9 +343,8 @@ class StreamedLiveProvider : MainAPI() {
             found = loadDaddyLiveLinks(data, callback) || found
         }
 
-        // Source 3: mirrors.st / taifood-blog.asia embeds
-        if (data.contains("taifood-blog.asia/embed")
-            || data.contains("mirrors.st")) {
+        // Source 3: taifood-blog.asia embeds
+        if (data.contains("taifood-blog.asia/embed")) {
             found = loadGenericEmbedLinks(data, callback) || found
         }
 

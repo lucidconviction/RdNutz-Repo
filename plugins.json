@@ -196,10 +196,10 @@
     "type": "Movie"
   },
   {
-    "fileHash": "sha256-2951bad42e66acafac417f57bb88e44599f660fe736c55161d77e52d9ab18e2e",
+    "fileHash": "sha256-eb5d3b28afe6dae534b4978128ebc4b1bfd668d1f83bfb422699613aba2955be",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
-    "fileSize": 28973,
+    "fileSize": 28529,
     "status": 1,
     "authors": [],
     "version": 1,
@@ -210,10 +210,10 @@
     "type": "Live"
   },
   {
-    "fileHash": "sha256-4510c8d176c3208aec8fd874933329afb2d56b6c0eb5f95155ca10a3851370b4",
+    "fileHash": "sha256-5bd9359cf6bce8a04f26c3cab54fcbfbcba33272f68270303698772296f0b2ae",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
-    "fileSize": 33781,
+    "fileSize": 34064,
     "status": 1,
     "authors": [],
     "version": 1,

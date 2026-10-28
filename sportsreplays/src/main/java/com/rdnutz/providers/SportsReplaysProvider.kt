@@ -14,9 +14,9 @@ class SportsReplaysProvider : MainAPI() {
 
     // ── Main page entries ──────────────────────────────────────────────────────
     override val mainPage = mainPageOf(
-        "basketball-video|||nba" to "NBA (BasketballVideo)",
-        "basketball-video|||wnba" to "WNBA (BasketballVideo)",
-        "basketball-video|||ncaa" to "NCAA (BasketballVideo)",
+        "basketball-video|||2025-26" to "NBA (BasketballVideo)",
+        "basketball-video|||wnba-video" to "WNBA (BasketballVideo)",
+        "basketball-video|||college-basketball" to "NCAA (BasketballVideo)",
         "nfl-video" to "NFL Replays",
         "mlb-live" to "MLB Replays",
         "watchprowrestling|||mma" to "MMA (WatchProWrestling)",
@@ -35,7 +35,15 @@ class SportsReplaysProvider : MainAPI() {
         val payload = parts.getOrNull(1) ?: ""
 
         return when (source) {
-            "basketball-video" -> getBasketballVideoMainPage(payload, page)
+            "basketball-video" -> {
+                val catLabel = when (payload) {
+                    "2025-26" -> "NBA"
+                    "wnba-video" -> "WNBA"
+                    "college-basketball" -> "NCAA"
+                    else -> "Basketball"
+                }
+                getBasketballVideoMainPage(payload, page, catLabel)
+            }
             "nfl-video" -> getNFLVideoMainPage(page)
             "mlb-live" -> getMLBLiveMainPage(page)
             "watchprowrestling" -> getWatchProWrestlingMainPage(payload, page)
@@ -49,13 +57,7 @@ class SportsReplaysProvider : MainAPI() {
     // ═══════════════════════════════════════════════════════════════════════════
     //  BASKETBALLVIDEO.COM  (NBA / WNBA / NCAA replays)
     // ═══════════════════════════════════════════════════════════════════════════
-    private suspend fun getBasketballVideoMainPage(category: String, page: Int): HomePageResponse {
-        val sportLabel = when (category) {
-            "nba" -> "NBA"
-            "wnba" -> "WNBA"
-            "ncaa" -> "NCAA"
-            else -> "Basketball"
-        }
+    private suspend fun getBasketballVideoMainPage(category: String, page: Int, label: String): HomePageResponse {
         val pageUrl = if (page == 1) "$mainUrl/$category" else "$mainUrl/$category/page/$page"
         val document = app.get(pageUrl).document
 
@@ -74,7 +76,7 @@ class SportsReplaysProvider : MainAPI() {
             val doc = app.get(url).document
             val title = doc.selectFirst("title")?.text()?.trim()
                 ?: doc.selectFirst("meta[property='og:title']")?.attr("content")
-                ?: sportLabel + " Replay"
+                ?: label + " Replay"
             val poster = fixUrlNull(doc.selectFirst("meta[property='og:image']")?.attr("content"))
             newMovieSearchResponse(title, url, TvType.Movie) {
                 this.posterUrl = poster
@@ -82,16 +84,16 @@ class SportsReplaysProvider : MainAPI() {
         }
 
         return newHomePageResponse(
-            list = HomePageList(name = sportLabel, list = items, isHorizontalImages = true),
+            list = HomePageList(name = label, list = items, isHorizontalImages = true),
             hasNext = items.size >= 15
         )
     }
 
     // ═══════════════════════════════════════════════════════════════════════════
-    //  NFL-VIDEO.COM  (NFL full game replays)
+    //  NFL-VIDEO.COM
     // ═══════════════════════════════════════════════════════════════════════════
     private suspend fun getNFLVideoMainPage(page: Int): HomePageResponse {
-        val pageUrl = if (page == 1) "https://nfl-video.com/" else "https://nfl-video.com/page/$page"
+        val pageUrl = if (page == 1) "https://nfl-video.com/2026/" else "https://nfl-video.com/2026/page/$page/"
         val document = app.get(pageUrl).document
 
         val postLinks = document.select("a[href]")
@@ -126,7 +128,7 @@ class SportsReplaysProvider : MainAPI() {
     //  MLBLIVE.NET  (MLB full game replays)
     // ═══════════════════════════════════════════════════════════════════════════
     private suspend fun getMLBLiveMainPage(page: Int): HomePageResponse {
-        val pageUrl = if (page == 1) "https://mlblive.net/" else "https://mlblive.net/page/$page"
+        val pageUrl = if (page == 1) "https://mlblive.net/2026-mlb-full-game-replays/" else "https://mlblive.net/2026-mlb-full-game-replays/page/$page/"
         val document = app.get(pageUrl).document
 
         val postLinks = document.select("a[href]")
@@ -335,7 +337,7 @@ class SportsReplaysProvider : MainAPI() {
 
         // Search basketball-video.com
         try {
-            for (cat in listOf("nba", "wnba", "ncaa")) {
+            for (cat in listOf("2025-26", "wnba-video", "college-basketball")) {
                 val doc = app.get("$mainUrl/$cat").document
                 val links = doc.select("a[href]")
                     .mapNotNull { el ->
