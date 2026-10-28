@@ -213,10 +213,51 @@ gh release view v<version> --json assets --jq '.assets[].name'
 
 | Version | Date | Changes |
 |---------|------|---------|
-| v0.8.3 | Oct 28, 2026 | Fixed sportsreplays 404s (URL path corrections); removed dead mirrors.st from streamedlive |
-| v0.8.2 | Oct 27, 2026 | Added sportsreplays extension (7 sources); added streamedlive extension (4 sources) |
-| v0.8.1 | Oct 27, 2026 | Fixed NSFW type classification for crazyshit and zfilmzoriginals |
-| v0.8.0 | Oct 27, 2026 | Initial public release with 14 extensions |
+| **v0.8.3** | Oct 28, 2026 | **Bug fixes:** Fixed sportsreplays 404s — corrected URL paths for BasketballVideo (NBA→`/2025-26`, WNBA→`/wnba-video`, NCAA→`/college-basketball`), NFL (`/`→`/2026/`), MLB (`/`→`/2026-mlb-full-game-replays/`). Removed dead `mirrors.st` API (connection refused) from streamedlive — kept StrmFree, DaddyLive, NTV Falcon, CricHD. Updated `settings.gradle.kts` to include `sportsreplays`. |
+| **v0.8.2** | Oct 27, 2026 | **New extensions:** Added `sportsreplays` (multi-source NBA/NFL/MLB/MMA/Boxing/Wrestling replays from BasketballVideo, NFL-Video, MLBLive, WatchProWrestling, AllTheBestFights, 123Wrestling, DaddyLive). Added `streamedlive` (live sports from StrmFree, DaddyLive, NTV Falcon, CricHD). |
+| **v0.8.1** | Oct 27, 2026 | **Type fix:** Corrected `crazyshit` and `zfilmzoriginals` type from `Movie` to `NSFW` in both `.csmeta` files and `plugins.json`. This ensures they appear in the correct CloudStream browser tab instead of the Movies section. |
+| **v0.8.0** | Oct 27, 2026 | **Initial public release** with 14 NSFW + MMA extensions (crazyshit, daftporn, efukt, fullfightreplays, horriblevideos, jeffsmodels, kaotic, livegore, plumperd, sexyandfunny, theync, watchmmafull, worldstar, zfilmzoriginals). |
+
+---
+
+## Fixes Log
+
+### Fix #1 — sportsreplays 404 on all categories (Oct 28, 2026)
+- **Symptom:** All sportsreplays categories returned empty results or 404
+- **Root cause:** Sites changed their URL paths; old paths no longer exist
+- **What changed:**
+  - `basketball-video.com/nba` → `/2025-26`
+  - `basketball-video.com/wnba` → `/wnba-video`
+  - `basketball-video.com/ncaa` → `/college-basketball`
+  - `nfl-video.com/` → `/2026/`
+  - `mlblive.net/` → `/2026-mlb-full-game-replays/`
+- **Resolution:** Updated all category URLs in `SportsReplaysProvider.kt` `mainPageOf()` and search loop
+- **Prevention:** Always test URLs with `curl -s -o /dev/null -w "%{http_code}"` before adding to `mainPageOf()`
+
+### Fix #2 — mirrors.st API dead in streamedlive (Oct 28, 2026)
+- **Symptom:** `mirrors` source returned connection refused (HTTP 000), caused errors in logs
+- **Root cause:** `api.mirrors.st` is completely offline (no server responding)
+- **What was removed:** `getMirrorsMainPage()`, mirrors entry from `mainPageOf()`, mirrors branch in `when`, mirrors handler in `loadLinks()`, mirrors search block
+- **Resolution:** Removed all mirrors.st code; kept 4 working sources: StrmFree, DaddyLive, NTV Falcon, CricHD
+- **Prevention:** Test API endpoints before shipping; set a health-check deadline
+
+### Fix #3 — NSFW type misclassification (Oct 27, 2026)
+- **Symptom:** `crazyshit` and `zfilmzoriginals` appeared in the Movies tab instead of NSFW
+- **Root cause:** `.csmeta` files used old format; `plugins.json` had `"type": "Movie"`
+- **Resolution:** Migrated both `.csmeta` files to new format with `supportedTypes: ["NSFW"]`; updated `plugins.json` entries
+- **Prevention:** Use `"type": "NSFW"` in `plugins.json` for any extension that serves adult content; verify with `cat plugins.json | python3 -c "..."` before release
+
+### Fix #4 — Kotlin `request` unresolved reference (Oct 28, 2026)
+- **Symptom:** Build failure — `Unresolved reference: request` at line 79 of SportsReplaysProvider.kt
+- **Root cause:** When removing the `sportLabel` local variable, left a dangling `request.name` reference inside `getBasketballVideoMainPage()` which doesn't receive a `request` parameter
+- **Resolution:** Added `label: String` parameter to `getBasketballVideoMainPage()` and passed the category label from the caller; updated the fallback title to use `label + " Replay"`
+- **Prevention:** After refactoring a function signature, search for all references to removed variables
+
+### Fix #5 — .cs3 not committed (gitignore trap) (Oct 27–28, 2026)
+- **Symptom:** Release v0.8.2 had no `.cs3` assets — only v0.8.3 had them after manual `cp`
+- **Root cause:** `*.cs3` is in `.gitignore`; `git add` silently skipped them
+- **Resolution:** Used `git add -f` to force-add; also copied binaries to root before committing
+- **Prevention:** Always verify with `ls *.cs3` (on disk) vs `git ls-tree HEAD --name-only | grep '\.cs3$'` (in repo)
 
 ---
 
