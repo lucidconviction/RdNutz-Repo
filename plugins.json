@@ -210,10 +210,10 @@
     "type": "Live"
   },
   {
-    "fileHash": "sha256-5bd9359cf6bce8a04f26c3cab54fcbfbcba33272f68270303698772296f0b2ae",
+    "fileHash": "sha256-8d6da6a1634374f86002bfb8eebab18598d4ae422f6276aac78a299d1c894aff",
     "apiVersion": 1,
     "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
-    "fileSize": 34064,
+    "fileSize": 22802,
     "status": 1,
     "authors": [],
     "version": 1,
