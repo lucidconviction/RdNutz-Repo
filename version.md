@@ -1,6 +1,6 @@
 # RdNutz CloudStream Extensions — Version & Knowledge Base
 
-## Current Release: v0.8.3
+## Current Release: v0.8.4
 **Date:** October 28, 2026  
 **Branch:** `builds`  
 **Repo:** https://github.com/lucidconviction/RdNutz-Repo  
@@ -22,7 +22,7 @@
 | 8 | livegore | NSFW | 12.0 KB | livegore.com | ✅ Working |
 | 9 | plumperd | NSFW | 10.0 KB | plumperd.com | ✅ Working |
 | 10 | sexyandfunny | NSFW | 13.4 KB | sexyandfunny.com | ✅ Working |
-| 11 | sportsreplays | Movie | 34.1 KB | BasketballVideo, NFL-Video, MLBLive, WatchProWrestling, AllTheBestFights, 123Wrestling, DaddyLive | ✅ Working |
+| 11 | sportsreplays | Movie | 22.3 KB | WatchProWrestling, AllTheBestFights, 123Wrestling, DaddyLive | ✅ Working |
 | 12 | streamedlive | Live | 28.5 KB | StrmFree, DaddyLive, NTV Falcon, CricHD | ✅ Working |
 | 13 | theync | NSFW | 10.3 KB | theync.com | ✅ Working |
 | 14 | watchmmafull | Movie | 15.2 KB | watchmmafull.com | ✅ Working |
@@ -213,6 +213,7 @@ gh release view v<version> --json assets --jq '.assets[].name'
 
 | Version | Date | Changes |
 |---------|------|---------|
+| **v0.8.4** | Oct 28, 2026 | **sportsreplays rewrite:** Removed BasketballVideo, NFL-Video, and MLBLive — all three are behind Cloudflare protection that blocks automated requests (confirmed via curl, SeleniumBase CDP+UC, and nodriver tests). BasketballVideo article pages contain zero video embeds (no iframes/YouTube/OK.ru/Vimeo). MLBLive iframe chain resolves to `bysesukior.com` → `n1mwq.org` → unresolved. NFL-Video returns HTTP 522 (origin down). Kept WatchProWrestling (fixed `?paged=N` pagination), AllTheBestFights (fixed `<article>` tag selectors), 123Wrestling, and DaddyLive. |
 | **v0.8.3** | Oct 28, 2026 | **Bug fixes:** Fixed sportsreplays 404s — corrected URL paths for BasketballVideo (NBA→`/2025-26`, WNBA→`/wnba-video`, NCAA→`/college-basketball`), NFL (`/`→`/2026/`), MLB (`/`→`/2026-mlb-full-game-replays/`). Removed dead `mirrors.st` API (connection refused) from streamedlive — kept StrmFree, DaddyLive, NTV Falcon, CricHD. Updated `settings.gradle.kts` to include `sportsreplays`. |
 | **v0.8.2** | Oct 27, 2026 | **New extensions:** Added `sportsreplays` (multi-source NBA/NFL/MLB/MMA/Boxing/Wrestling replays from BasketballVideo, NFL-Video, MLBLive, WatchProWrestling, AllTheBestFights, 123Wrestling, DaddyLive). Added `streamedlive` (live sports from StrmFree, DaddyLive, NTV Falcon, CricHD). |
 | **v0.8.1** | Oct 27, 2026 | **Type fix:** Corrected `crazyshit` and `zfilmzoriginals` type from `Movie` to `NSFW` in both `.csmeta` files and `plugins.json`. This ensures they appear in the correct CloudStream browser tab instead of the Movies section. |
@@ -259,9 +260,16 @@ gh release view v<version> --json assets --jq '.assets[].name'
 - **Resolution:** Used `git add -f` to force-add; also copied binaries to root before committing
 - **Prevention:** Always verify with `ls *.cs3` (on disk) vs `git ls-tree HEAD --name-only | grep '\.cs3$'` (in repo)
 
----
-
-## Quick Reference — Common Commands
+### Fix #6 — CF-protected sources removed from sportsreplays (Oct 28, 2026)
+- **Symptom:** BasketballVideo, NFL-Video, and MLBLive returned empty results (Cloudflare challenge pages)
+- **Root cause:** All three sites serve Cloudflare Turnstile challenges to automated/CDP requests. Even nodriver's `verify_cf()` cannot make the data extractable in CloudStream:
+  - **BasketballVideo:** Node bypass works, but article pages contain zero video embeds — only nav/team links, no iframes/YouTube/OK.ru/Vimeo. Videos are likely JS-loaded dynamically.
+  - **NFL-Video:** Returns HTTP 522 (origin server down) even after CF bypass
+  - **MLBLive:** Bypasses CF, but article iframe points to `bysesukior.com/e/{id}` → redirects to `n1mwq.org/8eu3/{id}` → final destination unresolved
+- **Tested:** SeleniumBase Pure CDP (blocked), UC Mode (blocked), nodriver `verify_cf()` (bypasses but no extractable content)
+- **What was removed:** BasketballVideo, NFL-Video, MLBLive from `mainPageOf()`, all related `get*` methods, and search blocks
+- **What was fixed:** WatchProWrestling pagination → `?paged=N` (not `/page/N/`), AllTheBestFights article extraction → `<article>` tags with `full-fight-video` filter
+- **Prevention:** Before adding a CF-protected site, verify that article pages actually contain extractable video embeds in the static HTML
 
 ```bash
 # Test if a site is reachable
@@ -319,4 +327,4 @@ RdNutz-Repo/
 
 ---
 
-*Last updated: October 28, 2026 — v0.8.3*
+*Last updated: October 28, 2026 — v0.8.4*
