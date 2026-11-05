@@ -194,5 +194,19 @@
     "name": "watchmmafull",
     "iconUrl": "https://mmafull.com/wp-content/uploads/logo.png",
     "type": "Movie"
+  },
+  {
+    "fileHash": "",
+    "apiVersion": 1,
+    "repositoryUrl": "https://github.com/lucidconviction/RdNutz-Repo",
+    "fileSize": 0,
+    "status": 1,
+    "authors": [],
+    "version": 1,
+    "internalName": "rdnutziptv",
+    "url": "https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/builds/rdnutziptv.cs3",
+    "name": "RDNutz IPTV",
+    "iconUrl": "https://iptv.rdnutz.us/favicon.ico",
+    "type": "Live"
   }
 ]

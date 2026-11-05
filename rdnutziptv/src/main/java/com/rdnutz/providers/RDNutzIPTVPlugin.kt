@@ -4,8 +4,8 @@ import com.lagradost.cloudstream3.plugins.CloudstreamPlugin
 import com.lagradost.cloudstream3.plugins.Plugin
 
 @CloudstreamPlugin
-class YouPornPlugin : Plugin() {
+class RDNutzIPTVPlugin : Plugin() {
     override fun load() {
-        registerMainAPI(YouPornProvider())
+        registerMainAPI(RDNutzIPTVProvider())
     }
 }

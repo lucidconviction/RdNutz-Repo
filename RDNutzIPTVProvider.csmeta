@@ -1,0 +1,10 @@
+{
+  "name": "RDNutz IPTV",
+  "url": "https://github.com/Robbdeeze/rdnutz-cloudstream-extensions",
+  "description": "IPTV live channels from RDNUTZTV — All Resources + Fast Combined sources",
+  "language": "en",
+  "version": 1,
+  "type": 4,
+  "mainActivity": "com.rdnutz.providers.RDNutzIPTVProvider",
+  "bundle": "rdnutziptv/app/build/outputs/aar/app-release.aar"
+}

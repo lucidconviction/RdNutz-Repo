@@ -1,7 +1,7 @@
 # RdNutz CloudStream Extensions — Version & Knowledge Base
 
-## Current Release: v0.8.4
-**Date:** October 28, 2026  
+## Current Release: v0.8.5
+**Date:** November 5, 2026  
 **Branch:** `builds`  
 **Repo:** https://github.com/lucidconviction/RdNutz-Repo  
 **CloudStream Repo URL:** `https://raw.githubusercontent.com/lucidconviction/RdNutz-Repo/master/repo.json`
@@ -267,9 +267,10 @@ gh release view v<version> --json assets --jq '.assets[].name'
 
 ## Version History
 
-| Version | Date | Changes |
-|---------|------|---------|
-| **v0.8.4** | Oct 28, 2026 | **sportsreplays rewrite:** Removed BasketballVideo, NFL-Video, and MLBLive — all three are behind Cloudflare protection that blocks automated requests (confirmed via curl, SeleniumBase CDP+UC, and nodriver tests). BasketballVideo article pages contain zero video embeds (no iframes/YouTube/OK.ru/Vimeo). MLBLive iframe chain resolves to `bysesukior.com` → `n1mwq.org` → unresolved. NFL-Video returns HTTP 522 (origin down). Kept WatchProWrestling (fixed `?paged=N` pagination), AllTheBestFights (fixed `<article>` tag selectors), 123Wrestling, and DaddyLive. |
+|| Version | Date | Changes |
+||---------|------|---------|
+|| **v0.8.5** | Nov 5, 2026 | **New extension:** Added `rdnutziptv` — IPTV live channels from RDNUTZTV sources (All_Resources_Combined_By_Language.m3u ~46K channels, fast_combined.m3u ~650 channels). Source URLs are XOR-obfuscated (key: 0x37,0xA5,0xCC,0x12) so plaintext URLs cannot be extracted from the compiled .cs3 via `strings`. 24 h in-memory cache. **Removed dead modules:** heavyr, honeydippedcream, inhumanity, nothingtoxic, sickjunk, youporn, mmacore. |
+|| **v0.8.4** | Oct 28, 2026 | **sportsreplays rewrite:** Removed BasketballVideo, NFL-Video, and MLBLive — all three are behind Cloudflare protection that blocks automated requests (confirmed via curl, SeleniumBase CDP+UC, and nodriver tests). BasketballVideo article pages contain zero video embeds (no iframes/YouTube/OK.ru/Vimeo). MLBLive iframe chain resolves to `bysesukior.com` → `n1mwq.org` → unresolved. NFL-Video returns HTTP 522 (origin down). Kept WatchProWrestling (fixed `?paged=N` pagination), AllTheBestFights (fixed `<article>` tag selectors), 123Wrestling, and DaddyLive. |
 | **v0.8.3** | Oct 28, 2026 | **Bug fixes:** Fixed sportsreplays 404s — corrected URL paths for BasketballVideo (NBA→`/2025-26`, WNBA→`/wnba-video`, NCAA→`/college-basketball`), NFL (`/`→`/2026/`), MLB (`/`→`/2026-mlb-full-game-replays/`). Removed dead `mirrors.st` API (connection refused) from streamedlive — kept StrmFree, DaddyLive, NTV Falcon, CricHD. Updated `settings.gradle.kts` to include `sportsreplays`. |
 | **v0.8.2** | Oct 27, 2026 | **New extensions:** Added `sportsreplays` (multi-source NBA/NFL/MLB/MMA/Boxing/Wrestling replays from BasketballVideo, NFL-Video, MLBLive, WatchProWrestling, AllTheBestFights, 123Wrestling, DaddyLive). Added `streamedlive` (live sports from StrmFree, DaddyLive, NTV Falcon, CricHD). |
 | **v0.8.1** | Oct 27, 2026 | **Type fix:** Corrected `crazyshit` and `zfilmzoriginals` type from `Movie` to `NSFW` in both `.csmeta` files and `plugins.json`. This ensures they appear in the correct CloudStream browser tab instead of the Movies section. |
@@ -422,4 +423,4 @@ RdNutz-Repo/
 
 ---
 
-*Last updated: October 28, 2026 — v0.8.4*
+*Last updated: November 5, 2026 — v0.8.5*
